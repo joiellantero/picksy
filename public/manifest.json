@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Name Roulette",
+  "name": "Name Roulette - Random Name Picker",
   "icons": [
     {
       "src": "favicon.ico",
