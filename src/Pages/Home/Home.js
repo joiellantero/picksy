@@ -1,9 +1,12 @@
 import React from 'react';
+import Wheel from '../../Components/Wheel';
+import List from  '../../Components/List';
 
 const Home = () => {
   return(
-    <div>
-      <h1 className='font-serif font-semibold'>Home page</h1>
+    <div className='flex justify-center gap-12'>
+      <Wheel/>
+      <List/>
     </div>
   );
 };

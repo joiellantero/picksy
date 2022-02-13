@@ -3,10 +3,6 @@
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Outfit&family=Roboto+Serif:wght@100;400;700&display=swap');
 
-body {
-  background-color: #FEFAF4;
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

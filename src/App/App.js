@@ -1,15 +1,20 @@
 import React from 'react';
 import {Route, Routes} from "react-router-dom";
-import './App.css';
+import { useRecoilValue } from 'recoil';
+import { darkModeState } from '../Shared/globalState';
 
-import Header from '../Components/Header/Header';
+import Header from '../Components/Header';
 import Home from '../Pages/Home/Home';
 import Features from '../Pages/Features/Features';
 import Help from '../Pages/Help/Help';
 
+import './App.css';
+
 export default function App() {
+  const isDarkModeEnabled = useRecoilValue(darkModeState);
+  
   return (
-    <div>
+    <div className={`App ${ isDarkModeEnabled ? 'dark:bg-gray-900 text-white' : '' }`}>
       <Header />
       <Routes>
         <Route exact path='/' element={<Home/>} />

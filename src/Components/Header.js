@@ -1,9 +1,12 @@
-import React from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom'
+import { useRecoilState } from 'recoil';
+import { darkModeState } from '../Shared/globalState';
 
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { Fragment } from 'react'
+import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
 const help = [
   {
@@ -27,12 +30,21 @@ const help = [
 ]
 
 const Header = () => {
+  const [checked, setChecked] = useState(false);
+  const [isDarkModeEnabled, setISDarkModeEnabled] = useRecoilState(darkModeState);
+  const toggleDarkMode = () => setISDarkModeEnabled(!isDarkModeEnabled);
+
+  const handleChange = (checked) => {
+    setChecked(checked);
+    toggleDarkMode();
+  };
+
   return(
-    <div className='flex justify-between px-12 py-5'>
+    <div className='flex justify-between px-24 py-10'>
       <div className='py-2 flex justify-center items-center'>
         <h1>Name Roulette</h1>
       </div>
-      <div className="flex gap-6">
+      <div className="flex items-center justify-center gap-6">
         <Link to="/" className='py-2'>Home</Link>
         <Popover className="relative">
           {({ open }) => (
@@ -107,9 +119,11 @@ const Header = () => {
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
         </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-        </svg>
+        <DarkModeSwitch
+          checked={checked}
+          onChange={handleChange}
+          size={25}
+        />
       </div>
     </div>
   );
