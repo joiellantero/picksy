@@ -28,7 +28,7 @@ const help = [
   },
 ]
 
-const Header = () => {
+const Nav = () => {
   const [checked, setChecked] = useDarkMode();
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useDarkMode();
   const toggleDarkMode = () => setIsDarkModeEnabled(!isDarkModeEnabled);
@@ -41,17 +41,17 @@ const Header = () => {
   return(
     <div className='flex justify-between px-24 py-10'>
       <div className='py-2 flex justify-center items-center font-serif font-bold'>
-        <Link to="/" className='py-2'>Name Roulette</Link>
+        <Link to="/">Name Roulette</Link>
       </div>
       <div className="flex items-center justify-center gap-6">
-        <Link to="/" className='py-2'>Home</Link>
+        <Link to="/">Home</Link>
         <Popover className="relative">
           {({ open }) => (
             <>
               <Popover.Button
                 className={`
                   ${open ? 'text-blue-600 group bg-blue-200' : 'text-opacity-90'}
-                  px-3 py-2 rounded-md inline-flex items-center text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+                  px-3 py-2 rounded-md inline-flex items-center text-base hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
               >
                 <span>Help</span>
                 <ChevronDownIcon
@@ -207,4 +207,4 @@ function IconThree() {
   )
 }
 
-export default Header;
+export default Nav;
