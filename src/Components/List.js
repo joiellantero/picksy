@@ -10,36 +10,23 @@ const List = () => {
   return(
     <div className='flex flex-col w-1/4'>
       <label 
-        for="listInput" 
-        className="form-label inline-block mb-2 text-gray-700"
+        htmlFor="listInput" 
+        className="form-label inline-block mb-2"
       >
         Enter names
       </label>
       <textarea
-        className="
-          form-control
-          block
-          w-full
-          px-3
-          py-1.5
-          text-base
-          font-normal
-          text-gray-700
-          bg-white bg-clip-padding
-          border border-solid border-gray-300
-          rounded
-          transition
-          ease-in-out
-          m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+        className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 dark:text-gray-300 bg-clip-padding dark:bg-slate-800 bg-slate-100 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-slate-200 focus:border-blue-600 focus:outline-none
         "
         id="listInput"
         rows="5"
         onChange={handleChange}
       />
-      <input
+      <textarea
         value={value}
-      ></input>
+        readOnly
+        className='form-control dark:bg-slate-800 dark:text-gray-500 bg-slate-100 focus:outline-none px-3 py-1.5'
+      ></textarea>
     </div>
   );
 };
