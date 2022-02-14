@@ -1,3 +1,5 @@
+// TODO add custom theme for easy customization
+
 module.exports = {
     content: [
       "./src/**/*.{js,jsx,ts,tsx}",
