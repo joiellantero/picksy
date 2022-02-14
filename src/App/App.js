@@ -14,7 +14,6 @@ export default function App() {
   
   return (
     <div className={`${isDarkModeEnabled ? 'dark' : ''}`}>
-      {console.log(isDarkModeEnabled)}
       <div className='App dark:bg-gray-900 dark:text-white'>
         <Header />
         <Routes>
