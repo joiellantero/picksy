@@ -36,7 +36,7 @@ const Wheel = (props) => {
         />
       </div>
       <Modal 
-        isOpen={isOpen} 
+        isOpen={isOpen}
         title={props.modalTitle}
         body={drawnName}
         onClose={(isClose) => setIsOpen(isClose)}

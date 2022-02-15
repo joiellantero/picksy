@@ -22,3 +22,23 @@ export function useDarkMode() {
     setDarkModeStored
   ];
 }
+
+export const removeState = atom({
+    key: 'removeState',
+    default: false,
+    effects_UNSTABLE: [persistAtom]
+});
+
+export function useRemoveState() {
+    const [isInitial, setIsInitial] = useState(true);
+    const [removeNameStored, setRemoveNameStored] = useRecoilState(removeState);
+
+    useEffect(() => {
+        setIsInitial(false);
+    }, []);
+
+    return [
+        isInitial === true ? false : removeNameStored,
+        setRemoveNameStored
+    ];
+}
