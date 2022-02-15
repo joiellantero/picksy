@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Wheel from '../../Components/Wheel';
 import List from  '../../Components/List';
 import Input from '../../Components/Input';
+import Toggle from '../../Components/Toggle';
 
 const Home = () => {
   const [listData, setListData] = useState();
@@ -21,6 +22,7 @@ const Home = () => {
       <div className="flex flex-col gap-5">
         <List onChange={(listData) => setListData(listData)}/>
         <Input id={winnerMsg} label={'Winner Prompt Message'} onChange={(winnerMsg) => setWinnerMsg(winnerMsg)}/>
+        <Toggle />
       </div>
     </div>
   );
