@@ -23,7 +23,9 @@ const Home = () => {
     <div className='flex justify-center gap-12 mt-10'>
       <Wheel
           wheelData={wheelData}
+          handleChange={(wheelData) => setWheelData(wheelData)}
           modalTitle={winnerMsg}
+          removeName={shouldRemoveName}
       />
       <div className="flex flex-col gap-5">
         <List

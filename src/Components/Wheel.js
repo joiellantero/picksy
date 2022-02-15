@@ -7,16 +7,27 @@ const Wheel = (props) => {
   let [drawnName, setDrawnName] = useState();
 
   const getNames = () => {
-    let names = props.wheelData.split("\n");
-    let name = names[Math.floor(Math.random()*names.length)];
-    setDrawnName(name);
+    let rawList = props.wheelData.split("\n");
+    let cleanedList = []
+    rawList.forEach((item) => {
+      if (item !== ''){
+        let cleanedItem = item.replace(/\s/g, "")
+        cleanedList.push(cleanedItem);
+      }
+    });
+    let drawnName = cleanedList[Math.floor(Math.random()*cleanedList.length)];
+    setDrawnName(drawnName);
     setIsOpen(true);
+    if (props.removeName && cleanedList.indexOf(drawnName) >= 0){
+      cleanedList = cleanedList.filter(e => e !== drawnName);
+      props.handleChange(cleanedList.join("\n"))
+    }
   }
 
   return(
     <>
       <div className='flex justify-center flex-col'>
-        <label 
+        <label
           htmlFor="wheelOutput" 
           className="form-label inline-block mb-2"
         >
