@@ -1,4 +1,6 @@
 import React from 'react';
+import ButtonSecondary from './Buttons/ButtonsSecondary';
+import UploadIcon from '../Assets/icons/Upload';
 
 const List = (props) => {
   return(
@@ -16,6 +18,9 @@ const List = (props) => {
           rows="5"
           onChange={(e) => props.onChange(e.target.value)}
         />
+      </div>
+      <div>
+        <ButtonSecondary icon={<UploadIcon/>} value={'Upload File'} />
       </div>
     </>
   );
