@@ -11,7 +11,7 @@ const Wheel = (props) => {
     let cleanedList = []
     rawList.forEach((item) => {
       if (item !== ''){
-        let cleanedItem = item.replace(/\s/g, "")
+        let cleanedItem = item.replace(/\s+$/, "")
         cleanedList.push(cleanedItem);
       }
     });
