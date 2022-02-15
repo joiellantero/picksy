@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react';
-import { useDarkMode } from '../Shared/globalState';
+import { useDarkMode } from '../shared/globalState';
 
 const Modal = (props) => {
   const [isDarkModeEnabled] = useDarkMode();

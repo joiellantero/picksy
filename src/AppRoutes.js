@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Routes } from "react-router-dom";
-import { useDarkMode } from './Shared/globalState';
+import { useDarkMode } from './shared/globalState';
 
 import Nav from './components/Nav';
 import Home from './pages/Home/Home';
 import Features from './pages/Features/Features';
 import Help from './pages/Help/Help';
 
-import './styles/app.css';
+import './styles/index.css';
 
 export default function App() {
   const [isDarkModeEnabled] = useDarkMode();

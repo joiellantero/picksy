@@ -27,10 +27,13 @@ const Wheel = (props) => {
           rows="10"
           className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 dark:text-gray-300 bg-clip-padding dark:bg-slate-800 bg-slate-100 rounded transition ease-in-out m-0 focus:outline-none"
           id="wheelOutput"
-        ></textarea>
-        <div className="my-5">
-          <ButtonPrimary value={'Spin Wheel'} onClick={getNames}/>
-        </div>
+        />
+        <ButtonPrimary 
+          value={'Spin Wheel'} 
+          onClick={getNames}
+          disabled={!props.wheelData}
+          tooltip={'Names cannot be empty'}
+        />
       </div>
       <Modal 
         isOpen={isOpen} 

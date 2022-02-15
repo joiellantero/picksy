@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import { useDarkMode } from '../Shared/globalState';
+import { useDarkMode } from '../shared/globalState';
 
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
