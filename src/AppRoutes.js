@@ -3,9 +3,9 @@ import { Route, Routes } from "react-router-dom";
 import { useDarkMode } from './shared/globalState';
 
 import Nav from './components/Nav';
-import Home from './pages/Home/Home';
-import Features from './pages/Features/Features';
-import Help from './pages/Help/Help';
+import Home from './pages/Home';
+import Features from './pages/Features';
+import Help from './pages/Help';
 
 import './styles/index.css';
 

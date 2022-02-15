@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useRemoveState } from '../../shared/globalState';
+import { useRemoveState } from '../shared/globalState';
 
-import Wheel from '../../components/Wheel';
-import List from  '../../components/List';
-import Input from '../../components/Input';
-import Toggle from '../../components/Toggle';
+import Wheel from '../components/Wheel';
+import List from '../components/List';
+import Input from '../components/Input';
+import Toggle from '../components/Toggle';
 
 const Home = () => {
   const [listData, setListData] = useState();
