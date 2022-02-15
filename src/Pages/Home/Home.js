@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import Wheel from '../../Components/Wheel';
-import List from  '../../Components/List';
-import Input from '../../Components/Input';
-import Toggle from '../../Components/Toggle';
+import Wheel from '../../components/Wheel';
+import List from  '../../components/List';
+import Input from '../../components/Input';
+import Toggle from '../../components/Toggle';
 
 const Home = () => {
   const [listData, setListData] = useState();

@@ -1,6 +1,6 @@
 import React from 'react';
 import ButtonSecondary from './Buttons/ButtonsSecondary';
-import UploadIcon from '../Assets/icons/Upload';
+import UploadIcon from '../assets/icons/UploadIcon';
 
 const List = (props) => {
   return(

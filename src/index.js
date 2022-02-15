@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App/App';
+import './styles/index.css';
+import AppRoutes from './AppRoutes';
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 
@@ -9,7 +9,7 @@ ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
       <BrowserRouter>
-        <App />
+        <AppRoutes />
       </BrowserRouter>
     </RecoilRoot>
   </React.StrictMode>,

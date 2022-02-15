@@ -1,20 +1,20 @@
 import React from 'react';
 import { Route, Routes } from "react-router-dom";
-import { useDarkMode } from '../Shared/globalState';
+import { useDarkMode } from './Shared/globalState';
 
-import Nav from '../Components/Nav';
-import Home from '../Pages/Home/Home';
-import Features from '../Pages/Features/Features';
-import Help from '../Pages/Help/Help';
+import Nav from './components/Nav';
+import Home from './pages/Home/Home';
+import Features from './pages/Features/Features';
+import Help from './pages/Help/Help';
 
-import './App.css';
+import './styles/app.css';
 
 export default function App() {
   const [isDarkModeEnabled] = useDarkMode();
   
   return (
     <div className={`${isDarkModeEnabled ? 'dark' : ''}`}>
-      <div className='App dark:bg-gray-900 dark:text-white'>
+      <div className='fullscreen dark:bg-gray-900 dark:text-white'>
         <Nav />
         <Routes>
           <Route exact path='/' element={<Home/>} />
