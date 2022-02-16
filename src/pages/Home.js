@@ -20,7 +20,7 @@ const Home = () => {
   }, [listData, winnerMsg])
 
   return(
-    <div className='flex justify-center gap-12 mt-10'>
+    <div className='flex flex-wrap justify-center gap-12 mt-10'>
       <Wheel
           wheelData={wheelData}
           handleChange={(wheelData) => setWheelData(wheelData)}
