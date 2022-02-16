@@ -3,14 +3,15 @@
 const ButtonSecondary = (props) => {
   return (
     <div className={`relative group ${props.divClass}`}>
-      {props.disabled && (
+      {props.disabled && props.tooltip && (
         <span className='tooltip group-hover:scale-100'>
         {props.tooltip}
       </span>
       )}
       <button
-        className="flex justify-center items-center py-2 px-4 bg-slate-600 hover:bg-slate-700 active:bg-slate-800 text-white focus:outline-none rounded"
+        className="flex justify-center items-center py-2 px-4 bg-slate-600 hover:bg-slate-700 active:bg-slate-800 text-white focus:outline-none rounded disabled:hover:cursor-not-allowed disabled:opacity-75 disabled:hover:bg-none disabled:hover:bg-slate-600"
         onClick={props.onClick}
+        disabled={props.disabled}
       >
       <span className='mr-3'>
         {props.icon}

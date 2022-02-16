@@ -40,7 +40,7 @@ const Wheel = (props) => {
           id="wheelOutput"
         />
         <ButtonPrimary 
-          value={'Spin Wheel'} 
+          value={'Choose a Name'}
           onClick={getNames}
           disabled={!props.wheelData}
           tooltip={'Names cannot be empty'}

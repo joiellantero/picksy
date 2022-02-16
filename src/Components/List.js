@@ -22,6 +22,8 @@ const List = (props) => {
       <ButtonSecondary
         icon={<UploadIcon/>}
         value={'Upload File'}
+        disabled={true}
+        tooltip={'Coming Soon'}
       />
     </>
   );
