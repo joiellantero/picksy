@@ -44,6 +44,7 @@ const Wheel = (props) => {
           onClick={getNames}
           disabled={!props.wheelData}
           tooltip={'Names cannot be empty'}
+          divClass={'my-5'}
         />
       </div>
       <Modal 

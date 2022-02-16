@@ -19,9 +19,10 @@ const List = (props) => {
           onChange={(e) => props.onChange(e.target.value)}
         />
       </div>
-      <div>
-        <ButtonSecondary icon={<UploadIcon/>} value={'Upload File'} />
-      </div>
+      <ButtonSecondary
+        icon={<UploadIcon/>}
+        value={'Upload File'}
+      />
     </>
   );
 };
