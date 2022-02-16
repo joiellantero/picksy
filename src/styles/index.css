@@ -10,6 +10,6 @@ code {
 
 @layer components{
   .tooltip{
-    @apply absolute w-auto p-2 min-w-max rounded shadow-md text-white bg-slate-600 text-xs font-bold transition-all duration-100 scale-0 origin-bottom bottom-12;
+    @apply absolute w-auto p-2 min-w-max rounded shadow-md text-white bg-slate-600 text-xs font-bold transition-all duration-300 skew-y-6 opacity-0 origin-bottom-left bottom-12;
   }
 }
