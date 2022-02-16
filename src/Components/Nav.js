@@ -42,7 +42,7 @@ const Nav = () => {
   };
 
   return(
-    <div className='text-center md:flex md:justify-between px-12 md:px-14 lg:px-24 py-10'>
+    <div className='text-center md:text-left md:flex md:justify-between px-12 md:px-14 lg:px-24 py-10'>
       <div className='py-2 flex justify-center items-center font-serif font-bold text-lg'>
         <Link to="/">Name Roulette</Link>
       </div>
