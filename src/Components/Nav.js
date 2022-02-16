@@ -43,8 +43,15 @@ const Nav = () => {
 
   return(
     <div className='text-center md:text-left md:flex md:justify-between px-12 md:px-14 lg:px-24 py-10'>
-      <div className='py-2 flex justify-center items-center font-serif font-bold text-lg'>
-        <Link to="/">Name Roulette</Link>
+      <div className='py-2 flex justify-center items-center font-serif font-bold text-2xl md:text-lg'>
+        <Link to="/">
+          Name Roulette
+          <span
+            className={'bg-blue-600 ml-2 px-2 pt-1 rounded text-white'}
+          >
+            Web
+          </span>
+        </Link>
       </div>
       <div className="items-center justify-center gap-6 hidden md:flex ">
         <Link to="/">Home</Link>
