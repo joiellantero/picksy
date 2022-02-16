@@ -129,7 +129,7 @@ const Nav = () => {
       </div>
       <MenuIcon
         height={60}
-        className={"visible md:invisible md:hidden hover:cursor-pointer bg-blue-600 p-4 rounded-full absolute bottom-12 right-8 text-white"}
+        className={"visible md:invisible md:hidden hover:cursor-pointer bg-blue-600 p-4 rounded-full fixed bottom-12 right-8 text-white"}
       />
     </div>
   );
