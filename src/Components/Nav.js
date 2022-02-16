@@ -5,6 +5,7 @@ import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
+import {MenuIcon} from "@heroicons/react/outline";
 import FeaturesIcon from '../assets/icons/FeaturesIcon';
 import FaqIcon from "../assets/icons/FaqIcon";
 import FeedbackIcon from "../assets/icons/FeedbackIcon";
@@ -41,11 +42,11 @@ const Nav = () => {
   };
 
   return(
-    <div className='flex justify-between px-24 py-10'>
-      <div className='py-2 flex justify-center items-center font-serif font-bold'>
+    <div className='text-center md:flex md:justify-between px-12 md:px-14 lg:px-24 py-10'>
+      <div className='py-2 flex justify-center items-center font-serif font-bold text-lg'>
         <Link to="/">Name Roulette</Link>
       </div>
-      <div className="flex items-center justify-center gap-6">
+      <div className="items-center justify-center gap-6 hidden md:flex ">
         <Link to="/">Home</Link>
         <Popover className="relative">
           {({ open }) => (
@@ -116,7 +117,7 @@ const Nav = () => {
           )}
         </Popover>
       </div>
-      <div className='py-2 flex justify-center items-center gap-4'>
+      <div className='py-2 justify-center items-center gap-4 hidden md:flex '>
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 hover:cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
         </svg>
@@ -126,6 +127,10 @@ const Nav = () => {
           size={25}
         />
       </div>
+      <MenuIcon
+        height={60}
+        className={"visible md:invisible md:hidden hover:cursor-pointer bg-blue-600 p-4 rounded-full absolute bottom-12 right-8 text-white"}
+      />
     </div>
   );
 };

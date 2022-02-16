@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Route, Routes } from "react-router-dom";
 import { useDarkMode } from "./shared/globalState";
 
@@ -11,17 +11,25 @@ import './styles/index.css';
 
 export default function App() {
   const [isDarkModeEnabled] = useDarkMode();
+
+  useEffect(() => {
+    if (isDarkModeEnabled){
+      document.body.style.background = "#0f172a";
+      document.body.style.color = "white";
+    } else{
+      document.body.style.background = "#f1f5f9";
+      document.body.style.color = "black";
+    }
+  })
   
   return (
     <div className={`${isDarkModeEnabled ? 'dark' : ''}`}>
-      <div className='fullscreen dark:bg-gray-900 dark:text-white'>
-        <Nav />
-        <Routes>
-          <Route exact path='/' element={<Home/>} />
-          <Route exact path='/features' element={<Features/>} />
-          <Route exact path='/help' element={<Help/>} />
-        </Routes>
-      </div>
+      <Nav />
+      <Routes>
+        <Route exact path='/' element={<Home/>} />
+        <Route exact path='/features' element={<Features/>} />
+        <Route exact path='/help' element={<Help/>} />
+      </Routes>
     </div>
   )
 }
