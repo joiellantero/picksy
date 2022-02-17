@@ -14,10 +14,13 @@ const Home = () => {
 
   useEffect(() => {
     setWheelData(listData)
+  }, [listData])
+
+  useEffect(() => {
     if (winnerMsg === ''){
       setWinnerMsg('Congratulations!');
     }
-  }, [listData, winnerMsg])
+  }, [winnerMsg])
 
   return(
     <div className='flex flex-wrap justify-center gap-12 m-10'>
