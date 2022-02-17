@@ -64,6 +64,7 @@ const Modal = (props) => {
               >
                 <CloseIcon color={`${isDarkModeEnabled ? '#64748b' : '#cbd5e1'}`}/>
               </div>
+              <button className="h-0 w-0 overflow-hidden"/>
             </div>
           </Transition.Child>
         </div>
