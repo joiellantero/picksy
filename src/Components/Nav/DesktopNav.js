@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom'
-import { useDarkMode } from '../shared/globalState';
+import { useDarkMode } from '../../shared/globalState';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
-import PopoverMenu from "./PopoverMenu";
-import Logo from './Logo';
+import PopoverMenu from "../PopoverMenu";
+import Logo from '../Logo';
+import Menu from './MobileNav';
 
-import {MenuIcon} from "@heroicons/react/outline";
-import FeaturesIcon from '../assets/icons/FeaturesIcon';
-import FaqIcon from "../assets/icons/FaqIcon";
-import FeedbackIcon from "../assets/icons/FeedbackIcon";
-import SettingsIcon from "../assets/icons/SettingsIcon";
+import FeaturesIcon from '../../assets/icons/FeaturesIcon';
+import FaqIcon from "../../assets/icons/FaqIcon";
+import FeedbackIcon from "../../assets/icons/FeedbackIcon";
+import SettingsIcon from "../../assets/icons/SettingsIcon";
 
 const helpLinks = [
   {
@@ -38,7 +38,7 @@ const helpLinks = [
   },
 ]
 
-const Nav = () => {
+const DesktopNav = () => {
   const [checked, setChecked] = useDarkMode();
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useDarkMode();
   const toggleDarkMode = () => setIsDarkModeEnabled(!isDarkModeEnabled);
@@ -75,12 +75,9 @@ const Nav = () => {
           width={7}
         />
       </div>
-      <MenuIcon
-        height={60}
-        className={"visible md:invisible md:hidden hover:cursor-pointer bg-blue-600 p-4 rounded-full fixed bottom-12 right-8 text-white"}
-      />
+      <Menu/>
     </div>
   );
 };
 
-export default Nav;
+export default DesktopNav;
