@@ -20,13 +20,19 @@ const helpLinks = [
   },
   {
     name: 'FAQs',
-    description: 'Frequently asked questions',
+    description: 'Need help with this website?',
     href: '/help',
     icon: FaqIcon,
   },
   {
     name: 'Feedback',
     description: 'Leave us a feedback',
+    href: '##',
+    icon: FeedbackIcon,
+  },
+  {
+    name: 'About the Developer',
+    description: 'Learn more about the person behind Name Roulette Web',
     href: '##',
     icon: FeedbackIcon,
   },
