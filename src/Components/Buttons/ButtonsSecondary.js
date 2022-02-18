@@ -9,7 +9,7 @@ const ButtonSecondary = (props) => {
       </span>
       )}
       <button
-        className="flex justify-center items-center py-2 px-4 bg-slate-600 hover:bg-slate-700 active:bg-slate-800 text-white focus:outline-none rounded disabled:hover:cursor-not-allowed disabled:opacity-75 disabled:hover:bg-slate-600"
+        className="flex justify-center items-center py-2 px-4 bg-slate-600 hover:bg-slate-700 active:bg-slate-800 text-white focus:outline-none rounded disabled:hover:cursor-not-allowed disabled:opacity-75 disabled:hover:bg-slate-600 h-14 md:h-fit w-full md:w-fit"
         onClick={props.onClick}
         disabled={props.disabled}
       >

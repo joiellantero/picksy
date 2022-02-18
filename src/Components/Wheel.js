@@ -41,7 +41,7 @@ const Wheel = (props) => {
           readOnly={true}
         />
         <ButtonPrimary 
-          value={'Choose a Name'}
+          value={'Choose a name'}
           onClick={getNames}
           disabled={!props.wheelData}
           tooltip={"Names can't be empty"}
