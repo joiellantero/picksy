@@ -24,7 +24,7 @@ const SettingsModal = (props) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-black opacity-10" />
+            <Dialog.Overlay className="fixed inset-0 opacity-0" />
           </Transition.Child>
 
           <span
