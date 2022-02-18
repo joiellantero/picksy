@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Route, Routes } from "react-router-dom";
 import { useDarkMode } from "./shared/globalState";
 
-import DesktopNav from './components/Nav/DesktopNav';
+import Nav from "./components/Nav/Nav";
 import Home from './pages/Home';
 import Features from './pages/Features';
 import Help from './pages/Help';
@@ -24,7 +24,7 @@ export default function App() {
   
   return (
     <div className={`${isDarkModeEnabled ? 'dark' : ''}`}>
-      <DesktopNav />
+      <Nav />
       <Routes>
         <Route exact path='/' element={<Home/>} />
         <Route exact path='/features' element={<Features/>} />
