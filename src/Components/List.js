@@ -1,5 +1,8 @@
 import React from 'react';
+
 import ButtonSecondary from './Buttons/ButtonsSecondary';
+import TextArea from "./TextArea";
+
 import UploadIcon from '../assets/icons/UploadIcon';
 
 const List = (props) => {
@@ -12,10 +15,9 @@ const List = (props) => {
         >
           Enter names
         </label>
-        <textarea
-          className="form-control block px-3 py-1.5 w-80 md:w-60 text-base font-normal text-slate-700 dark:text-slate-300 bg-clip-padding dark:bg-slate-800 bg-slate-200 rounded transition ease-in-out m-0 focus:text-slate-700 focus:bg-slate-300 dark:focus:bg-[#162338] focus:outline-none"
-          id="listInput"
-          rows="10"
+        <TextArea
+          rows={'10'}
+          id={'listInput'}
           onChange={(e) => props.onChange(e.target.value)}
         />
       </div>

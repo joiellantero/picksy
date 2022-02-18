@@ -1,6 +1,8 @@
 import { useState } from 'react';
+
 import ButtonPrimary from './Buttons/ButtonPrimary';
 import Modal from './Modal';
+import TextArea from "./TextArea";
 
 const Wheel = (props) => {
   let [isOpen, setIsOpen] = useState(false);
@@ -32,12 +34,11 @@ const Wheel = (props) => {
           className="form-label inline-block mb-2"
         >
         </label>
-        <textarea
+        <TextArea
           value={props.wheelData}
-          readOnly
-          rows="10"
-          className="form-control block w-80 md:w-60 px-3 py-1.5 text-base font-normal text-gray-700 dark:text-gray-300 bg-clip-padding dark:bg-slate-800 bg-slate-200 rounded transition ease-in-out m-0 focus:outline-none"
-          id="wheelOutput"
+          rows={'10'}
+          id={'wheelOutput'}
+          readOnly={true}
         />
         <ButtonPrimary 
           value={'Choose a Name'}
