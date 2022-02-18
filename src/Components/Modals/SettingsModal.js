@@ -1,10 +1,10 @@
-import { Fragment } from 'react'
-import { Dialog, Transition } from '@headlessui/react';
-import { useDarkMode } from '../shared/globalState';
+import {Fragment} from "react";
+import {useDarkMode} from "../../shared/globalState";
+import {Dialog, Transition} from "@headlessui/react";
 
-import CloseIcon from '../assets/icons/CloseIcon';
+import CloseIcon from "../../assets/icons/CloseIcon";
 
-const Modal = (props) => {
+const SettingsModal = (props) => {
   const [isDarkModeEnabled] = useDarkMode();
 
   return(
@@ -69,7 +69,7 @@ const Modal = (props) => {
         </div>
       </Dialog>
     </Transition>
-  );
-};
+  )
+}
 
-export default Modal;
+export default SettingsModal;

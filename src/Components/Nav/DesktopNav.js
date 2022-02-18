@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom'
-import { useDarkMode } from '../../shared/globalState';
+import { useDarkMode, useSettingsModalState } from '../../shared/globalState';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
 import PopoverMenu from "../PopoverMenu";
+import ButtonSettings from "../Buttons/ButtonSettings";
 
 import FeaturesIcon from '../../assets/icons/FeaturesIcon';
 import FaqIcon from "../../assets/icons/FaqIcon";
 import FeedbackIcon from "../../assets/icons/FeedbackIcon";
-import SettingsIcon from "../../assets/icons/SettingsIcon";
 
 const helpLinks = [
   {
@@ -39,11 +39,11 @@ const helpLinks = [
 const DesktopNav = () => {
   const [checked, setChecked] = useDarkMode();
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useDarkMode();
-  const toggleDarkMode = () => setIsDarkModeEnabled(!isDarkModeEnabled);
+  const [isSettingsOpen, setIsSettingsOpen] = useSettingsModalState();
 
   const handleChange = (checked) => {
     setChecked(checked);
-    toggleDarkMode();
+    setIsDarkModeEnabled(!isDarkModeEnabled);
   };
 
   return(
@@ -61,11 +61,10 @@ const DesktopNav = () => {
         <DarkModeSwitch
           checked={checked}
           onChange={handleChange}
-          size={55}
+          size={30}
         />
-        <SettingsIcon
-          height={8}
-          width={8}
+        <ButtonSettings
+          onClick={() => setIsSettingsOpen(!isSettingsOpen)}
         />
       </div>
     </>

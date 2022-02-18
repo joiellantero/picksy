@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import ButtonPrimary from './Buttons/ButtonPrimary';
-import Modal from './Modal';
+import Modal from './Modals/Modal';
 import TextArea from "./TextArea";
 
 const Wheel = (props) => {

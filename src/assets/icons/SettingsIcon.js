@@ -1,9 +1,8 @@
-const SettingsIcon = (props) => {
-  console.log(props)
+const SettingsIcon = () => {
   return(
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={`h-${props.height} w-${props.width} hover:cursor-pointer`}
+      className={`h-8 w-8 hover:cursor-pointer`}
       viewBox="0 0 20 20"
       fill="currentColor"
     >
@@ -16,4 +15,4 @@ const SettingsIcon = (props) => {
   )
 }
 
-export default SettingsIcon
+export default SettingsIcon;

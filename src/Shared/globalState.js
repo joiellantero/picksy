@@ -42,3 +42,23 @@ export function useRemoveState() {
         setRemoveNameStored
     ];
 }
+
+export const settingsModalState = atom({
+  key: 'settingsModalState',
+  default: false,
+  effects_UNSTABLE: [persistAtom]
+});
+
+export function useSettingsModalState() {
+  const [isInitial, setIsInitial] = useState(true);
+  const [settingsModalStored, setSettingsModalStored] = useRecoilState(settingsModalState);
+
+  useEffect(() => {
+    setIsInitial(false);
+  }, []);
+
+  return [
+    isInitial === true ? false : settingsModalStored,
+    setSettingsModalStored
+  ];
+}
