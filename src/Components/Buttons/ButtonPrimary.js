@@ -2,7 +2,7 @@ const ButtonPrimary = (props) => {
   return (
     <div className={`relative group ${props.divClass}`}>
       {props.disabled && props.tooltip &&(
-          <span className='tooltip group-hover:opacity-100 group-hover:skew-y-0'>
+          <span className='tooltip group-hover:opacity-100 group-hover:scale-100'>
         {props.tooltip}
       </span>
       )}
