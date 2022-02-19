@@ -1,4 +1,4 @@
-const SettingsIcon = () => {
+const SettingsIconSolid = () => {
   return(
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,4 +15,4 @@ const SettingsIcon = () => {
   )
 }
 
-export default SettingsIcon;
+export default SettingsIconSolid;

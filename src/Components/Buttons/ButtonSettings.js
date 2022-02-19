@@ -1,6 +1,10 @@
-import SettingsIcon from "../../assets/icons/SettingsIcon";
+import SettingsIconSolid from "../../assets/icons/SettingsIconSolid";
+import SettingsIconAlt from "../../assets/icons/SettingsIconAlt";
+import {useSettingsModalState} from "../../shared/globalState";
 
 const ButtonSettings = (props) => {
+  const [settingSideBarState] = useSettingsModalState()
+
   return (
     <>
       <button
@@ -8,7 +12,7 @@ const ButtonSettings = (props) => {
         onClick={props.onClick}
         disabled={props.disabled}
       >
-        <SettingsIcon/>
+        {settingSideBarState ? <SettingsIconSolid/> : <SettingsIconAlt/>}
       </button>
     </>
   );
