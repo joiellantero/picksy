@@ -30,7 +30,7 @@ const Home = () => {
           modalTitle={winnerMsg}
           removeName={shouldRemoveName}
       />
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col justify-center gap-5">
         <List
             onChange={(listData) => setListData(listData)}
         />
