@@ -2,7 +2,7 @@ const SettingsIcon = () => {
   return(
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={`h-8 w-8 hover:cursor-pointer`}
+      className={`h-7 w-7 hover:cursor-pointer`}
       viewBox="0 0 20 20"
       fill="currentColor"
     >

@@ -61,7 +61,7 @@ const DesktopNav = () => {
         <DarkModeSwitch
           checked={checked}
           onChange={handleChange}
-          size={30}
+          size={25}
         />
         <ButtonSettings
           onClick={() => setIsSettingsOpen(!isSettingsOpen)}
