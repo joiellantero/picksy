@@ -28,6 +28,10 @@ const List = (props) => {
         disabled={true}
         tooltip={'Coming Soon'}
       />
+      <ButtonSecondary
+        onClick={props.onClear}
+        value={'Clear List'}
+      />
     </>
   );
 };

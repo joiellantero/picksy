@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {atom, DefaultValue, useRecoilState} from 'recoil';
+import {atom, useRecoilState} from 'recoil';
 import { recoilPersist } from "recoil-persist";
 const { persistAtom } = recoilPersist();
 
@@ -73,7 +73,7 @@ export const namesListState = atom({
         setSelf(JSON.parse(storedNamesList));
       }
       onSet((newNameList) => {
-        if (newNameList instanceof DefaultValue){
+        if (newNameList && newNameList.length === 0){
           localStorage.removeItem('namesList');
         } else{
           localStorage.setItem('namesList', JSON.stringify(newNameList));
