@@ -1,7 +1,8 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
-import {useDarkMode, useSettingsModalState} from '../../shared/globalState';
+import {darkModeState, settingsSideBarState} from '../../shared/globalState';
 import {Link} from "react-router-dom";
+import {useRecoilState} from "recoil";
 
 import {MenuIcon} from "@heroicons/react/outline";
 import { HomeActiveIcon, HomeInactiveIcon, DarkHomeInactiveIcon} from "../../assets/icons/HomeIcon";
@@ -9,9 +10,10 @@ import { HelpActiveIcon, HelpInactiveIcon, DarkHelpInactiveIcon} from "../../ass
 import { SunActiveIcon, SunInactiveIcon, MoonActiveIcon, MoonInactiveIcon, DarkMoonInactiveIcon} from "../../assets/icons/SunIcon";
 import { SettingsActiveIcon, SettingsInactiveIcon, DarkSettingsInactiveIcon} from "../../assets/icons/SettingsIcon2";
 
+
 const MenuWindow = () => {
-  const [isDarkModeEnabled, setIsDarkModeEnabled] = useDarkMode();
-  const [isSettingsOpen, setIsSettingsOpen] = useSettingsModalState();
+  const [isDarkModeEnabled, setIsDarkModeEnabled] = useRecoilState(darkModeState);
+  const [isSettingsOpen, setIsSettingsOpen] = useRecoilState(settingsSideBarState);
 
   return(
     <div className="w-56 text-right fixed bottom-[22rem] right-8 z-10">

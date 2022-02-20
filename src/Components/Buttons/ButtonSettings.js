@@ -1,9 +1,10 @@
 import SettingsIconSolid from "../../assets/icons/SettingsIconSolid";
 import SettingsIconAlt from "../../assets/icons/SettingsIconAlt";
-import {useSettingsModalState} from "../../shared/globalState";
+import {settingsSideBarState} from "../../shared/globalState";
+import {useRecoilValue} from "recoil";
 
 const ButtonSettings = (props) => {
-  const [settingSideBarState] = useSettingsModalState()
+  const settingSideBarState = useRecoilValue(settingsSideBarState)
 
   return (
     <>

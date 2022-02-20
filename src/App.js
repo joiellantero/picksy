@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
-import {useDarkMode, useSettingsModalState} from "./shared/globalState";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {darkModeState, settingsSideBarState} from "./shared/globalState";
 
 import Nav from "./components/Nav/Nav";
 import Home from './pages/Home';
@@ -10,8 +11,8 @@ import './styles/index.css';
 import SettingsSideBar from "./components/SettingsSideBar";
 
 export default function App() {
-  const [isDarkModeEnabled] = useDarkMode();
-  let [isOpen, setIsOpen] = useSettingsModalState();
+  const isDarkModeEnabled = useRecoilValue(darkModeState);
+  let [isOpen, setIsOpen] = useRecoilState(settingsSideBarState);
   
   return (
     <div className={`min-h-screen relative overflow-x-hidden ${isDarkModeEnabled ? 'dark bg-slate-900 text-white' : 'bg-slate-100'}`}>

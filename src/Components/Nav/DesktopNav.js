@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useDarkMode, useSettingsModalState } from '../../shared/globalState';
+import {darkModeState, settingsSideBarState} from '../../shared/globalState';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
 import PopoverMenu from "../PopoverMenu";
@@ -8,6 +8,7 @@ import ButtonSettings from "../Buttons/ButtonSettings";
 import FeaturesIcon from '../../assets/icons/FeaturesIcon';
 import FaqIcon from "../../assets/icons/FaqIcon";
 import FeedbackIcon from "../../assets/icons/FeedbackIcon";
+import {useRecoilState} from "recoil";
 
 const helpLinks = [
   {
@@ -37,9 +38,9 @@ const helpLinks = [
 ]
 
 const DesktopNav = () => {
-  const [checked, setChecked] = useDarkMode();
-  const [isDarkModeEnabled, setIsDarkModeEnabled] = useDarkMode();
-  const [isSettingsOpen, setIsSettingsOpen] = useSettingsModalState();
+  const [checked, setChecked] = useRecoilState(darkModeState);
+  const [isDarkModeEnabled, setIsDarkModeEnabled] = useRecoilState(darkModeState);
+  const [isSettingsSideBarOpen, setIsSettingsSideBarOpen] = useRecoilState(settingsSideBarState);
 
   const handleChange = (checked) => {
     setChecked(checked);
@@ -64,7 +65,7 @@ const DesktopNav = () => {
           size={25}
         />
         <ButtonSettings
-          onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+          onClick={() => setIsSettingsSideBarOpen(!isSettingsSideBarOpen)}
         />
       </div>
     </>

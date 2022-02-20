@@ -1,11 +1,12 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react';
-import { useDarkMode } from '../../shared/globalState';
+import {darkModeState} from '../../shared/globalState';
+import {useRecoilValue} from "recoil";
 
 import CloseIcon from '../../assets/icons/CloseIcon';
 
 const Modal = (props) => {
-  const [isDarkModeEnabled] = useDarkMode();
+  const isDarkModeEnabled = useRecoilValue(darkModeState);
 
   return(
     <Transition appear show={props.isOpen} as={Fragment}>
