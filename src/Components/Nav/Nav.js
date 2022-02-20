@@ -5,6 +5,7 @@ import DesktopNav from "./DesktopNav";
 import Menu from "./MobileNav";
 import {useRecoilState} from "recoil";
 import {settingsSideBarState} from "../../shared/globalState";
+import {ChevronRightIcon} from "@heroicons/react/outline";
 
 const Nav = () => {
   const [isSettingsSideBarOpen, setIsSettingsSideBarOpen] = useRecoilState(settingsSideBarState);
@@ -22,7 +23,7 @@ const Nav = () => {
         className={`${isSettingsSideBarOpen ? 'visible translate-x-0' : 'invisible translate-x-full lg:translate-x-0'} transform transition duration-200 ease-in-out md:invisible md:hidden hover:cursor-pointer bg-blue-600 p-4 rounded fixed bottom-10 right-[19rem] text-white z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
         onClick={() => setIsSettingsSideBarOpen(!isSettingsSideBarOpen)}
       >
-        Close
+        <ChevronRightIcon height={28}/>
       </button>
     </div>
   )
