@@ -1,15 +1,20 @@
 import { useState } from 'react';
+import {useRecoilState, useRecoilValue} from "recoil";
+import {namesListState, winnerMessageState} from "../shared/globalState";
 
 import ButtonPrimary from './Buttons/ButtonPrimary';
 import Modal from './Modals/Modal';
 import TextArea from "./TextArea";
 
+
 const Wheel = (props) => {
   let [isOpen, setIsOpen] = useState(false);
   let [drawnName, setDrawnName] = useState();
+  const winnerMessageValue = useRecoilValue(winnerMessageState);
+  const [namesList, setNamesList] = useRecoilState(namesListState);
 
   const getNames = () => {
-    let rawList = props.wheelData.split("\n");
+    let rawList = namesList.split("\n");
     let cleanedList = []
     rawList.forEach((item) => {
       if (item !== ''){
@@ -22,7 +27,7 @@ const Wheel = (props) => {
     setIsOpen(true);
     if (props.removeName && cleanedList.indexOf(drawnName) >= 0){
       cleanedList = cleanedList.filter(e => e !== drawnName);
-      props.handleChange(cleanedList.join("\n"))
+      setNamesList(cleanedList.join("\n"))
     }
   }
 
@@ -35,7 +40,7 @@ const Wheel = (props) => {
         >
         </label>
         <TextArea
-          value={props.wheelData}
+          value={namesList}
           rows={'10'}
           id={'wheelOutput'}
           readOnly={true}
@@ -43,14 +48,14 @@ const Wheel = (props) => {
         <ButtonPrimary 
           value={'Choose a name'}
           onClick={getNames}
-          disabled={!props.wheelData}
+          disabled={!namesList}
           tooltip={"Names can't be empty"}
           divClass={'my-5'}
         />
       </div>
       <Modal 
         isOpen={isOpen}
-        title={props.modalTitle}
+        title={winnerMessageValue}
         body={drawnName}
         onClose={(isClose) => setIsOpen(isClose)}
       />
