@@ -65,42 +65,26 @@ export function useSettingsModalState() {
   ];
 }
 
+const localPersist = ({onSet, setSelf, node}) => {
+  const storedData = localStorage.getItem(node.key)
+  if (storedData != null){
+    setSelf(JSON.parse(storedData))
+  }
+  onSet((newData, __, isReset) => {
+    isReset
+      ? localStorage.removeItem(node.key)
+      : localStorage.setItem(node.key, JSON.stringify(newData));
+  })
+}
+
 export const namesListState = atom({
   key: 'namesListState',
   default: [],
-  effects_UNSTABLE: [
-    ({onSet, setSelf}) => {
-      const storedNamesList = localStorage.getItem('namesList')
-      if(storedNamesList != null){
-        setSelf(JSON.parse(storedNamesList));
-      }
-      onSet((newNameList) => {
-        if (newNameList && newNameList.length === 0){
-          localStorage.removeItem('namesList');
-        } else{
-          localStorage.setItem('namesList', JSON.stringify(newNameList));
-        }
-      })
-    }
-  ]
+  effects_UNSTABLE: [localPersist]
 })
 
 export const winnerMessageState = atom({
   key: 'winnerMessageState',
-  default: '',
-  effects_UNSTABLE: [
-    ({onSet, setSelf}) => {
-      const storedWinnerMessage = localStorage.getItem('winnerMessage')
-      if(storedWinnerMessage != null){
-        setSelf(JSON.parse(storedWinnerMessage));
-      }
-      onSet((newWinnerMessage) => {
-        if (newWinnerMessage && newWinnerMessage === ''){
-          localStorage.removeItem('winnerMessage');
-        } else{
-          localStorage.setItem('winnerMessage', JSON.stringify(newWinnerMessage));
-        }
-      })
-    }
-  ]
+  default: [],
+  effects_UNSTABLE: [localPersist]
 })
