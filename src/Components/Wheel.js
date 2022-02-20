@@ -30,7 +30,6 @@ const Wheel = (props) => {
       setNamesList(cleanedList.join("\n"))
     }
   }
-
   return(
     <>
       <div className='flex justify-center flex-col'>
@@ -48,7 +47,7 @@ const Wheel = (props) => {
         <ButtonPrimary 
           value={'Choose a name'}
           onClick={getNames}
-          disabled={!namesList}
+          disabled={namesList.length === 0}
           tooltip={"Names can't be empty"}
           divClass={'my-5'}
         />

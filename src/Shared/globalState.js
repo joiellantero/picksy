@@ -85,7 +85,7 @@ export const namesListState = atom({
 
 export const winnerMessageState = atom({
   key: 'winnerMessageState',
-  default: [],
+  default: '',
   effects_UNSTABLE: [
     ({onSet, setSelf}) => {
       const storedWinnerMessage = localStorage.getItem('winnerMessage')
@@ -93,7 +93,7 @@ export const winnerMessageState = atom({
         setSelf(JSON.parse(storedWinnerMessage));
       }
       onSet((newWinnerMessage) => {
-        if (newWinnerMessage && newWinnerMessage.length === 0){
+        if (newWinnerMessage && newWinnerMessage === ''){
           localStorage.removeItem('winnerMessage');
         } else{
           localStorage.setItem('winnerMessage', JSON.stringify(newWinnerMessage));
