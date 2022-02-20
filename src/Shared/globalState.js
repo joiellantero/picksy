@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { atom, useRecoilState } from 'recoil';
+import {atom, DefaultValue, useRecoilState} from 'recoil';
 import { recoilPersist } from "recoil-persist";
 const { persistAtom } = recoilPersist();
 
@@ -43,7 +43,7 @@ export function useRemoveState() {
     ];
 }
 
-export const settingsModalState = atom({
+export const settingsSideBarState = atom({
   key: 'settingsModalState',
   default: false,
   effects_UNSTABLE: [persistAtom]
@@ -51,14 +51,34 @@ export const settingsModalState = atom({
 
 export function useSettingsModalState() {
   const [isInitial, setIsInitial] = useState(true);
-  const [settingsModalStored, setSettingsModalStored] = useRecoilState(settingsModalState);
+  const [settingsSideBarStored, setSettingsSideBarStored] = useRecoilState(settingsSideBarState);
 
   useEffect(() => {
     setIsInitial(false);
   }, []);
 
   return [
-    isInitial === true ? false : settingsModalStored,
-    setSettingsModalStored
+    isInitial === true ? false : settingsSideBarStored,
+    setSettingsSideBarStored
   ];
 }
+
+export const namesListState = atom({
+  key: 'namesListState',
+  default: [],
+  effects_UNSTABLE: [
+    ({onSet, setSelf}) => {
+      const storedNamesList = localStorage.getItem('namesList')
+      if(storedNamesList != null){
+        setSelf(JSON.parse(storedNamesList));
+      }
+      onSet((newNameList) => {
+        if (newNameList instanceof DefaultValue){
+          localStorage.removeItem('namesList');
+        } else{
+          localStorage.setItem('namesList', JSON.stringify(newNameList));
+        }
+      })
+    }
+  ]
+})

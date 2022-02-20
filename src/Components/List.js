@@ -16,6 +16,7 @@ const List = (props) => {
           Enter names
         </label>
         <TextArea
+          value={props.value}
           rows={'10'}
           id={'listInput'}
           onChange={(e) => props.onChange(e.target.value)}
