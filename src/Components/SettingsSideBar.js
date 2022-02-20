@@ -1,3 +1,5 @@
+// TODO create winner message component and clear message button
+
 import { useRecoilState, useResetRecoilState } from "recoil";
 import {useRemoveState, useSettingsModalState, namesListState, winnerMessageState} from "../shared/globalState";
 
@@ -25,7 +27,6 @@ const SettingsSideBar = () => {
           onChange={(e) => setName(e)}
           onClear={() => resetNamesList()}
         />
-        {/* TODO create winner message component and clear message button */}
         <Input
           id={'winnerMessage'}
           label={'Winner Prompt Message'}
