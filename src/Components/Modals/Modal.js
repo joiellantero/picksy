@@ -44,7 +44,7 @@ const Modal = (props) => {
             leaveTo="opacity-0 scale-95"
           >
             <div
-              className="inline-block w-full max-w-md p-10 my-8 overflow-hidden align-middle duration-100 transition-all ease-in-out transform dark:bg-slate-700 bg-white shadow-md rounded text-center hover:border-4 dark:border-slate-600 border-slate-200 hover:cursor-pointer group"
+              className="inline-block w-full max-w-md p-10 my-8 overflow-hidden align-middle duration-100 transition-all ease-in-out transform dark:bg-slate-700 bg-white shadow-md rounded text-center hover:border-4 dark:border-slate-600 border-slate-200 hover:cursor-pointer group pointer-events-none md:pointer-events-auto"
               onClick={() => props.onClose(false)}
             >
               <Dialog.Title
@@ -65,6 +65,9 @@ const Modal = (props) => {
                 <CloseIcon color={`${isDarkModeEnabled ? '#64748b' : '#cbd5e1'}`}/>
               </div>
               <button className="h-0 w-0 overflow-hidden"/>
+              <small className={'block md:hidden text-black dark:text-slate-500'}>
+                Touch anywhere to close
+              </small>
             </div>
           </Transition.Child>
         </div>
