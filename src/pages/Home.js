@@ -35,7 +35,6 @@ const Home = () => {
             onChange={(listData) => setListData(listData)}
         />
         <Input
-            id={winnerMsg}
             label={'Winner Prompt Message'}
             onChange={(winnerMsg) => setWinnerMsg(winnerMsg)}
         />

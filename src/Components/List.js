@@ -13,7 +13,7 @@ const List = (props) => {
           htmlFor="listInput" 
           className="form-label inline-block mb-2"
         >
-          Enter names
+          {props.label}
         </label>
         <TextArea
           value={props.value}

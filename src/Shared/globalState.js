@@ -82,3 +82,23 @@ export const namesListState = atom({
     }
   ]
 })
+
+export const winnerMessageState = atom({
+  key: 'winnerMessageState',
+  default: [],
+  effects_UNSTABLE: [
+    ({onSet, setSelf}) => {
+      const storedWinnerMessage = localStorage.getItem('winnerMessage')
+      if(storedWinnerMessage != null){
+        setSelf(JSON.parse(storedWinnerMessage));
+      }
+      onSet((newWinnerMessage) => {
+        if (newWinnerMessage && newWinnerMessage.length === 0){
+          localStorage.removeItem('winnerMessage');
+        } else{
+          localStorage.setItem('winnerMessage', JSON.stringify(newWinnerMessage));
+        }
+      })
+    }
+  ]
+})
