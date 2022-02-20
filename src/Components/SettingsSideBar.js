@@ -16,7 +16,7 @@ const SettingsSideBar = () => {
   const resetWinnerMessage = useResetRecoilState(winnerMessageState);
 
   return(
-    <div className={`z-10 min-h-full bg-slate-300/70 dark:bg-slate-700/70 p-10 fixed right-0 transform transition ${settingsSideBarState ? 'translate-x-0 ' : 'translate-x-full lg:translate-x-0' } duration-200 ease-in-out flex flex-col items-center`}
+    <div className={`min-h-screen bg-slate-300/70 dark:bg-slate-700/70 p-10 absolute right-0 transform transition ${settingsSideBarState ? 'translate-x-0 ' : 'translate-x-full lg:translate-x-0' } duration-200 ease-in-out flex flex-col items-center`}
     >
       <h2 className={'text-lg mb-8'}>Settings</h2>
       <div className="flex flex-col justify-center gap-5">

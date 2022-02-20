@@ -14,6 +14,7 @@ const Wheel = (props) => {
   const [namesList, setNamesList] = useRecoilState(namesListState);
 
   const getNames = () => {
+    console.log(namesList)
     let rawList = namesList.split("\n");
     let cleanedList = []
     rawList.forEach((item) => {
