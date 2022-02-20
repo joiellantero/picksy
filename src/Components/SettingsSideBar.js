@@ -1,5 +1,3 @@
-// TODO create winner message component and clear message button
-
 import { useRecoilState, useResetRecoilState } from "recoil";
 import {useRemoveState, useSettingsModalState, namesListState} from "../shared/globalState";
 
