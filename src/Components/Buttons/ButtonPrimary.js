@@ -7,7 +7,7 @@ const ButtonPrimary = (props) => {
       </span>
       )}
       <button
-      className="py-2 px-4 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white focus:outline-none rounded disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600 h-14 md:h-fit w-full md:w-fit"
+      className="bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 active:bg-blue-700 px-5 py-2 text-sm leading-5 font-semibold text-white focus:outline-none rounded disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-500 h-14 md:h-fit w-full md:w-fit"
       onClick={props.onClick}
       disabled={props.disabled}
       >

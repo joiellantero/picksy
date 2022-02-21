@@ -10,7 +10,7 @@ code {
 
 @layer components{
   .tooltip{
-    @apply absolute w-auto p-2 min-w-max rounded shadow-md text-slate-800 bg-slate-100 dark:text-slate-100 dark:bg-slate-700 text-xs font-bold ease-out transition-all duration-200 scale-90 opacity-0 origin-bottom-left bottom-16 md:bottom-12 delay-500;
+    @apply absolute w-auto p-2 min-w-max rounded shadow-md text-slate-800 bg-slate-100 dark:text-slate-100 dark:bg-slate-700 text-xs font-bold ease-out transition-all duration-200 scale-90 opacity-0 origin-bottom-left bottom-[3.75rem] md:bottom-10 delay-500;
   }
   hr{
     @apply border-slate-200 dark:border-slate-700 my-5 border-2
