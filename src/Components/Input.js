@@ -18,7 +18,7 @@ const Input = (props) => {
         />
         {props.value.length !== 0 &&(
           <button
-            className={'absolute top-0 right-0 rounded-full z-10 top-1/2 transform -translate-y-1/2 mr-3 cursor-pointer text-xs bg-slate-700/50 hover:bg-slate-700 py-1 px-1.5 transition transition-all duration-200 ease-out'}
+            className={'absolute top-0 right-0 rounded-full z-10 text-white top-1/2 transform -translate-y-1/2 mr-3 cursor-pointer text-xs bg-slate-400/50 hover:bg-slate-400 dark:bg-slate-700/50 dark:hover:bg-slate-700 py-1 px-1.5 transition transition-all duration-200 ease-out'}
             onClick={props.onClear}
           >
             Clear
