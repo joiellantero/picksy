@@ -21,7 +21,7 @@ const MenuWindow = () => {
         {({open}) => (
           <>
             <Menu.Button
-              className={`${isSettingsSideBarOpen ? 'invisible' : 'visible'} md:invisible md:hidden hover:cursor-pointer bg-blue-600 p-4 rounded fixed bottom-10 right-8 text-white z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus:bg-blue-700`}
+              className={`${isSettingsSideBarOpen ? 'invisible' : 'visible'} md:invisible md:hidden hover:cursor-pointer bg-blue-600 p-4 rounded-full fixed bottom-10 right-8 text-white z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus:bg-blue-700`}
             >
               {open ? (
                 <XIcon height={28}/>
