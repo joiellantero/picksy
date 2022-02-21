@@ -20,6 +20,7 @@ const List = (props) => {
           rows={'10'}
           id={'listInput'}
           onChange={(e) => props.onChange(e.target.value)}
+          onClick={props.onClear}
         />
       </div>
       <ButtonSecondary
@@ -27,10 +28,6 @@ const List = (props) => {
         value={'Upload File'}
         disabled={true}
         tooltip={'Coming Soon'}
-      />
-      <ButtonSecondary
-        onClick={props.onClear}
-        value={'Clear List'}
       />
     </>
   );
