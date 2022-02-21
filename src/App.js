@@ -15,7 +15,7 @@ export default function App() {
   let [isOpen, setIsOpen] = useRecoilState(settingsSideBarState);
   
   return (
-    <div className={`min-h-screen relative overflow-x-hidden ${isDarkModeEnabled ? 'dark bg-slate-900 text-white' : 'bg-slate-100'}`}>
+    <div className={`min-h-screen relative overflow-x-hidden ${isDarkModeEnabled ? 'dark bg-slate-900 text-white' : 'bg-white'}`}>
       <Nav />
       <div className={'grid grid-cols-1 lg:grid-cols-4 gap-4'}>
         <div className={'col-span-1 lg:col-span-3 flex justify-center'}>
