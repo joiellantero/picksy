@@ -20,7 +20,7 @@ const List = (props) => {
           rows={'10'}
           id={'listInput'}
           onChange={(e) => props.onChange(e.target.value)}
-          onClick={props.onClear}
+          onClear={props.onClear}
         />
       </div>
       <ButtonSecondary

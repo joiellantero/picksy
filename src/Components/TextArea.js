@@ -21,7 +21,7 @@ const TextArea = (props) => {
           {props.value.length !== 0 &&(
             <button
               className={'absolute top-0 right-0 rounded-full z-10 m-2 cursor-pointer text-xs bg-slate-700/50 hover:bg-slate-700 py-1 px-1.5 transition transition-all duration-200 ease-out'}
-              onClick={props.onClick}
+              onClick={props.onClear}
             >
               Clear
             </button>
