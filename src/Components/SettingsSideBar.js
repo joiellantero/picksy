@@ -8,7 +8,7 @@ import WinnerMessage from "./WinnerMessage";
 const SettingsSideBar = () => {
   const [shouldRemoveName, setShouldRemoveName] = useRecoilState(removeState);
   const isSettingsSideBarOpen = useRecoilValue(settingsSideBarState);
-  const [names, setName] = useRecoilState(namesListState);
+  const [namesList, setNamesList] = useRecoilState(namesListState);
   const resetNamesList = useResetRecoilState(namesListState);
 
   return(
@@ -19,8 +19,8 @@ const SettingsSideBar = () => {
         <List
           id={'listInput'}
           label={'Enter Names'}
-          value={names}
-          onChange={(e) => setName(e)}
+          value={namesList}
+          onChange={(e) => setNamesList(e)}
           onClear={() => resetNamesList()}
         />
         <hr/>
