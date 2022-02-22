@@ -1,7 +1,7 @@
 import React from 'react';
 
-import ButtonSecondary from './Buttons/ButtonsSecondary';
 import TextArea from "./TextArea";
+import ButtonUpload from './Buttons/ButtonUpload';
 
 import UploadIcon from '../assets/icons/UploadIcon';
 
@@ -23,11 +23,9 @@ const List = (props) => {
           onClear={props.onClear}
         />
       </form>
-      <ButtonSecondary
+      <ButtonUpload
         icon={<UploadIcon/>}
         value={'Upload File'}
-        disabled={true}
-        tooltip={'Coming Soon'}
       />
     </>
   );
