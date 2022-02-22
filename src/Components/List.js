@@ -25,7 +25,9 @@ const List = (props) => {
       </form>
       <ButtonUpload
         icon={<UploadIcon/>}
-        value={'Upload File'}
+        id={'namesListFile'}
+        name={'namesListFile'}
+        onUpload={(e) => props.onChange(e)}
       />
     </>
   );
