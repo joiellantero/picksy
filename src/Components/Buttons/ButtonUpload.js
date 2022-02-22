@@ -6,7 +6,6 @@ const ButtonUpload = (props) => {
       let reader = new FileReader();
       reader.onload = async (e) => {
         let content = e.target.result;
-        console.log(content);
         props.onUpload(content);
       }
       reader.readAsText(file);
