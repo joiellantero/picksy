@@ -7,6 +7,7 @@ const TextArea = (props) => {
           rows={props.rows}
           id={props.id}
           onChange={props.onChange}
+          placeholder={props.placeholder}
           readOnly
         />
       ) : (
@@ -17,6 +18,7 @@ const TextArea = (props) => {
             rows={props.rows}
             id={props.id}
             onChange={props.onChange}
+            placeholder={props.placeholder}
           />
           {props.value.length !== 0 &&(
             <button

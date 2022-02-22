@@ -44,6 +44,7 @@ const Wheel = (props) => {
           rows={'10'}
           id={'wheelOutput'}
           readOnly={true}
+          placeholder={'Add your list of names in settings'}
         />
         <ButtonPrimary 
           value={'Choose a name'}
