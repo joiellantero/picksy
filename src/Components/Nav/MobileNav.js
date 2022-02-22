@@ -16,7 +16,7 @@ const MenuWindow = () => {
   const [isSettingsSideBarOpen, setIsSettingsSideBarOpen] = useRecoilState(settingsSideBarState);
 
   return(
-    <div className="w-56 text-right fixed bottom-[22rem] right-8 z-10">
+    <div className={`${isSettingsSideBarOpen ? 'invisible' : 'visible'} w-56 text-right fixed bottom-[22rem] right-8 z-10`}>
       <Menu as="div" className="relative inline-block text-left">
         {({open}) => (
           <>
