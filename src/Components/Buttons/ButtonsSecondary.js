@@ -1,5 +1,3 @@
-// TODO create secondary button
-
 const ButtonSecondary = (props) => {
   return (
     <div className={`relative group ${props.divClass}`}>
