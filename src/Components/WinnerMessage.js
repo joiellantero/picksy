@@ -7,7 +7,7 @@ const WinnerMessage = () => {
   const resetWinnerMessage = useResetRecoilState(winnerMessageState);
 
   return(
-    <>
+    <form>
       <Input
         id={'winnerMessage'}
         label={'Winner Prompt Message'}
@@ -15,7 +15,7 @@ const WinnerMessage = () => {
         onChange={(e) => setWinnerMessage(e)}
         onClear={() => resetWinnerMessage()}
       />
-    </>
+    </form>
   )
 }
 

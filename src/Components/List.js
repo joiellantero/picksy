@@ -8,7 +8,7 @@ import UploadIcon from '../assets/icons/UploadIcon';
 const List = (props) => {
   return(
     <>
-      <div className='flex flex-col'>
+      <form className='flex flex-col'>
         <label 
           htmlFor="listInput" 
           className="form-label inline-block mb-2"
@@ -22,7 +22,7 @@ const List = (props) => {
           onChange={(e) => props.onChange(e.target.value)}
           onClear={props.onClear}
         />
-      </div>
+      </form>
       <ButtonSecondary
         icon={<UploadIcon/>}
         value={'Upload File'}

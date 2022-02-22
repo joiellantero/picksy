@@ -8,8 +8,8 @@ import TextArea from "./TextArea";
 
 
 const Wheel = (props) => {
-  let [isOpen, setIsOpen] = useState(false);
-  let [drawnName, setDrawnName] = useState();
+  const [isOpen, setIsOpen] = useState(false);
+  const [drawnName, setDrawnName] = useState();
   const winnerMessageValue = useRecoilValue(winnerMessageState);
   const [namesList, setNamesList] = useRecoilState(namesListState);
 
