@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 
 const FileUpload = (props) => {
 
-  const showFile = (e) => {
+  const handleUpload = (e) => {
     e.preventDefault();
     let file = e.target.files[0];
     let allowedExtensions = /(\.csv|\.txt)$/i;
@@ -28,7 +28,7 @@ const FileUpload = (props) => {
             accept=".txt, .csv"
             id={props.id}
             name={props.name}
-            onChange={(e) => showFile(e)}
+            onChange={(e) => handleUpload(e)}
           />
         </label>
       </form>
