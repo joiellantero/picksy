@@ -1,8 +1,12 @@
+import {Link} from "react-router-dom";
+
 const FileUpload = (props) => {
 
   const showFile = (e) => {
+    e.preventDefault();
     let file = e.target.files[0];
-    if (file.type === "text/csv" || file.type === "text/plain"){
+    let allowedExtensions = /(\.csv|\.txt)$/i;
+    if (allowedExtensions.exec(file.name)){
       let reader = new FileReader();
       reader.onload = async (e) => {
         let content = e.target.result;
@@ -15,20 +19,23 @@ const FileUpload = (props) => {
   }
 
   return (
-    <form className={`relative group`}>
-      <label className="block">
-        <input
-          className="block file:bg-slate-500 file:hover:bg-slate-600 file:focus:outline-none file:active:bg-slate-700 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:text-white file:cursor-pointer"
-          type="file"
-          id={props.id}
-          name={props.name}
-          onChange={(e) => showFile(e)}
-        />
-        <small className="mt-2 text-slate-500">
-          Files uploaded (txt/csv) are not stored online.
-        </small>
-      </label>
-    </form>
+    <div>
+      <form className={`relative group`}>
+        <label className="block">
+          <input
+            className="block file:bg-slate-500 file:hover:bg-slate-600 file:focus:outline-none file:active:bg-slate-700 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:text-white file:cursor-pointer"
+            type="file"
+            accept=".txt, .csv"
+            id={props.id}
+            name={props.name}
+            onChange={(e) => showFile(e)}
+          />
+        </label>
+      </form>
+      <small className="mt-2 block text-slate-500">
+        Files uploaded (txt/csv) are not stored online. <Link to="/help">Learn more.</Link>
+      </small>
+    </div>
   );
 }
  
