@@ -1,4 +1,4 @@
-const Input = (props) => {
+const TextField = (props) => {
   return ( 
     <div>
       <label
@@ -29,4 +29,4 @@ const Input = (props) => {
   );
 }
  
-export default Input;
+export default TextField;

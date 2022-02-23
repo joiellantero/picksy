@@ -1,4 +1,4 @@
-import Input from "./Input";
+import TextField from "./Input/TextField";
 import {useRecoilState, useResetRecoilState} from "recoil";
 import {winnerMessageState} from "../shared/globalState";
 
@@ -8,7 +8,7 @@ const WinnerMessage = () => {
 
   return(
     <form>
-      <Input
+      <TextField
         id={'winnerMessage'}
         label={'Winner Prompt Message'}
         value={winnerMessage}

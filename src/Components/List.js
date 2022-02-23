@@ -1,7 +1,7 @@
 import React from 'react';
 
-import TextArea from "./TextArea";
-import ButtonUpload from './Buttons/ButtonUpload';
+import TextArea from "./Input/TextArea";
+import FileUpload from './FileUpload';
 
 import UploadIcon from '../assets/icons/UploadIcon';
 
@@ -23,7 +23,7 @@ const List = (props) => {
           onClear={props.onClear}
         />
       </form>
-      <ButtonUpload
+      <FileUpload
         icon={<UploadIcon/>}
         id={'namesListFile'}
         name={'namesListFile'}

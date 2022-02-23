@@ -4,7 +4,7 @@ import {namesListState, winnerMessageState} from "../shared/globalState";
 
 import ButtonPrimary from './Buttons/ButtonPrimary';
 import Modal from './Modals/Modal';
-import TextArea from "./TextArea";
+import TextArea from "./Input/TextArea";
 
 
 const Wheel = (props) => {

@@ -1,4 +1,4 @@
-const ButtonUpload = (props) => {
+const FileUpload = (props) => {
 
   const showFile = (e) => {
     let file = e.target.files[0];
@@ -32,4 +32,4 @@ const ButtonUpload = (props) => {
   );
 }
  
-export default ButtonUpload;
+export default FileUpload;

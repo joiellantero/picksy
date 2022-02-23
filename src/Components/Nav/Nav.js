@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 
-import Logo from "../Logo";
+import Logo from "../../assets/Logo";
 import DesktopNav from "./DesktopNav";
 import Menu from "./MobileNav";
 import {useRecoilState} from "recoil";
