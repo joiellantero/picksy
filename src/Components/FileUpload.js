@@ -6,15 +6,17 @@ const FileUpload = (props) => {
     e.preventDefault();
     let file = e.target.files[0];
     let allowedExtensions = /(\.csv|\.txt)$/i;
-    if (allowedExtensions.exec(file.name)){
-      let reader = new FileReader();
-      reader.onload = async (e) => {
-        let content = e.target.result;
-        props.onUpload(content);
+    if (file){
+      if (allowedExtensions.exec(file.name)){
+        let reader = new FileReader();
+        reader.onload = async (e) => {
+          let content = e.target.result;
+          props.onUpload(content);
+        }
+        reader.readAsText(file);
+      } else {
+        alert("Only plain text (.txt) and comma-separated-value (.csv) files are allowed.");
       }
-      reader.readAsText(file);
-    } else {
-      alert("Only plain text (.txt) and comma-separated-value (.csv) files are allowed.");
     }
   }
 
