@@ -16,6 +16,11 @@ const FileUpload = (props) => {
 
   return (
     <form className={`relative group`}>
+      {props.tooltip &&(
+        <span className='tooltip group-hover:opacity-100 group-hover:scale-100 bottom-16'>
+            {props.tooltip}
+          </span>
+      )}
       <label className="block">
         <input
           className="block file:bg-slate-500 file:hover:bg-slate-600 file:focus:outline-none file:active:bg-slate-700 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:text-white file:cursor-pointer"
@@ -25,7 +30,7 @@ const FileUpload = (props) => {
           onChange={(e) => showFile(e)}
         />
         <small className="mt-2 text-slate-500">
-          Files (.txt/.csv) uploaded are not stored online.
+          Files uploaded are not stored online.
         </small>
       </label>
     </form>

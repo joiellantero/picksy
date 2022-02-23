@@ -28,6 +28,7 @@ const List = (props) => {
         id={'namesListFile'}
         name={'namesListFile'}
         onUpload={(e) => props.onChange(e)}
+        tooltip={'Upload a .txt or .csv'}
       />
     </>
   );
