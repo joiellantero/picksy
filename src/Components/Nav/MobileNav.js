@@ -1,8 +1,8 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
-import {darkModeState, settingsSideBarState} from '../../shared/globalState';
+import {darkModeState, settingsBtnState, settingsSideBarState} from '../../shared/globalState';
 import {Link} from "react-router-dom";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 
 import {MenuIcon, XIcon, CogIcon} from "@heroicons/react/outline";
 import { HomeActiveIcon, HomeInactiveIcon, DarkHomeInactiveIcon} from "../../assets/icons/HomeIcon";
@@ -13,11 +13,13 @@ import { SettingsActiveIcon, SettingsInactiveIcon, DarkSettingsInactiveIcon} fro
 const MenuWindow = () => {
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useRecoilState(darkModeState);
   const [isSettingsSideBarOpen, setIsSettingsSideBarOpen] = useRecoilState(settingsSideBarState);
+  const showSettingsBtn = useRecoilValue(settingsBtnState);
+
   return(
     <>
-      <div className={`${isSettingsSideBarOpen ? 'hidden' : 'block'}`}>
+      <div className={`${showSettingsBtn && !isSettingsSideBarOpen ? 'block' : 'hidden'}`}>
         <button
-          className={`${isSettingsSideBarOpen ? 'hidden' : 'block'} md:invisible md:hidden hover:cursor-pointer bg-slate-600 p-4 rounded-full fixed bottom-[7rem] right-8 text-white z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus:bg-slate-700`}
+          className={`${showSettingsBtn && !isSettingsSideBarOpen ? 'block' : 'hidden'} md:invisible md:hidden hover:cursor-pointer bg-slate-600 p-4 rounded-full fixed bottom-[7rem] right-8 text-white z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus:bg-slate-700`}
           onClick={(e) => setIsSettingsSideBarOpen(!isSettingsSideBarOpen)}
         >
           <CogIcon height={28}/>

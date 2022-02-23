@@ -17,7 +17,9 @@ export default function Toggle(props) {
               pointer-events-none inline-block h-[30px] w-[30px] md:h-[20px] md:w-[20px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200`}
           />
         </Switch>
-        <Switch.Label passive className="ml-3">Remove after chosen?</Switch.Label>
+        <Switch.Label passive className="ml-3">
+          {props.label}
+        </Switch.Label>
       </div>
     </Switch.Group>
   )

@@ -24,6 +24,12 @@ export const removeState = atom({
   effects_UNSTABLE: [localPersist]
 });
 
+export const settingsBtnState = atom({
+  key: 'settingsBtnState',
+  default: false,
+  effects_UNSTABLE: [localPersist]
+});
+
 export const settingsSideBarState = atom({
   key: 'settingsModalState',
   default: false,
