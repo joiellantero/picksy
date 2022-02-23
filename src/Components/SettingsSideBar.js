@@ -13,8 +13,7 @@ const SettingsSideBar = () => {
   const [showSettingsBtn, setShowSettingsBtn] = useRecoilState(settingsBtnState);
 
   return(
-    <div className={`min-h-screen bg-slate-100 dark:bg-slate-700 p-10 absolute right-0 transform transition w-[320px] ${isSettingsSideBarOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0' } duration-200 ease-in-out flex flex-col items-center`}
-    >
+    <div className={`min-h-screen bg-slate-100 dark:bg-slate-700 p-10 absolute right-0 transform transition w-[320px] ${isSettingsSideBarOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0' } duration-200 ease-in-out flex flex-col items-center`}>
       <h2 className={'text-lg mb-8'}>Settings</h2>
       <div className="flex flex-col justify-center gap-5">
         <List
@@ -31,11 +30,13 @@ const SettingsSideBar = () => {
           isOn={shouldRemoveName}
           handleToggle={() => setShouldRemoveName(!shouldRemoveName)}
           label={'Remove after chosen?'}
+          hiddenMobile={false}
         />
         <Toggle
           isOn={showSettingsBtn}
           handleToggle={() => setShowSettingsBtn(!showSettingsBtn)}
           label={'Show Settings Button?'}
+          hiddenMobile={true}
         />
       </div>
     </div>

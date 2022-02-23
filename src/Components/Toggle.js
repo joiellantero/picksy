@@ -3,7 +3,7 @@ import { Switch } from '@headlessui/react'
 export default function Toggle(props) {
   return (
     <Switch.Group>
-      <div className="flex items-center">
+      <div className={`flex items-center ${props.hiddenMobile ? 'md:hidden' : 'block'}`}>
         <Switch
           checked={props.isOn}
           onChange={props.handleToggle}
