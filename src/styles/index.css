@@ -15,4 +15,7 @@ code {
   hr{
     @apply border-slate-200 dark:border-slate-800/20 my-5 border-2
   }
+  a.link{
+    @apply text-blue-600/70 dark:text-blue-300/50
+  }
 }

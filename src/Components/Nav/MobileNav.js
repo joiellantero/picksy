@@ -14,14 +14,14 @@ import { SettingsActiveIcon, SettingsInactiveIcon, DarkSettingsInactiveIcon} fro
 const MenuWindow = () => {
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useRecoilState(darkModeState);
   const [isSettingsSideBarOpen, setIsSettingsSideBarOpen] = useRecoilState(settingsSideBarState);
-
+  console.log(isSettingsSideBarOpen)
   return(
-    <div className={`${isSettingsSideBarOpen ? 'invisible' : 'visible'} w-56 text-right fixed bottom-[22rem] right-8 z-10`}>
+    <div className={`${isSettingsSideBarOpen ? 'hidden' : 'block'} w-56 text-right fixed bottom-[22rem] right-8 z-10`}>
       <Menu as="div" className="relative inline-block text-left">
         {({open}) => (
           <>
             <Menu.Button
-              className={`${isSettingsSideBarOpen ? 'invisible' : 'visible'} md:invisible md:hidden hover:cursor-pointer bg-blue-600 p-4 rounded-full fixed bottom-10 right-8 text-white z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus:bg-blue-700`}
+              className={`${isSettingsSideBarOpen ? 'hidden' : 'block'} md:invisible md:hidden hover:cursor-pointer bg-blue-600 p-4 rounded-full fixed bottom-10 right-8 text-white z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus:bg-blue-700`}
             >
               {open ? (
                 <XIcon height={28}/>

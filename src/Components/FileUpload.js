@@ -35,7 +35,7 @@ const FileUpload = (props) => {
         </label>
       </form>
       <small className="mt-2 block text-slate-500">
-        Files uploaded (txt/csv) are not stored online. <Link to="/help">Learn more.</Link>
+        Files uploaded (txt/csv) are not stored online. <Link to="/help" className={'link'}>Learn more.</Link>
       </small>
     </div>
   );
