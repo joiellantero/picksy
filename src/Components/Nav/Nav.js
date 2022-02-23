@@ -16,7 +16,7 @@ const Nav = () => {
       <DesktopNav/>
       <Menu/>
       <button
-        className={`${isSettingsSideBarOpen ? 'visible translate-x-0' : 'invisible translate-x-full lg:translate-x-0'} transform transition duration-200 ease-in-out md:invisible md:hidden hover:cursor-pointer bg-blue-600 p-4 rounded-full fixed bottom-10 right-[18.5rem] text-white z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+        className={`${isSettingsSideBarOpen ? 'visible translate-x-0' : 'invisible translate-x-full lg:translate-x-0'} transform transition duration-200 ease-in-out md:invisible md:hidden hover:cursor-pointer bg-slate-600 p-4 rounded-full fixed bottom-[7rem] right-[18.5rem] text-white z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
         onClick={() => setIsSettingsSideBarOpen(!isSettingsSideBarOpen)}
       >
         <ChevronRightIcon height={28}/>
