@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 
 const FileUpload = (props) => {
 
-  const handleUpload = (e) => {
+  const handleUpload = async (e) => {
     e.preventDefault();
     let file = e.target.files[0];
     let allowedExtensions = /(\.csv|\.txt)$/i;
