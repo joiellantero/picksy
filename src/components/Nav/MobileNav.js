@@ -25,7 +25,7 @@ const MenuWindow = () => {
           <CogIcon height={28}/>
         </button>
       </div>
-      <div className={`${isSettingsSideBarOpen ? 'hidden' : 'block'} w-56 text-right fixed bottom-[22rem] right-8 z-10`}>
+      <div className={`${isSettingsSideBarOpen ? 'hidden' : 'block'} md:hidden w-56 text-right fixed bottom-[22rem] right-8 z-10`}>
         <Menu as="div" className={"relative inline-block text-left"}>
           {({open}) => (
             <>
