@@ -3,8 +3,6 @@ import { Dialog, Transition } from '@headlessui/react';
 import {darkModeState} from '../../shared/globalState';
 import {useRecoilValue} from "recoil";
 
-import CloseIcon from '../../assets/icons/CloseIcon';
-
 const Modal = (props) => {
   const isDarkModeEnabled = useRecoilValue(darkModeState);
 
@@ -44,7 +42,7 @@ const Modal = (props) => {
             leaveTo="opacity-0 scale-95"
           >
             <div
-              className="inline-block w-full max-w-md p-10 my-8 overflow-hidden align-middle duration-100 transition-all ease-in-out transform dark:bg-slate-700 bg-white shadow-md rounded text-center hover:border-4 dark:border-slate-600 border-slate-200 hover:cursor-pointer group pointer-events-none md:pointer-events-auto"
+              className="inline-block w-full max-w-md p-10 my-8 overflow-hidden align-middle duration-300 transition-all ease-in-out transform dark:bg-slate-700 bg-white shadow-md rounded text-center hover:border-4 dark:border-slate-600 border-slate-200 hover:cursor-pointer group pointer-events-none md:pointer-events-auto"
               onClick={() => props.onClose(false)}
             >
               <Dialog.Title
@@ -58,12 +56,9 @@ const Modal = (props) => {
                   {props.body}
                 </p>
               </div>
-
-              <div
-                className="absolute top-4 right-4 justify-center text-sm font-medium text-slate-500 dark:text-slate-400 border border-transparent rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-slate-500 scale-0 group-hover:scale-100 transition-all transform origin-top-right"
-              >
-                <CloseIcon color={`${isDarkModeEnabled ? '#64748b' : '#cbd5e1'}`}/>
-              </div>
+              <small className={'absolute bottom-2 left-0 right-0 justify-center text-sm font-medium text-slate-300 dark:text-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-slate-500 scale-75 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all transform origin-bottom duration-300'}>
+                close
+              </small>
               <button className="h-0 w-0 overflow-hidden"/>
               <small className={'block md:hidden text-black dark:text-slate-500'}>
                 Touch anywhere to close
