@@ -17,9 +17,9 @@ const MenuWindow = () => {
 
   return(
     <>
-      <div className={`${showSettingsBtn && !isSettingsSideBarOpen ? 'block' : 'hidden'}`}>
+      <div className={`${showSettingsBtn && !isSettingsSideBarOpen ? 'block' : 'hidden'}  md:hidden`}>
         <button
-          className={`${showSettingsBtn && !isSettingsSideBarOpen ? 'block' : 'hidden'} md:invisible md:hidden hover:cursor-pointer bg-slate-600 p-4 rounded-full fixed bottom-[7rem] right-8 text-white z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus:bg-slate-700`}
+          className={`${showSettingsBtn && !isSettingsSideBarOpen ? 'block' : 'hidden'} md:hidden hover:cursor-pointer bg-slate-600 p-4 rounded-full fixed bottom-[7rem] right-8 text-white z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus:bg-slate-700`}
           onClick={(e) => setIsSettingsSideBarOpen(!isSettingsSideBarOpen)}
         >
           <CogIcon height={28}/>
