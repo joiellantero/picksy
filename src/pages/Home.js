@@ -7,10 +7,8 @@ const Home = () => {
   const shouldRemoveName = useRecoilValue(removeState);
 
   return(
-    <div className='flex flex-wrap justify-center gap-20 m-10'>
-      <Wheel
-          removeName={shouldRemoveName}
-      />
+    <div className='flex flex-wrap justify-center items-center gap-20 m-10'>
+      <Wheel removeName={shouldRemoveName}/>
     </div>
   );
 };
