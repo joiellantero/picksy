@@ -15,35 +15,35 @@ const localPersist = ({onSet, setSelf, node}) => {
 export const darkModeState = atom({
   key: 'darkModeState',
   default: false,
-  effects_UNSTABLE: [localPersist]
+  effects: [localPersist]
 });
 
 export const removeState = atom({
   key: 'removeState',
   default: false,
-  effects_UNSTABLE: [localPersist]
+  effects: [localPersist]
 });
 
 export const settingsBtnState = atom({
   key: 'settingsBtnState',
   default: false,
-  effects_UNSTABLE: [localPersist]
+  effects: [localPersist]
 });
 
 export const settingsSideBarState = atom({
   key: 'settingsModalState',
   default: false,
-  effects_UNSTABLE: [localPersist]
+  effects: [localPersist]
 });
 
 export const namesListState = atom({
   key: 'namesListState',
   default: [],
-  effects_UNSTABLE: [localPersist]
+  effects: [localPersist]
 })
 
 export const winnerMessageState = atom({
   key: 'winnerMessageState',
   default: [],
-  effects_UNSTABLE: [localPersist]
+  effects: [localPersist]
 })
