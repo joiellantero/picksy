@@ -1,6 +1,6 @@
-# Name Roulette Web
+# Picksy
 
-Name Roulette Web is an open-source web app that picks a random name from a list — fairly and instantly.
+Picksy is an open-source web app that picks a random name from a list — fairly and instantly.
 
 [![Visit - webapp](https://img.shields.io/badge/Visit-webapp-2ea44f?style=for-the-badge&logo=vercel)](https://nameroulette.vercel.app)
 [![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react)](https://react.dev)

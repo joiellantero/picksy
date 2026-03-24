@@ -36,7 +36,7 @@ export default function App() {
               {/* Brand */}
               <div>
                 <p className="text-sm font-semibold bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent tracking-tight">
-                  Name Roulette Web
+                  Picksy
                 </p>
                 <p className="mt-0.5 text-[11px] text-gray-400 dark:text-gray-600 italic">Pick a name. Make it fair.</p>
               </div>
@@ -73,7 +73,7 @@ export default function App() {
                 {/* Brand col */}
                 <div className="flex flex-col gap-3">
                   <p className="text-sm font-semibold bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent tracking-tight">
-                    Name Roulette Web
+                    Picksy
                   </p>
                   <p className="text-xs text-gray-400 dark:text-gray-600 italic">Pick a name. Make it fair.</p>
                   <div className="flex items-center gap-2 mt-1">
@@ -106,7 +106,7 @@ export default function App() {
 
               <div className="mt-6 h-px bg-gradient-to-r from-transparent via-gray-100 dark:via-gray-800 to-transparent" />
               <p className="mt-4 text-[11px] text-gray-300 dark:text-gray-700">
-                &copy; {new Date().getFullYear()} Name Roulette Web &mdash; Made with <span className="text-rose-400">♥</span> by joiellantero
+                &copy; {new Date().getFullYear()} Picksy &mdash; Made with <span className="text-rose-400">♥</span> by joiellantero
               </p>
             </div>
 
