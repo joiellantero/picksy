@@ -2,27 +2,18 @@ import {Link} from "react-router-dom";
 
 import Logo from "../../assets/Logo";
 import DesktopNav from "./DesktopNav";
-import Menu from "./MobileNav";
-import {useRecoilState} from "recoil";
-import {settingsSideBarState} from "../../shared/globalState";
-import {ChevronRightIcon} from "@heroicons/react/outline";
 
 const Nav = () => {
-  const [isSettingsSideBarOpen, setIsSettingsSideBarOpen] = useRecoilState(settingsSideBarState);
-
-  return(
-    <div className='text-center md:text-left md:flex md:justify-between px-12 md:px-14 lg:px-24 py-5 bg-slate-200 dark:bg-slate-800'>
-      <Link to="/"><Logo /></Link>
-      <DesktopNav/>
-      <Menu/>
-      <button
-        className={`${isSettingsSideBarOpen ? 'visible translate-x-0' : 'invisible translate-x-full lg:translate-x-0'} transform transition duration-200 ease-in-out md:invisible md:hidden hover:cursor-pointer bg-slate-600 p-4 rounded-full fixed bottom-[7rem] right-[18.5rem] text-white z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
-        onClick={() => setIsSettingsSideBarOpen(!isSettingsSideBarOpen)}
-      >
-        <ChevronRightIcon height={28}/>
-      </button>
-    </div>
-  )
-}
+  return (
+    <header className='sticky top-0 z-50 bg-white/90 dark:bg-[#0c0c14]/90 backdrop-blur-md'>
+      <div className='flex items-center justify-between px-6 md:px-10 lg:px-16 py-3'>
+        <Link to="/"><Logo /></Link>
+        <DesktopNav />
+      </div>
+      {/* Gradient bottom border */}
+      <div className="h-px bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent" />
+    </header>
+  );
+};
 
 export default Nav;

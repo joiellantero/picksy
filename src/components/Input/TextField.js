@@ -1,24 +1,29 @@
 const TextField = (props) => {
-  return ( 
+  const hasValue = props.value && typeof props.value === 'string' && props.value.length > 0;
+
+  return (
     <div>
-      <label
-        htmlFor={props.id}
-        className="form-label inline-block mb-2"
-      >
+      {props.label && (
+        <label
+          htmlFor={props.id}
+          className='block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1.5'
+        >
           {props.label}
-      </label>
-      <div className={'relative'}>
+        </label>
+      )}
+      <div className='relative'>
         <input
           id={props.id}
-          rows="5"
-          className="form-control block max-w-xs pl-3 pr-14 py-1.5 text-base font-normal text-gray-700 dark:text-gray-300 bg-clip-padding dark:bg-slate-800 bg-slate-200 focus:bg-slate-300 dark:focus:bg-[#162338] rounded transition ease-in-out m-0 focus:outline-none h-14 md:h-fit w-full"
+          className='w-full pl-4 pr-16 py-2.5 text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400/40 focus:border-indigo-400 dark:focus:border-indigo-500/60 transition-all duration-200 placeholder:text-gray-400 dark:placeholder:text-gray-600'
           onChange={(e) => props.onChange(e.target.value)}
           value={props.value}
           maxLength={60}
+          placeholder={props.placeholder}
         />
-        {props.value.length !== 0 &&(
+        {hasValue && (
           <button
-            className={'absolute -right-1 rounded-full z-10 text-white top-1/2 transform -translate-y-1/2 mr-3 cursor-pointer text-xs bg-slate-400/50 hover:bg-slate-400 dark:bg-slate-700/50 dark:hover:bg-slate-700 py-1 px-1.5 transition duration-200 ease-out'}
+            type='button'
+            className='absolute right-2 top-1/2 -translate-y-1/2 text-xs font-medium text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-2 py-1 rounded-lg transition-colors duration-150'
             onClick={props.onClear}
           >
             Clear
@@ -27,6 +32,6 @@ const TextField = (props) => {
       </div>
     </div>
   );
-}
- 
+};
+
 export default TextField;

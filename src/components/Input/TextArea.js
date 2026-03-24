@@ -1,36 +1,39 @@
 const TextArea = (props) => {
-  return(
+  const hasValue = props.value && typeof props.value === 'string' && props.value.length > 0;
+
+  return (
     props.readOnly ? (
+      <textarea
+        className="w-full px-4 py-3 text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:outline-none resize-none font-mono leading-relaxed placeholder:text-gray-400"
+        value={props.value}
+        rows={props.rows}
+        id={props.id}
+        onChange={props.onChange}
+        placeholder={props.placeholder}
+        readOnly
+      />
+    ) : (
+      <div className='relative'>
         <textarea
-          className="form-control block w-full max-w-xs px-3 py-1.5 text-base font-normal text-gray-700 dark:text-gray-300 bg-clip-padding dark:bg-slate-800 bg-slate-200 rounded transition ease-in-out m-0 focus:outline-none"
+          className="w-full px-4 py-3 text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400/40 focus:border-indigo-400 dark:focus:border-indigo-500/60 transition-all duration-200 resize-none placeholder:text-gray-400 dark:placeholder:text-gray-600"
           value={props.value}
           rows={props.rows}
           id={props.id}
           onChange={props.onChange}
           placeholder={props.placeholder}
-          readOnly
         />
-      ) : (
-        <div className={'relative'}>
-          <textarea
-            className="form-control block px-3 py-1.5 w-full max-w-xs text-base font-normal text-slate-700 dark:text-slate-300 bg-clip-padding dark:bg-slate-800 bg-slate-200 rounded transition ease-in-out m-0 focus:text-slate-700 focus:bg-slate-300 dark:focus:bg-[#162338] focus:outline-none"
-            value={props.value}
-            rows={props.rows}
-            id={props.id}
-            onChange={props.onChange}
-            placeholder={props.placeholder}
-          />
-          {props.value.length !== 0 &&(
-            <button
-              className={'absolute top-0 right-0 rounded-full z-10 m-2 cursor-pointer text-white text-xs bg-slate-400/50 hover:bg-slate-400 dark:bg-slate-700/50 dark:hover:bg-slate-700 py-1 px-1.5 transition transition-all duration-200 ease-out'}
-              onClick={props.onClear}
-            >
-              Clear
-            </button>
-          )}
-        </div>
-      )
-  )
-}
+        {hasValue && (
+          <button
+            type='button'
+            className='absolute top-2 right-2 text-xs font-medium text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-2 py-1 rounded-lg transition-colors duration-150'
+            onClick={props.onClear}
+          >
+            Clear
+          </button>
+        )}
+      </div>
+    )
+  );
+};
 
 export default TextArea;

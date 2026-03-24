@@ -6,14 +6,14 @@ import {useRecoilValue} from "recoil";
 const Modal = (props) => {
   const isDarkModeEnabled = useRecoilValue(darkModeState);
 
-  return(
+  return (
     <Transition appear show={props.isOpen} as={Fragment}>
       <Dialog
         as="div"
         className={`fixed inset-0 z-10 overflow-y-auto ${isDarkModeEnabled ? 'dark' : ''}`}
         onClose={() => props.onClose(false)}
       >
-        <div className="min-h-screen px-4 text-center">
+        <div className="min-h-screen px-4 flex items-center justify-center">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -23,46 +23,39 @@ const Modal = (props) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-black opacity-10" />
+            <Dialog.Overlay className="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm" />
           </Transition.Child>
 
-          <span
-            className="inline-block h-screen align-middle"
-            aria-hidden="true"
-          >
-            &#8203;
-          </span>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
-            enterFrom="opacity-0 scale-95"
-            enterTo="opacity-100 scale-100"
+            enterFrom="opacity-0 scale-90 translate-y-4"
+            enterTo="opacity-100 scale-100 translate-y-0"
             leave="ease-in duration-200"
-            leaveFrom="opacity-100 scale-100"
-            leaveTo="opacity-0 scale-95"
+            leaveFrom="opacity-100 scale-100 translate-y-0"
+            leaveTo="opacity-0 scale-90 translate-y-4"
           >
             <div
-              className="inline-block w-full max-w-md p-10 my-8 overflow-hidden align-middle duration-300 transition-all ease-in-out transform dark:bg-slate-700 bg-white shadow-md rounded text-center hover:border-4 dark:border-slate-600 border-slate-200 hover:cursor-pointer group pointer-events-none md:pointer-events-auto"
+              className="relative w-full max-w-sm mx-auto bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-10 text-center cursor-pointer ring-2 ring-violet-500/40 dark:ring-violet-500/30"
               onClick={() => props.onClose(false)}
             >
+
               <Dialog.Title
-                as="h3"
-                className="text-base font-medium leading-6 text-slate-400 dark:text-slate-400"
+                as="p"
+                className="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-5"
               >
                 {props.title}
               </Dialog.Title>
-              <div className="mt-5">
-                <p className="text-5xl text-blue-700 dark:text-slate-100">
-                  {props.body}
-                </p>
-              </div>
-              <small className={'absolute bottom-2 left-0 right-0 justify-center text-sm font-medium text-slate-300 dark:text-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-slate-500 scale-75 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all transform origin-bottom duration-300'}>
-                close
-              </small>
-              <button className="h-0 w-0 overflow-hidden"/>
-              <small className={'block md:hidden text-black dark:text-slate-500'}>
-                Touch anywhere to close
-              </small>
+
+              <p className="text-5xl font-extrabold bg-gradient-to-r from-indigo-500 to-violet-600 bg-clip-text text-transparent break-words leading-tight py-2">
+                {props.body}
+              </p>
+
+              <p className='mt-8 text-xs text-gray-300 dark:text-gray-600 tracking-wide'>
+                Tap anywhere to close
+              </p>
+
+              <button className="h-0 w-0 overflow-hidden" />
             </div>
           </Transition.Child>
         </div>

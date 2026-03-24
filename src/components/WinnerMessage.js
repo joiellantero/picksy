@@ -6,17 +6,18 @@ const WinnerMessage = () => {
   const [winnerMessage, setWinnerMessage] = useRecoilState(winnerMessageState);
   const resetWinnerMessage = useResetRecoilState(winnerMessageState);
 
-  return(
+  return (
     <form>
       <TextField
-        id={'winnerMessage'}
-        label={'Winner Prompt Message'}
+        id='winnerMessage'
+        label='Winner Prompt'
+        placeholder='e.g. 🎉 And the winner is...'
         value={winnerMessage}
         onChange={(e) => setWinnerMessage(e)}
         onClear={() => resetWinnerMessage()}
       />
     </form>
-  )
-}
+  );
+};
 
 export default WinnerMessage;

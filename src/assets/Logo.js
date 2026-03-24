@@ -1,15 +1,14 @@
 const Logo = () => {
-  return(
-    <div className='py-2 flex justify-center items-center font-serif font-bold focus:outline-none  focus-visible:ring-2 focus-visible:ring-blue-600 dark:focus-visible:ring-white focus-visible:ring-opacity-75'
-    >
-      <div className={'pt-0.5'}>
+  return (
+    <div className='py-1.5 flex justify-center items-center font-sans font-bold focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-opacity-75'>
+      <span className='bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent text-base tracking-tight'>
         Name Roulette
-      </div>
-      <small className={'bg-blue-600 ml-1.5 px-2.5 py-0 pt-1 rounded-full text-white'}>
+      </span>
+      <span className='bg-gradient-to-br from-indigo-500 to-violet-600 ml-2 px-2 py-0.5 rounded-full text-white text-[10px] font-semibold tracking-wide shadow-sm'>
         Web
-      </small>
+      </span>
     </div>
-  )
-}
+  );
+};
 
 export default Logo;

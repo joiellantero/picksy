@@ -1,197 +1,236 @@
-import { Menu, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
-import {darkModeState, settingsBtnState, settingsSideBarState} from '../../shared/globalState';
-import {Link} from "react-router-dom";
-import {useRecoilState, useRecoilValue} from "recoil";
+import React, { useMemo, useState, useRef, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import useMeasure from 'react-use-measure';
+import { Link } from 'react-router-dom';
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import { darkModeState, namesListState, removeState } from '../../shared/globalState';
 
-import {MenuIcon, XIcon, CogIcon} from "@heroicons/react/outline";
-import { HomeActiveIcon, HomeInactiveIcon, DarkHomeInactiveIcon} from "../../assets/icons/HomeIcon";
-import { HelpActiveIcon, HelpInactiveIcon, DarkHelpInactiveIcon} from "../../assets/icons/HelpIcon";
-import { SunActiveIcon, SunInactiveIcon, MoonActiveIcon, MoonInactiveIcon, DarkMoonInactiveIcon} from "../../assets/icons/SunIcon";
-import { SettingsActiveIcon, SettingsInactiveIcon, DarkSettingsInactiveIcon} from "../../assets/icons/SettingsIcon2";
+import List from '../List';
+import WinnerMessage from '../WinnerMessage';
+import Toggle from '../Toggle';
 
-const MenuWindow = () => {
-  const [isDarkModeEnabled, setIsDarkModeEnabled] = useRecoilState(darkModeState);
-  const [isSettingsSideBarOpen, setIsSettingsSideBarOpen] = useRecoilState(settingsSideBarState);
-  const showSettingsBtn = useRecoilValue(settingsBtnState);
+/* ── Inline SVG icons ─────────────────────────────────────── */
+const SunIcon = () => (
+  <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75}
+      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+    />
+  </svg>
+);
 
-  return(
-    <>
-      <div className={`${showSettingsBtn && !isSettingsSideBarOpen ? 'block' : 'hidden'}  md:hidden`}>
-        <button
-          className={`${showSettingsBtn && !isSettingsSideBarOpen ? 'block' : 'hidden'} md:hidden hover:cursor-pointer bg-slate-600 p-4 rounded-full fixed bottom-[7rem] right-8 text-white z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus:bg-slate-700`}
-          onClick={(e) => setIsSettingsSideBarOpen(!isSettingsSideBarOpen)}
-        >
-          <CogIcon height={28}/>
-        </button>
-      </div>
-      <div className={`${isSettingsSideBarOpen ? 'hidden' : 'block'} md:hidden w-56 text-right fixed bottom-[22rem] right-8 z-10`}>
-        <Menu as="div" className={"relative inline-block text-left"}>
-          {({open}) => (
-            <>
-              <Menu.Button
-                className={`${isSettingsSideBarOpen ? 'hidden' : 'block'} md:invisible md:hidden hover:cursor-pointer bg-blue-600 p-4 rounded-full fixed bottom-10 right-8 text-white z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus:bg-blue-700`}
+const MoonIcon = () => (
+  <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75}
+      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+    />
+  </svg>
+);
+
+const PagesIcon = () => (
+  <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75}
+      d="M4 6h16M4 12h16M4 18h16"
+    />
+  </svg>
+);
+
+const GearIcon = () => (
+  <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75}
+      d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+    />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+  </svg>
+);
+
+/* ── Static data ───────────────────────────────────────────── */
+const NAV_PAGES = [
+  { text: 'Home', to: '/' },
+  { text: 'Features', to: '/features' },
+  { text: 'FAQs', to: '/help' },
+  { text: 'Documentation', to: 'https://github.com/joiellantero/name-roulette-web', external: true },
+];
+
+const THEME_OPTIONS = [
+  { key: false, Icon: SunIcon, text: 'Light' },
+  { key: true,  Icon: MoonIcon, text: 'Dark' },
+];
+
+const itemClass =
+  'flex items-center w-full px-3 py-2.5 text-sm font-medium text-gray-600 dark:text-gray-400 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all duration-75';
+
+/* ── Component ─────────────────────────────────────────────── */
+const MobileNav = () => {
+  const containerRef = useRef(null);
+  const [elementRef] = useMeasure();
+  const [hiddenRef, hiddenBounds] = useMeasure();
+  const [view, setView] = useState('default');
+  const [isDarkMode, setIsDarkMode] = useRecoilState(darkModeState);
+  const [namesList, setNamesList] = useRecoilState(namesListState);
+  const resetNamesList = useResetRecoilState(namesListState);
+  const [shouldRemoveName, setShouldRemoveName] = useRecoilState(removeState);
+
+  // Close submenus when tapping outside the dock
+  useEffect(() => {
+    const onOutside = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setView('default');
+      }
+    };
+    document.addEventListener('mousedown', onOutside);
+    return () => document.removeEventListener('mousedown', onOutside);
+  }, []);
+
+  // Submenu content — memoised so re-renders don't flash during animation
+  const content = useMemo(() => {
+    switch (view) {
+      case 'pages':
+        return (
+          <div className="space-y-0.5 min-w-[160px] p-1.5">
+            {NAV_PAGES.map(({ text, to, external }) =>
+              external ? (
+                <a key={text} href={to} target="_blank" rel="noopener noreferrer" onClick={() => setView('default')}>
+                  <button className={itemClass}>{text}</button>
+                </a>
+              ) : (
+                <Link key={text} to={to} onClick={() => setView('default')}>
+                  <button className={itemClass}>{text}</button>
+                </Link>
+              )
+            )}
+          </div>
+        );
+
+      case 'theme':
+        return (
+          <div className="flex items-center gap-1.5 p-1.5 min-w-[190px]">
+            {THEME_OPTIONS.map(({ key, Icon, text }) => (
+              <button
+                key={String(key)}
+                onClick={() => setIsDarkMode(key)}
+                className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-all duration-100 ${
+                  isDarkMode === key
+                    ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300'
+                    : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                }`}
               >
-                {open ? (
-                  <XIcon height={28}/>
-                ):(
-                  <MenuIcon height={28}/>
-                )}
-              </Menu.Button>
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
-                leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
-              >
-                <Menu.Items static className="absolute right-0 w-56 mt-2 origin-bottom-right bg-slate-100 dark:bg-slate-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <div className="px-1 py-1 ">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link to="/">
-                          <button
-                            className={`${
-                              active ? 'bg-blue-500 text-white' : 'text-gray-900 dark:text-slate-200'
-                            } group flex rounded-md items-center w-full px-2 py-2 text-sm leading-10`}
-                          >
-                            {active ? (
-                              <HomeActiveIcon
-                                className="w-5 h-5 mr-2"
-                                aria-hidden="true"
-                              />
-                            ) : (
-                              isDarkModeEnabled ? (
-                                <DarkHomeInactiveIcon
-                                  className="w-5 h-5 mr-2"
-                                  aria-hidden="true"
-                                />
-                              ) : (
-                                <HomeInactiveIcon
-                                  className="w-5 h-5 mr-2"
-                                  aria-hidden="true"
-                                />
-                              )
-                            )}
-                            Home
-                          </button>
-                        </Link>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <button
-                          className={`${
-                            active ? 'bg-blue-500 text-white' : 'text-gray-900 dark:text-slate-200'
-                          } group flex rounded-md items-center w-full px-2 py-2 text-sm leading-10`}
-                          onClick={() => setIsDarkModeEnabled(!isDarkModeEnabled)}
-                        >
-                          {isDarkModeEnabled ? (
-                            active ? (
-                              <MoonActiveIcon
-                                className="w-5 h-5 mr-2"
-                                aria-hidden="true"
-                              />
-                            ) : (
-                              isDarkModeEnabled ? (
-                                <DarkMoonInactiveIcon
-                                  className="w-5 h-5 mr-2"
-                                  aria-hidden="true"
-                                />
-                              ) : (
-                                <MoonInactiveIcon
-                                  className="w-5 h-5 mr-2"
-                                  aria-hidden="true"
-                                />
-                              )
-                            )
-                          ) : (
-                            active ? (
-                              <SunActiveIcon
-                                className="w-5 h-5 mr-2"
-                                aria-hidden="true"
-                              />
-                            ) : (
-                              <SunInactiveIcon
-                                className="w-5 h-5 mr-2"
-                                aria-hidden="true"
-                              />
-                            )
-                          )}
-                          Toggle Theme
-                        </button>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <button
-                          className={`${
-                            active ? 'bg-blue-500 text-white' : 'text-gray-900 dark:text-slate-200'
-                          } group flex rounded-md items-center w-full px-2 py-2 text-sm leading-10`}
-                          onClick={() => setIsSettingsSideBarOpen(!isSettingsSideBarOpen)}
-                        >
-                          {active ? (
-                            <SettingsActiveIcon
-                              className="w-5 h-5 mr-2"
-                              aria-hidden="true"
-                            />
-                          ) : (
-                            isDarkModeEnabled ? (
-                              <DarkSettingsInactiveIcon
-                                className="w-5 h-5 mr-2"
-                                aria-hidden="true"
-                              />
-                            ) : (
-                              <SettingsInactiveIcon
-                                className="w-5 h-5 mr-2"
-                                aria-hidden="true"
-                              />
-                            )
-                          )}
-                          Settings
-                        </button>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <button
-                          className={`${
-                            active ? 'bg-blue-500 text-white' : 'text-gray-900 dark:text-slate-200'
-                          } group flex rounded-md items-center w-full px-2 py-2 text-sm leading-10`}
-                        >
-                          {active ? (
-                            <HelpActiveIcon
-                              className="w-5 h-5 mr-2"
-                              aria-hidden="true"
-                            />
-                          ) : (
-                            isDarkModeEnabled ? (
-                              <DarkHelpInactiveIcon
-                                className="w-5 h-5 mr-2"
-                                aria-hidden="true"
-                              />
-                            ): (
-                              <HelpInactiveIcon
-                                className="w-5 h-5 mr-2"
-                                aria-hidden="true"
-                              />
-                            )
-                          )}
-                          Help
-                        </button>
-                      )}
-                    </Menu.Item>
-                  </div>
-                </Menu.Items>
-              </Transition>
-            </>
-          )}
-        </Menu>
-      </div>
-    </>
-  )
-}
+                <Icon />
+                <span>{text}</span>
+              </button>
+            ))}
+          </div>
+        );
 
-export default MenuWindow;
+      case 'settings':
+        return (
+          <div className="p-3 w-[90vw] max-w-[300px] space-y-3">
+            <p className="section-label">Participants</p>
+            <List
+              value={namesList}
+              onChange={(e) => setNamesList(e)}
+              onClear={() => resetNamesList()}
+            />
+            <div className="border-t border-gray-100 dark:border-gray-800/50" />
+            <p className="section-label">Customization</p>
+            <WinnerMessage />
+            <div className="border-t border-gray-100 dark:border-gray-800/50" />
+            <p className="section-label">Behavior</p>
+            <Toggle
+              isOn={shouldRemoveName}
+              handleToggle={() => setShouldRemoveName(!shouldRemoveName)}
+              label="Remove after chosen"
+              hiddenMobile={false}
+            />
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  }, [view, isDarkMode, setIsDarkMode, namesList, setNamesList, resetNamesList, shouldRemoveName, setShouldRemoveName]);
+
+  const mainNav = [
+    { Icon: PagesIcon, name: 'pages' },
+    { Icon: isDarkMode ? MoonIcon : SunIcon, name: 'theme' },
+    { Icon: GearIcon, name: 'settings' },
+  ];
+
+  const handleNavClick = (name) => {
+    setView((prev) => (prev === name ? 'default' : name));
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center overflow-visible"
+    >
+      {/* Hidden clone — gives react-use-measure the target size before animation */}
+      <div
+        ref={hiddenRef}
+        aria-hidden="true"
+        className="absolute left-[-9999px] invisible pointer-events-none"
+      >
+        <div className="rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700/50">
+          {content}
+        </div>
+      </div>
+
+      {/* Animated submenu panel — opens upward above the toolbar */}
+      <AnimatePresence mode="wait">
+        {view !== 'default' && (
+          <motion.div
+            key="submenu"
+            initial={{ opacity: 0, height: 0, width: 0 }}
+            animate={{
+              opacity: 1,
+              height: hiddenBounds.height || 'auto',
+              width: hiddenBounds.width || 'auto',
+            }}
+            exit={{ opacity: 0, height: 0, width: 0 }}
+            transition={{ duration: 0.25, ease: [0.45, 0, 0.25, 1] }}
+            style={{ transformOrigin: 'bottom center' }}
+            className="absolute bottom-[68px]"
+          >
+            <div
+              ref={elementRef}
+              className="rounded-2xl bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700/50 shadow-xl"
+            >
+              <AnimatePresence initial={false} mode="popLayout">
+                <motion.div
+                  key={view}
+                  initial={{ opacity: 0, scale: 0.96, filter: 'blur(8px)' }}
+                  animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, scale: 0.95, filter: 'blur(8px)' }}
+                  transition={{ duration: 0.2, ease: [0.42, 0, 0.58, 1] }}
+                  className="py-1"
+                >
+                  {content}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Floating toolbar */}
+      <div className="flex items-center gap-1 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700/50 rounded-[18px] p-1 shadow-lg z-10">
+        {mainNav.map(({ Icon, name }) => (
+          <button
+            key={name}
+            className={`p-3 rounded-2xl transition-all duration-150 ${
+              view === name
+                ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
+                : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+            }`}
+            onClick={() => handleNavClick(name)}
+          >
+            <Icon />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default MobileNav;
+

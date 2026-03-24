@@ -1,44 +1,50 @@
 import {Link} from "react-router-dom";
 
 const FileUpload = (props) => {
-
   const handleUpload = async (e) => {
     e.preventDefault();
     let file = e.target.files[0];
     let allowedExtensions = /(\.csv|\.txt)$/i;
-    if (file){
-      if (allowedExtensions.exec(file.name)){
+    if (file) {
+      if (allowedExtensions.exec(file.name)) {
         let reader = new FileReader();
         reader.onload = async (e) => {
-          let content = e.target.result;
-          props.onUpload(content);
-        }
+          props.onUpload(e.target.result);
+        };
         reader.readAsText(file);
       } else {
         alert("Only plain text (.txt) and comma-separated-value (.csv) files are allowed.");
       }
     }
-  }
+  };
 
   return (
     <div>
-      <form className={`relative group`}>
-        <label className="block">
-          <input
-            className="block file:bg-slate-500 file:hover:bg-slate-600 file:focus:outline-none file:active:bg-slate-700 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:text-white file:cursor-pointer"
-            type="file"
-            accept=".txt, .csv"
-            id={props.id}
-            name={props.name}
-            onChange={(e) => handleUpload(e)}
-          />
-        </label>
-      </form>
-      <small className="mt-2 block text-slate-500">
-        Files uploaded (txt/csv) are not stored online. <Link to="/help" className={'link'}>Learn more.</Link>
-      </small>
+      <label className='block'>
+        <input
+          className='
+            w-full text-xs text-gray-500 dark:text-gray-400 cursor-pointer
+            file:mr-3 file:py-1.5 file:px-3
+            file:rounded-lg file:border-0
+            file:text-xs file:font-medium
+            file:bg-indigo-50 file:text-indigo-600
+            dark:file:bg-indigo-900/20 dark:file:text-indigo-400
+            file:hover:bg-indigo-100 dark:file:hover:bg-indigo-900/30
+            file:cursor-pointer file:transition-colors file:duration-150
+          '
+          type='file'
+          accept='.txt, .csv'
+          id={props.id}
+          name={props.name}
+          onChange={(e) => handleUpload(e)}
+        />
+      </label>
+      <p className='mt-1.5 text-xs text-gray-400 dark:text-gray-500'>
+        .txt or .csv &mdash; not stored online.{' '}
+        <Link to='/help' className='link'>Learn more</Link>
+      </p>
     </div>
   );
-}
- 
+};
+
 export default FileUpload;

@@ -1,21 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit&family=Roboto+Serif:wght@100;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=Roboto+Serif:wght@100;400;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer base {
+  body {
+    @apply antialiased;
+  }
 }
 
-@layer components{
-  .tooltip{
-    @apply absolute w-auto p-2 min-w-max rounded shadow-md text-slate-800 bg-slate-100 dark:text-slate-100 dark:bg-slate-700 text-xs font-bold ease-out transition-all duration-200 scale-90 opacity-0 origin-bottom-left bottom-[3.75rem] md:bottom-10 delay-500;
+@layer components {
+  .tooltip {
+    @apply absolute w-auto py-1.5 px-3 min-w-max rounded-lg shadow-lg text-white bg-gray-900 dark:bg-gray-700 text-xs font-medium ease-out transition-all duration-200 scale-90 opacity-0 origin-bottom-left bottom-[3.75rem] md:bottom-10 delay-500;
   }
-  hr{
-    @apply border-slate-200 dark:border-slate-800/20 my-5 border-2
+  hr {
+    @apply border-gray-200 dark:border-gray-700/50 my-4;
   }
-  a.link{
-    @apply text-blue-600/70 dark:text-blue-300/50
+  a.link {
+    @apply text-indigo-600 dark:text-indigo-400 hover:underline underline-offset-2;
+  }
+  .card {
+    @apply bg-white dark:bg-gray-800/80 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/50;
+  }
+  .section-label {
+    @apply text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500;
   }
 }

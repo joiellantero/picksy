@@ -1,5 +1,5 @@
 import {useRecoilState, useRecoilValue, useResetRecoilState} from "recoil";
-import {namesListState, removeState, settingsBtnState, settingsSideBarState} from "../shared/globalState";
+import {namesListState, removeState, settingsSideBarState} from "../shared/globalState";
 
 import List from "./List";
 import Toggle from "./Toggle";
@@ -10,37 +10,61 @@ const SettingsSideBar = () => {
   const isSettingsSideBarOpen = useRecoilValue(settingsSideBarState);
   const [namesList, setNamesList] = useRecoilState(namesListState);
   const resetNamesList = useResetRecoilState(namesListState);
-  const [showSettingsBtn, setShowSettingsBtn] = useRecoilState(settingsBtnState);
 
-  return(
-    <div className={`min-h-screen bg-slate-100 dark:bg-slate-700 p-10 absolute right-0 transform transition w-[320px] ${isSettingsSideBarOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0' } duration-200 ease-in-out flex flex-col items-center`}>
-      <h2 className={'text-lg mb-8'}>Settings</h2>
-      <div className="flex flex-col justify-center gap-5">
+  return (
+    <aside
+      className={`
+        hidden lg:flex min-h-[calc(100vh-57px)] py-4 px-4 absolute right-0
+        w-72 flex-col gap-4
+        bg-white dark:bg-gray-900/60
+        border-l border-gray-100 dark:border-gray-800/60
+        transform transition duration-300 ease-in-out
+        ${isSettingsSideBarOpen ? 'translate-x-0' : 'translate-x-full'}
+      `}
+    >
+      {/* Header */}
+      <div className='flex items-center gap-2 pb-1'>
+        <div className='w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-sm flex-shrink-0'>
+          <svg className='w-3.5 h-3.5 text-white' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' />
+            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M15 12a3 3 0 11-6 0 3 3 0 016 0z' />
+          </svg>
+        </div>
+        <h2 className='text-sm font-semibold text-gray-900 dark:text-white'>Settings</h2>
+      </div>
+
+      {/* Participants */}
+      <section className='flex flex-col gap-1.5'>
+        <p className='section-label'>Participants</p>
         <List
-          id={'listInput'}
-          label={'Enter Names'}
           value={namesList}
           onChange={(e) => setNamesList(e)}
           onClear={() => resetNamesList()}
         />
-        <hr/>
-        <WinnerMessage/>
-        <hr/>
+      </section>
+
+      <div className='border-t border-gray-100 dark:border-gray-800/50' />
+
+      {/* Customization */}
+      <section className='flex flex-col gap-1.5'>
+        <p className='section-label'>Customization</p>
+        <WinnerMessage />
+      </section>
+
+      <div className='border-t border-gray-100 dark:border-gray-800/50' />
+
+      {/* Behavior */}
+      <section className='flex flex-col gap-2.5'>
+        <p className='section-label'>Behavior</p>
         <Toggle
           isOn={shouldRemoveName}
           handleToggle={() => setShouldRemoveName(!shouldRemoveName)}
-          label={'Remove after chosen?'}
+          label={'Remove after chosen'}
           hiddenMobile={false}
         />
-        <Toggle
-          isOn={showSettingsBtn}
-          handleToggle={() => setShowSettingsBtn(!showSettingsBtn)}
-          label={'Show Settings Button?'}
-          hiddenMobile={true}
-        />
-      </div>
-    </div>
-  )
-}
+      </section>
+    </aside>
+  );
+};
 
 export default SettingsSideBar;

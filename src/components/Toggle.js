@@ -1,26 +1,28 @@
-import { Switch } from '@headlessui/react'
+import { Switch } from '@headlessui/react';
 
 export default function Toggle(props) {
   return (
     <Switch.Group>
-      <div className={`flex items-center ${props.hiddenMobile ? 'md:hidden' : 'block'}`}>
+      <div className={`flex items-center justify-between ${props.hiddenMobile ? 'md:hidden' : 'flex'}`}>
+        <Switch.Label passive className='text-sm text-gray-600 dark:text-gray-400 select-none cursor-pointer'>
+          {props.label}
+        </Switch.Label>
         <Switch
           checked={props.isOn}
           onChange={props.handleToggle}
-          className={`${props.isOn ? 'bg-blue-600' : 'bg-slate-600'}
-            relative inline-flex flex-shrink-0 h-[34px] w-[62px] md:h-[24px] md:w-[42px] border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+          className={`${
+            props.isOn ? 'bg-indigo-500' : 'bg-gray-200 dark:bg-gray-700'
+          } relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-opacity-75`}
         >
-          <span className="sr-only">Use setting</span>
+          <span className='sr-only'>Use setting</span>
           <span
-            aria-hidden="true"
-            className={`${props.isOn ? 'translate-x-7 md:translate-x-[1.15rem]' : 'translate-x-0'}
-              pointer-events-none inline-block h-[30px] w-[30px] md:h-[20px] md:w-[20px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200`}
+            aria-hidden='true'
+            className={`${
+              props.isOn ? 'translate-x-5' : 'translate-x-0'
+            } pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow-md transform ring-0 transition ease-in-out duration-200`}
           />
         </Switch>
-        <Switch.Label passive className="ml-3">
-          {props.label}
-        </Switch.Label>
       </div>
     </Switch.Group>
-  )
+  );
 }

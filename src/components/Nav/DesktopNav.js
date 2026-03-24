@@ -1,71 +1,63 @@
-import { Link } from 'react-router-dom'
-import {darkModeState, settingsSideBarState} from '../../shared/globalState';
+import { Link, useLocation } from 'react-router-dom';
+import { darkModeState } from '../../shared/globalState';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
-
-import PopoverMenu from "../PopoverMenu";
-import ButtonSettings from "../Buttons/ButtonSettings";
-
-import FeaturesIcon from '../../assets/icons/FeaturesIcon';
-import FaqIcon from "../../assets/icons/FaqIcon";
-import FeedbackIcon from "../../assets/icons/FeedbackIcon";
-import {useRecoilState} from "recoil";
-
-const helpLinks = [
-  {
-    name: 'Features',
-    description: 'Discover the possibilities',
-    href: "/features",
-    icon: FeaturesIcon,
-  },
-  {
-    name: 'FAQs',
-    description: 'Need help with this website?',
-    href: '/help',
-    icon: FaqIcon,
-  },
-  {
-    name: 'Feedback',
-    description: 'Leave us a feedback',
-    href: '##',
-    icon: FeedbackIcon,
-  },
-  {
-    name: 'About the Developer',
-    description: 'Learn more about the person behind Name Roulette Web',
-    href: '##',
-    icon: FeedbackIcon,
-  },
-]
+import { useRecoilState } from 'recoil';
 
 const DesktopNav = () => {
+  const { pathname } = useLocation();
   const [checked, setChecked] = useRecoilState(darkModeState);
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useRecoilState(darkModeState);
-  const [isSettingsSideBarOpen, setIsSettingsSideBarOpen] = useRecoilState(settingsSideBarState);
 
   const handleChange = (checked) => {
     setChecked(checked);
     setIsDarkModeEnabled(!isDarkModeEnabled);
   };
 
-  return(
+  const navLinkClass = (path) =>
+    `relative px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-150 ${
+      pathname === path
+        ? 'text-indigo-600 dark:text-indigo-400'
+        : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800/60'
+    }`;
+
+  return (
     <>
-      <div className="items-center justify-center gap-6 hidden md:flex ">
-        <Link to="/">Home</Link>
-        <PopoverMenu
-          links={helpLinks}
-          label={'Help'}
-          footerTitle={'Documentation'}
-          footerSubTitle={'Learn how to use Name Roulette'}
-        />
-      </div>
-      <div className='py-2 justify-center items-center gap-4 hidden md:flex'>
+      <nav className="items-center justify-center gap-1 hidden md:flex">
+        <Link to="/" className={navLinkClass('/')}>
+          Home
+          {pathname === '/' && (
+            <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-indigo-500" />
+          )}
+        </Link>
+        <Link to="/features" className={navLinkClass('/features')}>
+          Features
+          {pathname === '/features' && (
+            <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-indigo-500" />
+          )}
+        </Link>
+        <Link to="/help" className={navLinkClass('/help')}>
+          FAQs
+          {pathname === '/help' && (
+            <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-indigo-500" />
+          )}
+        </Link>
+        <a
+          href="https://github.com/joiellantero/name-roulette-web"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-150 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800/60"
+        >
+          Documentation
+        </a>
+      </nav>
+      <div className='hidden md:flex items-center gap-3'>
+        <div className="h-5 w-px bg-gray-200 dark:bg-gray-700" />
         <DarkModeSwitch
           checked={checked}
           onChange={handleChange}
-          size={25}
-        />
-        <ButtonSettings
-          onClick={() => setIsSettingsSideBarOpen(!isSettingsSideBarOpen)}
+          size={18}
+          moonColor="#818cf8"
+          sunColor="#f59e0b"
         />
       </div>
     </>
