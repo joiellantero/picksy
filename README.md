@@ -1,98 +1,86 @@
 # Name Roulette Web
 
-Name Roulette Web is an open-source webapp version of [Name Roulette](https://github.com/joiellantero/name-roulette).
+Name Roulette Web is an open-source web app that picks a random name from a list — fairly and instantly.
 
 [![Visit - webapp](https://img.shields.io/badge/Visit-webapp-2ea44f?style=for-the-badge&logo=vercel)](https://nameroulette.vercel.app)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react)](https://react.dev)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3-38BDF8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com)
+
+---
 
 ## Features
 
-1. The webapp runs on the client side. Once it loads, there's really no need for any internet connection.
+- **Random name picker** — instantly draws a name from your list with a confetti celebration
+- **Participants list** — add names manually (one per line) or upload a `.txt` / `.csv` file
+- **Winner prompt** — customise the message shown when a name is drawn
+- **Remove after chosen** — optionally remove a name from the pool after it's picked
+- **Light / dark mode** — toggle from the nav on desktop, or the bottom dock on mobile
+- **Animated bottom dock** — mobile-first navigation with smooth framer-motion transitions
+- **Fully client-side** — no data is ever sent to a server; everything runs in the browser
+- **State persistence** — theme, names list, winner message, and behavior settings are all saved to `localStorage` via Recoil
 
-2. State Persistence
-   1. I used `recoil` as the state management library for this project and shown below are the states that is saved in the local storage.
-      1. Theme (light or dark mode)
-      2. Settings Side Bar (if pinned or not)
-      3. Names list
-      4. Winner prompt message
-      5. Remove name toggle
+## Tech Stack
 
-3. File Upload
-   1. Accept one .txt or .csv file at a time.
-      > There is an existing Chromium bug but, I added a temporary solution until the bug is fixed. You may view my solution [here.](#miscellaneous)
-   2. The files uploaded are not uploaded to a database. The contents of the files are only read.
-      > Take note that the contents read will be saved to the names list and it is one of the states saved to your local storage.
-   
+| Library | Version | Purpose |
+|---|---|---|
+| React | 18 | UI framework |
+| Tailwind CSS | 3 | Styling |
+| Recoil | 0.7 | State management + localStorage persistence |
+| Framer Motion | 11 | Animated bottom dock and transitions |
+| React Router DOM | 6 | Client-side routing |
+| Headless UI | 1.7 | Accessible modal / dialog |
+| react-canvas-confetti | 2 | Winner confetti animation |
+
 ## Getting Started
 
-### Host your own
+### Run locally
 
-1. Vercel
-2. Netlify
-3. Heroku
+```shell
+# 1. Clone the repo
+git clone https://github.com/joiellantero/name-roulette-web.git
+cd name-roulette-web
 
-### Local Deployment
+# 2. Install dependencies
+npm install
 
-1. Clone the repository or download the latest release
-   
-   ```shell
-   git clone https://github.com/joiellantero/name-roulette-web.git
-   ```
+# 3. Start the dev server
+npm start
+```
 
-3. Install the dependencies
+The app will be available at `http://localhost:3000`.
 
-   ```shell
-   npm install
-   ```
+### Build for production
 
-4. Deploy the webapp locally
+```shell
+npm run build
+```
 
-   ```shell
-   npm run dev
-   ```
+### Deploy
 
-### Customization
+Works out of the box with [Vercel](https://vercel.com), [Netlify](https://netlify.com), or any static hosting provider — just point it at the `build/` folder.
 
-1. Changing the theme colors of the webapp is done in the `tailwind.config.js` file. 
-2. Simply update the hex values of the colors to change the theme colors.
-3. For more information regarding tailwind css, visit this [link](https://tailwindcss.com/docs/theme#header).
+## Customization
 
-## Miscellaneous
+Theme colors (indigo / violet brand palette, dark background, animations) are defined in `tailwind.config.js`. Update the values there to retheme the app.
 
-1. [MacOS Chromium Bug](https://bugs.chromium.org/p/chromium/issues/detail?id=646941)
-   1. The file upload should only allow .txt and .csv files but, MacOS Chromium browsers consider .txt like text/*. Thus, .py, .php, .js files and the like also become accepted filetypes. Here's another [reference](https://stackoverflow.com/questions/39508849/accept-attribute-for-inputtype-file-allows-other-extensions) to the bug.
-   2. Current Solution:
-      1. In the meantime, what I did was check the file extension again in my `handleUpload` function and added error handling for invalid file types.
-        
-          ```javascript
-          const handleUpload = async (e) => {
-            e.preventDefault();
-            let file = e.target.files[0];
-            let allowedExtensions = /(\.csv|\.txt)$/i;
-            if (file){
-              if (allowedExtensions.exec(file.name)){
-                let reader = new FileReader();
-                reader.onload = async (e) => {
-                  let content = e.target.result;
-                  props.onUpload(content);
-                }
-                reader.readAsText(file);
-              } else {
-                alert("Only plain text (.txt) and comma-separated-value (.csv) files are allowed.");
-              }
-            }
-          }
-          ```
+## File Upload Notes
 
-## Author
-
-- Joie Llantero
+The file input accepts `.txt` and `.csv` files. Due to a [Chromium bug on macOS](https://bugs.chromium.org/p/chromium/issues/detail?id=646941), some text-like files (`.py`, `.js`, etc.) may pass the browser's `accept` filter. This is handled defensively in `FileUpload.js` by re-validating the file extension before reading it.
 
 ## Contributors
 
-- All contributions are welcome!
+All contributions are welcome! Feel free to open issues or pull requests.
 
-## Support Me
+## Support
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/W7W5AOIF9)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/joiel)
 
 ## License
+
+This project is licensed under the **[PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0/)**.
+
+**In Summary:**
+- ✅ Free to use, study, and modify for personal or open-source projects
+- ✅ Free to share and redistribute non-commercially
+- ❌ Cannot be used for commercial purposes
+- ❌ Cannot be used in any way that generates revenue or monetary compensation
