@@ -10,7 +10,7 @@ const Modal = (props) => {
     <Transition appear show={props.isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className={`fixed inset-0 z-10 overflow-y-auto ${isDarkModeEnabled ? 'dark' : ''}`}
+        className={`fixed inset-0 z-[60] overflow-y-auto ${isDarkModeEnabled ? 'dark' : ''}`}
         onClose={() => props.onClose(false)}
       >
         <div className="min-h-screen px-4 flex items-center justify-center">
