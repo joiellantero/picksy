@@ -71,14 +71,14 @@ export default function SpinWheel({ removeName }) {
       ctx.stroke();
 
       // Icon circle: bg-indigo-50 dark:bg-indigo-900/20  (circular)
-      const iconCY = cy - 22 * DPR;
+      const iconCY = cy - 32 * DPR;
       ctx.beginPath();
-      ctx.arc(cx, iconCY, 22 * DPR, 0, 2 * Math.PI);
+      ctx.arc(cx, iconCY, 32 * DPR, 0, 2 * Math.PI);
       ctx.fillStyle = dark ? 'rgba(49,27,146,0.2)' : '#eef2ff';
       ctx.fill();
 
       // Group/people icon (same SVG path as list empty state), drawn via Path2D
-      const iconScale = 1.05 * DPR;
+      const iconScale = 1.5 * DPR;
       ctx.save();
       ctx.translate(cx - 12 * iconScale, iconCY - 12 * iconScale);
       ctx.scale(iconScale, iconScale);
@@ -91,15 +91,15 @@ export default function SpinWheel({ removeName }) {
 
       // "No participants yet": text-gray-500 dark:text-gray-400
       ctx.fillStyle = dark ? '#9ca3af' : '#6b7280';
-      ctx.font = `600 ${13 * DPR}px system-ui,-apple-system,sans-serif`;
+      ctx.font = `600 ${16 * DPR}px system-ui,-apple-system,sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText('No participants yet', cx, cy + 14 * DPR);
+      ctx.fillText('No participants yet', cx, cy + 24 * DPR);
 
       // Hint: text-gray-400 dark:text-gray-500
       ctx.fillStyle = dark ? '#6b7280' : '#9ca3af';
-      ctx.font = `${11 * DPR}px system-ui,-apple-system,sans-serif`;
-      ctx.fillText('Open settings to add names', cx, cy + 32 * DPR);
+      ctx.font = `${14 * DPR}px system-ui,-apple-system,sans-serif`;
+      ctx.fillText('Open settings to add names', cx, cy + 46 * DPR);
       return;
     }
 
