@@ -12,7 +12,7 @@ import Toggle from '../Toggle';
 
 /* ── Inline SVG icons ─────────────────────────────────────── */
 const PagesIcon = () => (
-  <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <svg className="w-[22px] h-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75}
       d="M4 6h16M4 12h16M4 18h16"
     />
@@ -20,7 +20,7 @@ const PagesIcon = () => (
 );
 
 const GearIcon = () => (
-  <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <svg className="w-[22px] h-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75}
       d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
     />
@@ -37,7 +37,7 @@ const NAV_PAGES = [
 ];
 
 const itemClass =
-  'flex items-center w-full px-3 py-2.5 text-sm font-medium text-gray-600 dark:text-gray-400 rounded-xl md:hover:bg-gray-100 md:dark:hover:bg-gray-800 md:hover:text-gray-900 md:dark:hover:text-white transition-all duration-75';
+  'flex items-center w-full px-4 py-3.5 text-base font-medium text-gray-600 dark:text-gray-400 rounded-xl md:hover:bg-gray-100 md:dark:hover:bg-gray-800 md:hover:text-gray-900 md:dark:hover:text-white transition-all duration-75';
 
 /* ── Component ─────────────────────────────────────────────── */
 const MobileNav = () => {
@@ -66,7 +66,7 @@ const MobileNav = () => {
     switch (view) {
       case 'pages':
         return (
-          <div className="space-y-0.5 min-w-[160px] p-1.5">
+          <div className="space-y-0.5 min-w-[200px] p-2">
             {NAV_PAGES.map(({ text, to, external }) =>
               external ? (
                 <a key={text} href={to} target="_blank" rel="noopener noreferrer" onClick={() => setView('default')}>
@@ -150,7 +150,7 @@ const MobileNav = () => {
             exit={{ opacity: 0, height: 0, width: 0 }}
             transition={{ duration: 0.25, ease: [0.45, 0, 0.25, 1] }}
             style={{ transformOrigin: 'bottom center' }}
-            className="absolute bottom-[68px]"
+            className="absolute bottom-[80px]"
           >
             <div
               ref={elementRef}
@@ -174,11 +174,11 @@ const MobileNav = () => {
       </AnimatePresence>
 
       {/* Floating toolbar */}
-      <div className="flex items-center gap-1 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700/50 rounded-[18px] p-1 shadow-lg z-10">
+      <div className="flex items-center gap-1.5 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700/50 rounded-[22px] p-1.5 shadow-lg z-10 select-none">
         {mainNav.map(({ Icon, name, action }) => (
           <button
             key={name}
-            className={`p-3 rounded-2xl transition-all duration-150 ${
+            className={`p-3.5 rounded-2xl transition-all duration-150 [-webkit-tap-highlight-color:transparent] select-none ${
               !action && view === name
                 ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
                 : 'text-gray-500 dark:text-gray-400 md:hover:bg-gray-100 md:dark:hover:bg-gray-800'
@@ -189,7 +189,7 @@ const MobileNav = () => {
               <DarkModeSwitch
                 checked={isDarkMode}
                 onChange={() => {}}
-                size={18}
+                size={22}
                 moonColor="#818cf8"
                 sunColor="#f59e0b"
               />

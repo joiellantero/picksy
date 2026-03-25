@@ -254,7 +254,7 @@ export default function SpinWheel({ removeName }) {
       <button
         onClick={spin}
         disabled={isEmpty || spinning}
-        className={`w-full flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-white rounded-xl shadow-md transition-colors duration-200 ${
+        className={`w-full flex items-center justify-center gap-2 px-6 py-4 sm:py-3 text-base sm:text-sm font-semibold text-white rounded-xl shadow-md transition-colors duration-200 ${
           isEmpty || spinning
             ? 'bg-indigo-300 dark:bg-indigo-900/40 cursor-not-allowed opacity-60'
             : 'bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 active:from-indigo-700 active:to-violet-800'

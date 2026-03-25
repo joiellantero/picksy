@@ -32,38 +32,14 @@ export default function App() {
           <div className="max-w-5xl mx-auto">
 
             {/* ── Mobile footer ── */}
-            <div className="md:hidden flex flex-col items-center gap-5 text-center">
-              {/* Brand */}
-              <div>
-                <p className="text-sm font-semibold bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent tracking-tight">
-                  Picksy
-                </p>
-                <p className="mt-0.5 text-[11px] text-gray-400 dark:text-gray-600 italic">Pick a name. Make it fair.</p>
-              </div>
-
-              {/* Action links */}
+            <div className="md:hidden flex flex-col items-center gap-2 text-center">
+              <p className="text-xs font-semibold bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent tracking-tight">Picksy</p>
               <div className="flex items-center gap-3">
-                <a
-                  href="https://sudojoie.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                >
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                  Blog
-                </a>
-                <a
-                  href="https://ko-fi.com/joiel"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors"
-                >
-                  <span>☕</span>
-                  Buy me a coffee
-                </a>
+                <a href="https://sudojoie.com" target="_blank" rel="noopener noreferrer" className="text-[10px] text-gray-300 dark:text-gray-700 hover:text-indigo-400 dark:hover:text-indigo-500 transition-colors">Blog</a>
+                <span className="text-[10px] text-gray-200 dark:text-gray-800">&middot;</span>
+                <a href="https://ko-fi.com/joiel" target="_blank" rel="noopener noreferrer" className="text-[10px] text-gray-300 dark:text-gray-700 hover:text-amber-400 dark:hover:text-amber-500 transition-colors">☕ Buy me a coffee</a>
               </div>
-
-              <p className="text-[11px] text-gray-300 dark:text-gray-700">&copy; {new Date().getFullYear()} joiellantero</p>
+              <p className="text-[10px] text-gray-300 dark:text-gray-700">&copy; {new Date().getFullYear()} joiellantero &mdash; Pick a name. Make it fair.</p>
             </div>
 
             {/* ── Desktop footer ── */}
