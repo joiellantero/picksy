@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { namesListState, winnerMessageState } from '../shared/globalState';
+import { namesListState, winnerMessageState, darkModeState } from '../shared/globalState';
 import Modal from './Modals/Modal';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 
@@ -34,6 +34,7 @@ export default function SpinWheel({ removeName }) {
 
   const [namesList, setNamesList] = useRecoilState(namesListState);
   const winnerMessage = useRecoilValue(winnerMessageState);
+  const isDarkMode = useRecoilValue(darkModeState);
 
   const names = (() => {
     const raw = typeof namesList === 'string' ? namesList : '';
@@ -47,7 +48,7 @@ export default function SpinWheel({ removeName }) {
       ? winnerMessage
       : '🎉 And the winner is...';
 
-  const drawWheel = useCallback((rot) => {
+  const drawWheel = useCallback((rot, dark = isDarkMode) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -60,14 +61,45 @@ export default function SpinWheel({ removeName }) {
     ctx.clearRect(0, 0, sz, sz);
 
     if (n === 0) {
-      // Empty state — draw a placeholder ring
+      // Empty state — matches the list view card theme
       ctx.beginPath();
       ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
-      ctx.fillStyle = '#f3f4f6';
+      ctx.fillStyle = dark ? '#1f2937' : '#ffffff'; // card: bg-white dark:bg-gray-800
       ctx.fill();
-      ctx.strokeStyle = '#e5e7eb';
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = dark ? 'rgba(55,65,81,0.5)' : '#f3f4f6'; // dark:border-gray-700/50 / border-gray-100
+      ctx.lineWidth = 2 * DPR;
       ctx.stroke();
+
+      // Icon circle: bg-indigo-50 dark:bg-indigo-900/20  (circular)
+      const iconCY = cy - 22 * DPR;
+      ctx.beginPath();
+      ctx.arc(cx, iconCY, 22 * DPR, 0, 2 * Math.PI);
+      ctx.fillStyle = dark ? 'rgba(49,27,146,0.2)' : '#eef2ff';
+      ctx.fill();
+
+      // Group/people icon (same SVG path as list empty state), drawn via Path2D
+      const iconScale = 1.05 * DPR;
+      ctx.save();
+      ctx.translate(cx - 12 * iconScale, iconCY - 12 * iconScale);
+      ctx.scale(iconScale, iconScale);
+      ctx.strokeStyle = '#818cf8';
+      ctx.lineWidth = 1.5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke(new Path2D('M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'));
+      ctx.restore();
+
+      // "No participants yet": text-gray-500 dark:text-gray-400
+      ctx.fillStyle = dark ? '#9ca3af' : '#6b7280';
+      ctx.font = `600 ${13 * DPR}px system-ui,-apple-system,sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('No participants yet', cx, cy + 14 * DPR);
+
+      // Hint: text-gray-400 dark:text-gray-500
+      ctx.fillStyle = dark ? '#6b7280' : '#9ca3af';
+      ctx.font = `${11 * DPR}px system-ui,-apple-system,sans-serif`;
+      ctx.fillText('Open settings to add names', cx, cy + 32 * DPR);
       return;
     }
 
@@ -122,7 +154,7 @@ export default function SpinWheel({ removeName }) {
     ctx.strokeStyle = 'rgba(255,255,255,0.9)';
     ctx.lineWidth = 2;
     ctx.stroke();
-  }, [names]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [names, isDarkMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     drawWheel(rotationRef.current);
