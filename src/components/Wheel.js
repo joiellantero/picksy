@@ -1,4 +1,4 @@
-import {useState, useCallback, useRef} from 'react';
+import {useState, useCallback, useRef, useEffect} from 'react';
 import {useRecoilState, useRecoilValue} from "recoil";
 import {namesListState, winnerMessageState, spinModeState} from "../shared/globalState";
 
@@ -24,6 +24,8 @@ const Wheel = (props) => {
   const winnerMessageValue = useRecoilValue(winnerMessageState);
   const [namesList, setNamesList] = useRecoilState(namesListState);
   const [isSpinMode, setIsSpinMode] = useRecoilState(spinModeState);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const containerRef = useRef(null);
 
   const getCleanNames = () => {
     const raw = typeof namesList === 'string' ? namesList : '';
@@ -70,6 +72,20 @@ const Wheel = (props) => {
     makeShot(0.1,  { spread: 120, startVelocity: 45 });
   }, [makeShot]);
 
+  const toggleFullscreen = useCallback(() => {
+    if (!document.fullscreenElement) {
+      containerRef.current?.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }, []);
+
+  useEffect(() => {
+    const onChange = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener('fullscreenchange', onChange);
+    return () => document.removeEventListener('fullscreenchange', onChange);
+  }, []);
+
   const isEmpty = cleanedNames.length === 0;
   const winnerPrompt = winnerMessageValue && winnerMessageValue.length > 0
     ? winnerMessageValue
@@ -77,7 +93,8 @@ const Wheel = (props) => {
 
   return (
     <>
-      <div className='flex flex-col items-center gap-6 w-full py-8 px-4 sm:px-6'>
+      <div ref={containerRef} className={`flex flex-col items-center gap-6 w-full py-8 px-4 sm:px-6${isFullscreen ? ' bg-gray-50 dark:bg-[#0c0c14] min-h-full' : ''}`}>
+        <div className={isFullscreen ? 'w-full max-w-lg mx-auto flex flex-col gap-6 items-center' : 'contents'}>
 
         {/* Page header */}
         <div className='text-center'>
@@ -91,33 +108,52 @@ const Wheel = (props) => {
           </p>
         </div>
 
-        {/* Mode toggle */}
-        <div className='flex items-center p-1 bg-gray-100 dark:bg-gray-800/60 rounded-xl self-center'>
+        {/* Mode toggle + fullscreen */}
+        <div className='flex items-center gap-2 self-center'>
+          <div className='flex items-center p-1 bg-gray-100 dark:bg-gray-800/60 rounded-xl'>
+            <button
+              onClick={() => setIsSpinMode(false)}
+              className={`flex items-center gap-1.5 px-4 py-2.5 sm:px-3 sm:py-1.5 rounded-lg text-sm sm:text-xs font-medium transition-all duration-150 ${
+                !isSpinMode
+                  ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
+                  : 'text-gray-500 dark:text-gray-400'
+              }`}
+            >
+              <svg className='w-5 h-5 sm:w-3.5 sm:h-3.5' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4 6h16M4 10h16M4 14h16M4 18h16' />
+              </svg>
+              List
+            </button>
+            <button
+              onClick={() => setIsSpinMode(true)}
+              className={`flex items-center gap-1.5 px-4 py-2.5 sm:px-3 sm:py-1.5 rounded-lg text-sm sm:text-xs font-medium transition-all duration-150 ${
+                isSpinMode
+                  ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
+                  : 'text-gray-500 dark:text-gray-400'
+              }`}
+            >
+              <svg className='w-5 h-5 sm:w-3.5 sm:h-3.5' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 2a10 10 0 100 20A10 10 0 0012 2zm0 0v10m0 0l-3-3m3 3l3-3' />
+              </svg>
+              Wheel
+            </button>
+          </div>
           <button
-            onClick={() => setIsSpinMode(false)}
-            className={`flex items-center gap-1.5 px-4 py-2.5 sm:px-3 sm:py-1.5 rounded-lg text-sm sm:text-xs font-medium transition-all duration-150 ${
-              !isSpinMode
-                ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
-                : 'text-gray-500 dark:text-gray-400'
-            }`}
+            onClick={toggleFullscreen}
+            className='p-2 rounded-xl text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/60 transition-all duration-150 [-webkit-tap-highlight-color:transparent]'
+            title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
           >
-            <svg className='w-5 h-5 sm:w-3.5 sm:h-3.5' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4 6h16M4 10h16M4 14h16M4 18h16' />
-            </svg>
-            List
-          </button>
-          <button
-            onClick={() => setIsSpinMode(true)}
-            className={`flex items-center gap-1.5 px-4 py-2.5 sm:px-3 sm:py-1.5 rounded-lg text-sm sm:text-xs font-medium transition-all duration-150 ${
-              isSpinMode
-                ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
-                : 'text-gray-500 dark:text-gray-400'
-            }`}
-          >
-            <svg className='w-5 h-5 sm:w-3.5 sm:h-3.5' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 2a10 10 0 100 20A10 10 0 0012 2zm0 0v10m0 0l-3-3m3 3l3-3' />
-            </svg>
-            Wheel
+            {isFullscreen ? (
+              /* Exit fullscreen — X in a box */
+              <svg className='w-5 h-5 sm:w-4 sm:h-4' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
+              </svg>
+            ) : (
+              /* Expand / enter fullscreen — arrows pointing outward */
+              <svg className='w-5 h-5 sm:w-4 sm:h-4' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4' />
+              </svg>
+            )}
           </button>
         </div>
 
@@ -145,7 +181,7 @@ const Wheel = (props) => {
                       {cleanedNames.length}
                     </span>
                   </div>
-                  <ul className='divide-y divide-gray-50 dark:divide-gray-700/30 max-h-96 overflow-y-auto'>
+                  <ul className={`divide-y divide-gray-50 dark:divide-gray-700/30 overflow-y-auto ${isFullscreen ? 'max-h-[60vh]' : 'max-h-96'}`}>
                     {cleanedNames.map((name, index) => (
                       <li
                         key={index}
@@ -172,6 +208,7 @@ const Wheel = (props) => {
             />
           </>
         )}
+        </div>
       </div>
 
       {!isSpinMode && (
