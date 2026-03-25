@@ -123,7 +123,7 @@ const MobileNav = () => {
   return (
     <div
       ref={containerRef}
-      className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center overflow-visible"
+      className="mobile-nav md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center overflow-visible"
     >
       {/* Hidden clone — gives react-use-measure the target size before animation */}
       <div

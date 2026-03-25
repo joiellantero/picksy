@@ -8,6 +8,13 @@
     @apply antialiased;
   }
 
+  /* Hide nav & footer when the wheel is in fullscreen mode */
+  body.fullscreen-mode header,
+  body.fullscreen-mode footer,
+  body.fullscreen-mode .mobile-nav {
+    display: none !important;
+  }
+
   input,
   textarea {
     -webkit-tap-highlight-color: transparent;

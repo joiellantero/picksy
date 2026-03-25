@@ -76,7 +76,15 @@ const Wheel = (props) => {
 
   useEffect(() => {
     document.body.style.overflow = isFullscreen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    if (isFullscreen) {
+      document.body.classList.add('fullscreen-mode');
+    } else {
+      document.body.classList.remove('fullscreen-mode');
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.classList.remove('fullscreen-mode');
+    };
   }, [isFullscreen]);
 
   const isEmpty = cleanedNames.length === 0;
@@ -89,23 +97,25 @@ const Wheel = (props) => {
       <div
         ref={containerRef}
         className={isFullscreen
-          ? 'fixed inset-0 z-40 bg-gray-50 dark:bg-[#0c0c14] flex flex-col items-center overflow-y-auto'
+          ? 'fixed inset-0 z-40 bg-gray-50 dark:bg-[#0c0c14] flex flex-col items-center justify-center overflow-y-auto'
           : 'flex flex-col items-center gap-6 w-full py-8 px-4 sm:px-6'
         }
       >
         <div className={isFullscreen ? 'w-full max-w-lg mx-auto flex flex-col gap-6 items-center py-8 px-4' : 'contents'}>
 
-        {/* Page header */}
-        <div className='text-center'>
-          <h1 className='text-3xl font-bold tracking-tight text-gray-900 dark:text-white'>
-            {isSpinMode ? 'Spin the Wheel' : 'Pick a Random Name'}
-          </h1>
-          <p className='mt-2 text-sm text-gray-500 dark:text-gray-400'>
-            {isEmpty
-              ? 'Add names in settings to get started'
-              : `${cleanedNames.length} participant${cleanedNames.length !== 1 ? 's' : ''} in the draw`}
-          </p>
-        </div>
+        {/* Page header — hidden in fullscreen */}
+        {!isFullscreen && (
+          <div className='text-center'>
+            <h1 className='text-3xl font-bold tracking-tight text-gray-900 dark:text-white'>
+              {isSpinMode ? 'Spin the Wheel' : 'Pick a Random Name'}
+            </h1>
+            <p className='mt-2 text-sm text-gray-500 dark:text-gray-400'>
+              {isEmpty
+                ? 'Add names in settings to get started'
+                : `${cleanedNames.length} participant${cleanedNames.length !== 1 ? 's' : ''} in the draw`}
+            </p>
+          </div>
+        )}
 
         {/* Mode toggle + fullscreen */}
         <div className='flex items-center gap-2 self-center'>
