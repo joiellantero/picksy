@@ -4,28 +4,13 @@ import useMeasure from 'react-use-measure';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { darkModeState, namesListState, removeState } from '../../shared/globalState';
+import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
 import List from '../List';
 import WinnerMessage from '../WinnerMessage';
 import Toggle from '../Toggle';
 
 /* ── Inline SVG icons ─────────────────────────────────────── */
-const SunIcon = () => (
-  <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75}
-      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-    />
-  </svg>
-);
-
-const MoonIcon = () => (
-  <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75}
-      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-    />
-  </svg>
-);
-
 const PagesIcon = () => (
   <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75}
@@ -51,13 +36,8 @@ const NAV_PAGES = [
   { text: 'Documentation', to: 'https://github.com/joiellantero/name-roulette-web', external: true },
 ];
 
-const THEME_OPTIONS = [
-  { key: false, Icon: SunIcon, text: 'Light' },
-  { key: true,  Icon: MoonIcon, text: 'Dark' },
-];
-
 const itemClass =
-  'flex items-center w-full px-3 py-2.5 text-sm font-medium text-gray-600 dark:text-gray-400 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all duration-75';
+  'flex items-center w-full px-3 py-2.5 text-sm font-medium text-gray-600 dark:text-gray-400 rounded-xl md:hover:bg-gray-100 md:dark:hover:bg-gray-800 md:hover:text-gray-900 md:dark:hover:text-white transition-all duration-75';
 
 /* ── Component ─────────────────────────────────────────────── */
 const MobileNav = () => {
@@ -101,26 +81,6 @@ const MobileNav = () => {
           </div>
         );
 
-      case 'theme':
-        return (
-          <div className="flex items-center gap-1.5 p-1.5 min-w-[190px]">
-            {THEME_OPTIONS.map(({ key, Icon, text }) => (
-              <button
-                key={String(key)}
-                onClick={() => setIsDarkMode(key)}
-                className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-all duration-100 ${
-                  isDarkMode === key
-                    ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300'
-                    : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
-                }`}
-              >
-                <Icon />
-                <span>{text}</span>
-              </button>
-            ))}
-          </div>
-        );
-
       case 'settings':
         return (
           <div className="p-3 w-[90vw] max-w-[300px] space-y-3">
@@ -150,12 +110,13 @@ const MobileNav = () => {
   }, [view, isDarkMode, setIsDarkMode, namesList, setNamesList, resetNamesList, shouldRemoveName, setShouldRemoveName]);
 
   const mainNav = [
-    { Icon: PagesIcon, name: 'pages' },
-    { Icon: isDarkMode ? MoonIcon : SunIcon, name: 'theme' },
-    { Icon: GearIcon, name: 'settings' },
+    { Icon: PagesIcon, name: 'pages', action: null },
+    { Icon: null, name: 'theme', action: () => { setIsDarkMode((d) => !d); setView('default'); } },
+    { Icon: GearIcon, name: 'settings', action: null },
   ];
 
-  const handleNavClick = (name) => {
+  const handleNavClick = (name, action) => {
+    if (action) { action(); return; }
     setView((prev) => (prev === name ? 'default' : name));
   };
 
@@ -214,17 +175,27 @@ const MobileNav = () => {
 
       {/* Floating toolbar */}
       <div className="flex items-center gap-1 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700/50 rounded-[18px] p-1 shadow-lg z-10">
-        {mainNav.map(({ Icon, name }) => (
+        {mainNav.map(({ Icon, name, action }) => (
           <button
             key={name}
             className={`p-3 rounded-2xl transition-all duration-150 ${
-              view === name
+              !action && view === name
                 ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
-                : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                : 'text-gray-500 dark:text-gray-400 md:hover:bg-gray-100 md:dark:hover:bg-gray-800'
             }`}
-            onClick={() => handleNavClick(name)}
+            onClick={() => handleNavClick(name, action)}
           >
-            <Icon />
+            {name === 'theme' ? (
+              <DarkModeSwitch
+                checked={isDarkMode}
+                onChange={() => {}}
+                size={18}
+                moonColor="#818cf8"
+                sunColor="#f59e0b"
+              />
+            ) : (
+              <Icon />
+            )}
           </button>
         ))}
       </div>
