@@ -107,7 +107,7 @@ const MobileNav = () => {
       default:
         return null;
     }
-  }, [view, isDarkMode, setIsDarkMode, namesList, setNamesList, resetNamesList, shouldRemoveName, setShouldRemoveName]);
+  }, [view, namesList, setNamesList, resetNamesList, shouldRemoveName, setShouldRemoveName]);
 
   const mainNav = [
     { Icon: PagesIcon, name: 'pages', action: null },
