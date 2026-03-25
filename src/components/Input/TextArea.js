@@ -4,7 +4,7 @@ const TextArea = (props) => {
   return (
     props.readOnly ? (
       <textarea
-        className="w-full px-4 py-3 text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:outline-none resize-none font-mono leading-relaxed placeholder:text-gray-400"
+        className="w-full px-4 py-3 text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/50 rounded-xl outline-none resize-none font-mono leading-relaxed placeholder:text-gray-400"
         value={props.value}
         rows={props.rows}
         id={props.id}
@@ -15,7 +15,7 @@ const TextArea = (props) => {
     ) : (
       <div className='relative'>
         <textarea
-          className="w-full px-4 py-3 text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400/40 focus:border-indigo-400 dark:focus:border-indigo-500/60 transition-all duration-200 resize-none placeholder:text-gray-400 dark:placeholder:text-gray-600"
+          className="w-full px-4 py-3 text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/50 rounded-xl outline-none appearance-none focus:ring-2 focus:ring-indigo-400/40 focus:ring-offset-0 focus:border-gray-200 dark:focus:border-gray-700/50 resize-none placeholder:text-gray-400 dark:placeholder:text-gray-600"
           value={props.value}
           rows={props.rows}
           id={props.id}

@@ -99,7 +99,7 @@ export default function App() {
                   <div className="flex flex-col gap-2">
                     <p className="text-[10px] uppercase tracking-widest font-semibold text-gray-300 dark:text-gray-700 mb-1">Developer</p>
                     <a href="https://sudojoie.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 dark:text-gray-600 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Blog</a>
-                    <a href="https://github.com/joiellantero/name-roulette-web" target="_blank" rel="noopener noreferrer" className="text-gray-400 dark:text-gray-600 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">GitHub</a>
+                    <a href="https://github.com/joiellantero/picksy" target="_blank" rel="noopener noreferrer" className="text-gray-400 dark:text-gray-600 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">GitHub</a>
                   </div>
                 </div>
               </div>

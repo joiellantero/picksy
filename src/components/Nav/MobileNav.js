@@ -33,7 +33,7 @@ const NAV_PAGES = [
   { text: 'Home', to: '/' },
   { text: 'Features', to: '/features' },
   { text: 'FAQs', to: '/help' },
-  { text: 'Documentation', to: 'https://github.com/joiellantero/name-roulette-web', external: true },
+  { text: 'Documentation', to: 'https://github.com/joiellantero/picksy', external: true },
 ];
 
 const itemClass =

@@ -84,7 +84,7 @@ const Features = () => {
 
       <p className='mt-8 text-xs text-gray-400 dark:text-gray-600'>
         Have a feature request?{' '}
-        <a href='https://github.com/joiellantero/picksy/issues' className='link'>Let us know</a>.
+        <a href='https://github.com/joiellantero/picksy/issues' className='link' target="_blank" rel="noopener noreferrer">Let us know</a>.
       </p>
     </div>
   );

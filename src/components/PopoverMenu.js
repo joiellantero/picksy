@@ -51,7 +51,7 @@ const PopoverMenu = (props) => {
                 </div>
                 <div className="border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-3">
                   <a
-                    href="https://github.com/joiellantero/name-roulette-web.git"
+                    href="https://github.com/joiellantero/picksy"
                     className="flex items-center gap-2.5 text-sm hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors focus:outline-none"
                     target='_blank'
                     rel='noopener noreferrer'

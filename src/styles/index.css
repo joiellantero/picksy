@@ -7,6 +7,11 @@
   body {
     @apply antialiased;
   }
+
+  input,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 @layer components {
