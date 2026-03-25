@@ -72,19 +72,12 @@ const Wheel = (props) => {
     makeShot(0.1,  { spread: 120, startVelocity: 45 });
   }, [makeShot]);
 
-  const toggleFullscreen = useCallback(() => {
-    if (!document.fullscreenElement) {
-      containerRef.current?.requestFullscreen();
-    } else {
-      document.exitFullscreen();
-    }
-  }, []);
+  const toggleFullscreen = useCallback(() => setIsFullscreen(f => !f), []);
 
   useEffect(() => {
-    const onChange = () => setIsFullscreen(!!document.fullscreenElement);
-    document.addEventListener('fullscreenchange', onChange);
-    return () => document.removeEventListener('fullscreenchange', onChange);
-  }, []);
+    document.body.style.overflow = isFullscreen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isFullscreen]);
 
   const isEmpty = cleanedNames.length === 0;
   const winnerPrompt = winnerMessageValue && winnerMessageValue.length > 0
@@ -93,8 +86,14 @@ const Wheel = (props) => {
 
   return (
     <>
-      <div ref={containerRef} className={`flex flex-col items-center gap-6 w-full py-8 px-4 sm:px-6${isFullscreen ? ' bg-gray-50 dark:bg-[#0c0c14] min-h-full' : ''}`}>
-        <div className={isFullscreen ? 'w-full max-w-lg mx-auto flex flex-col gap-6 items-center' : 'contents'}>
+      <div
+        ref={containerRef}
+        className={isFullscreen
+          ? 'fixed inset-0 z-40 bg-gray-50 dark:bg-[#0c0c14] flex flex-col items-center overflow-y-auto'
+          : 'flex flex-col items-center gap-6 w-full py-8 px-4 sm:px-6'
+        }
+      >
+        <div className={isFullscreen ? 'w-full max-w-lg mx-auto flex flex-col gap-6 items-center py-8 px-4' : 'contents'}>
 
         {/* Page header */}
         <div className='text-center'>
