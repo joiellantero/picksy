@@ -47,3 +47,9 @@ export const winnerMessageState = atom({
   default: [],
   effects: [localPersist]
 })
+
+export const spinModeState = atom({
+  key: 'spinModeState',
+  default: false,
+  effects: [localPersist]
+})
