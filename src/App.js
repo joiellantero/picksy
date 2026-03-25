@@ -26,7 +26,7 @@ export default function App() {
       <MobileNav />
 
       {/* ── Footer ── */}
-      <footer className="relative pb-28 md:pb-0">
+      <footer className="relative pb-28 md:pb-0 bg-white dark:bg-[#0c0c14]">
         <div className="h-px bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent" />
         <div className="bg-white dark:bg-[#0c0c14] px-6 pt-8 pb-6">
           <div className="max-w-5xl mx-auto">
