@@ -1,10 +1,10 @@
 import { Fragment } from 'react'
-import { Dialog, Transition } from '@headlessui/react';
+import { Dialog, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import {darkModeState} from '../../shared/globalState';
-import {useRecoilValue} from "recoil";
+import {useAtomValue} from "jotai";
 
 const Modal = (props) => {
-  const isDarkModeEnabled = useRecoilValue(darkModeState);
+  const isDarkModeEnabled = useAtomValue(darkModeState);
 
   return (
     <Transition appear show={props.isOpen} as={Fragment}>
@@ -14,7 +14,7 @@ const Modal = (props) => {
         onClose={() => props.onClose(false)}
       >
         <div className="min-h-screen px-4 flex items-center justify-center">
-          <Transition.Child
+          <TransitionChild
             as={Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0"
@@ -23,10 +23,10 @@ const Modal = (props) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm" />
-          </Transition.Child>
+            <div className="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm" aria-hidden="true" />
+          </TransitionChild>
 
-          <Transition.Child
+          <TransitionChild
             as={Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0 scale-90 translate-y-4"
@@ -40,12 +40,12 @@ const Modal = (props) => {
               onClick={() => props.onClose(false)}
             >
 
-              <Dialog.Title
+              <DialogTitle
                 as="p"
                 className="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-5"
               >
                 {props.title}
-              </Dialog.Title>
+              </DialogTitle>
 
               <p className="text-5xl font-extrabold bg-gradient-to-r from-indigo-500 to-violet-600 bg-clip-text text-transparent break-words leading-tight py-2">
                 {props.body}
@@ -57,7 +57,7 @@ const Modal = (props) => {
 
               <button className="h-0 w-0 overflow-hidden" />
             </div>
-          </Transition.Child>
+          </TransitionChild>
         </div>
       </Dialog>
     </Transition>

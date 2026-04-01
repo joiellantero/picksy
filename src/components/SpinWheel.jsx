@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useAtom, useAtomValue } from 'jotai';
 import { namesListState, winnerMessageState, darkModeState } from '../shared/globalState';
 import Modal from './Modals/Modal';
 import ReactCanvasConfetti from 'react-canvas-confetti';
@@ -32,9 +32,9 @@ export default function SpinWheel({ removeName }) {
   const [isOpen, setIsOpen] = useState(false);
   const [drawnName, setDrawnName] = useState('');
 
-  const [namesList, setNamesList] = useRecoilState(namesListState);
-  const winnerMessage = useRecoilValue(winnerMessageState);
-  const isDarkMode = useRecoilValue(darkModeState);
+  const [namesList, setNamesList] = useAtom(namesListState);
+  const winnerMessage = useAtomValue(winnerMessageState);
+  const isDarkMode = useAtomValue(darkModeState);
 
   const names = (() => {
     const raw = typeof namesList === 'string' ? namesList : '';
@@ -257,7 +257,7 @@ export default function SpinWheel({ removeName }) {
         className={`w-full flex items-center justify-center gap-2 px-6 py-4 sm:py-3 text-base sm:text-sm font-semibold text-white rounded-xl shadow-md transition-colors duration-200 ${
           isEmpty || spinning
             ? 'bg-indigo-300 dark:bg-indigo-900/40 cursor-not-allowed opacity-60'
-            : 'bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 active:from-indigo-700 active:to-violet-800'
+            : 'bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 active:from-indigo-700 active:to-violet-800 cursor-pointer'
         }`}
       >
         {spinning ? (

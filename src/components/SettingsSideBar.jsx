@@ -1,4 +1,4 @@
-import {useRecoilState, useRecoilValue, useResetRecoilState} from "recoil";
+import {useAtom, useAtomValue} from "jotai";
 import {namesListState, removeState, settingsSideBarState} from "../shared/globalState";
 
 import List from "./List";
@@ -6,10 +6,10 @@ import Toggle from "./Toggle";
 import WinnerMessage from "./WinnerMessage";
 
 const SettingsSideBar = () => {
-  const [shouldRemoveName, setShouldRemoveName] = useRecoilState(removeState);
-  const isSettingsSideBarOpen = useRecoilValue(settingsSideBarState);
-  const [namesList, setNamesList] = useRecoilState(namesListState);
-  const resetNamesList = useResetRecoilState(namesListState);
+  const [shouldRemoveName, setShouldRemoveName] = useAtom(removeState);
+  const isSettingsSideBarOpen = useAtomValue(settingsSideBarState);
+  const [namesList, setNamesList] = useAtom(namesListState);
+  const resetNamesList = () => setNamesList([]);
 
   return (
     <aside

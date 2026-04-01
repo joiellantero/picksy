@@ -21,7 +21,7 @@ const TextField = (props) => {
         {props.value.length !== 0 && (
           <button
             type="button"
-            className='absolute right-2 top-1/2 -translate-y-1/2 rounded-lg text-xs font-medium px-2 py-1 text-gray-500 dark:text-gray-400 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition'
+            className='absolute right-2 top-1/2 -translate-y-1/2 rounded-lg text-xs font-medium px-2 py-1 text-gray-500 dark:text-gray-400 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition cursor-pointer'
             onClick={props.onClear}
             aria-label={`clear ${props.label} input`}
           >

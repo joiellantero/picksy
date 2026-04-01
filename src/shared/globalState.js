@@ -1,55 +1,15 @@
-import {atom} from 'recoil';
+import { atomWithStorage } from 'jotai/utils';
 
-const localPersist = ({onSet, setSelf, node}) => {
-  const storedData = localStorage.getItem(node.key)
-  if (storedData != null){
-    setSelf(JSON.parse(storedData))
-  }
-  onSet((newData, __, isReset) => {
-    isReset
-      ? localStorage.removeItem(node.key)
-      : localStorage.setItem(node.key, JSON.stringify(newData));
-  })
-}
+export const darkModeState = atomWithStorage('darkModeState', false);
 
-export const darkModeState = atom({
-  key: 'darkModeState',
-  default: false,
-  effects: [localPersist]
-});
+export const removeState = atomWithStorage('removeState', false);
 
-export const removeState = atom({
-  key: 'removeState',
-  default: false,
-  effects: [localPersist]
-});
+export const settingsBtnState = atomWithStorage('settingsBtnState', false);
 
-export const settingsBtnState = atom({
-  key: 'settingsBtnState',
-  default: false,
-  effects: [localPersist]
-});
+export const settingsSideBarState = atomWithStorage('settingsModalState', false);
 
-export const settingsSideBarState = atom({
-  key: 'settingsModalState',
-  default: false,
-  effects: [localPersist]
-});
+export const namesListState = atomWithStorage('namesListState', []);
 
-export const namesListState = atom({
-  key: 'namesListState',
-  default: [],
-  effects: [localPersist]
-})
+export const winnerMessageState = atomWithStorage('winnerMessageState', []);
 
-export const winnerMessageState = atom({
-  key: 'winnerMessageState',
-  default: [],
-  effects: [localPersist]
-})
-
-export const spinModeState = atom({
-  key: 'spinModeState',
-  default: false,
-  effects: [localPersist]
-})
+export const spinModeState = atomWithStorage('spinModeState', false);

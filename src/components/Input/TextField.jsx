@@ -23,7 +23,7 @@ const TextField = (props) => {
         {hasValue && (
           <button
             type='button'
-            className='absolute right-2 top-1/2 -translate-y-1/2 text-xs font-medium text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-2 py-1 rounded-lg transition-colors duration-150'
+            className='absolute right-2 top-1/2 -translate-y-1/2 text-xs font-medium text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-2 py-1 rounded-lg transition-colors duration-150 cursor-pointer'
             onClick={props.onClear}
           >
             Clear

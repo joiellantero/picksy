@@ -1,7 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=Roboto+Serif:wght@100;400;700&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* Class-based dark mode (applies dark: utilities when an ancestor has class="dark") */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Font families (override tailwind defaults) */
+  --font-sans: Inter, Outfit, sans-serif;
+  --font-serif: 'Roboto Serif', serif;
+
+  /* Brand color palette */
+  --color-brand-50: #eef2ff;
+  --color-brand-100: #e0e7ff;
+  --color-brand-200: #c7d2fe;
+  --color-brand-400: #818cf8;
+  --color-brand-500: #6366f1;
+  --color-brand-600: #4f46e5;
+  --color-brand-700: #4338ca;
+
+  /* slide-up animation */
+  --animate-slide-up: slideUp 0.25s ease-out;
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
 
 @layer base {
   body {

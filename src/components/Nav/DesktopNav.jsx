@@ -1,12 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
 import { darkModeState } from '../../shared/globalState';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
 const DesktopNav = () => {
   const { pathname } = useLocation();
-  const [checked, setChecked] = useRecoilState(darkModeState);
-  const [isDarkModeEnabled, setIsDarkModeEnabled] = useRecoilState(darkModeState);
+  const [checked, setChecked] = useAtom(darkModeState);
+  const [isDarkModeEnabled, setIsDarkModeEnabled] = useAtom(darkModeState);
 
   const handleChange = (checked) => {
     setChecked(checked);

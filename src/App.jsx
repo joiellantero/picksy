@@ -1,5 +1,5 @@
 import { Link, Route, Routes } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useAtomValue } from "jotai";
 import { darkModeState } from "./shared/globalState";
 
 import Nav from "./components/Nav/Nav";
@@ -11,16 +11,16 @@ import Help from './pages/Help';
 import './styles/index.css';
 
 export default function App() {
-  const isDarkModeEnabled = useRecoilValue(darkModeState);
+  const isDarkModeEnabled = useAtomValue(darkModeState);
 
   return (
     <div className={`flex flex-col min-h-screen relative overflow-x-hidden ${isDarkModeEnabled ? 'dark bg-[#0c0c14] text-gray-100' : 'bg-gray-50 text-gray-900'}`}>
       <Nav />
       <div className={'flex-1 flex justify-center px-4 md:px-8'}>
         <Routes>
-          <Route exact path='/' element={<Home/>} />
-          <Route exact path='/features' element={<Features/>} />
-          <Route exact path='/help' element={<Help/>} />
+          <Route path='/' element={<Home/>} />
+          <Route path='/features' element={<Features/>} />
+          <Route path='/help' element={<Help/>} />
         </Routes>
       </div>
       <MobileNav />

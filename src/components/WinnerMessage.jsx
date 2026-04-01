@@ -1,10 +1,10 @@
 import TextField from "./Input/TextField";
-import {useRecoilState, useResetRecoilState} from "recoil";
+import {useAtom} from "jotai";
 import {winnerMessageState} from "../shared/globalState";
 
 const WinnerMessage = () => {
-  const [winnerMessage, setWinnerMessage] = useRecoilState(winnerMessageState);
-  const resetWinnerMessage = useResetRecoilState(winnerMessageState);
+  const [winnerMessage, setWinnerMessage] = useAtom(winnerMessageState);
+  const resetWinnerMessage = () => setWinnerMessage([]);
 
   return (
     <form>

@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { useAtom, useAtomValue } from 'jotai';
 import { namesListState, removeState } from '../shared/globalState';
 
 import Wheel from '../components/Wheel';
@@ -7,10 +7,10 @@ import WinnerMessage from '../components/WinnerMessage';
 import Toggle from '../components/Toggle';
 
 const Home = () => {
-  const shouldRemoveName = useRecoilValue(removeState);
-  const [namesList, setNamesList] = useRecoilState(namesListState);
-  const resetNamesList = useResetRecoilState(namesListState);
-  const [shouldRemoveNameState, setShouldRemoveName] = useRecoilState(removeState);
+  const shouldRemoveName = useAtomValue(removeState);
+  const [namesList, setNamesList] = useAtom(namesListState);
+  const resetNamesList = () => setNamesList([]);
+  const [shouldRemoveNameState, setShouldRemoveName] = useAtom(removeState);
 
   return (
     <div className='flex flex-col md:flex-row items-stretch md:items-start justify-center w-full max-w-5xl gap-8 px-0 md:px-6 py-4 md:py-8'>

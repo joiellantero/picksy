@@ -7,7 +7,7 @@ const ButtonPrimary = (props) => {
         </span>
       )}
       <button
-        className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 active:from-indigo-700 active:to-violet-800 focus:outline-none focus-visible:outline-none px-6 py-4 sm:py-3 text-base sm:text-sm font-semibold text-white rounded-xl shadow-md hover:shadow-lg transition-colors duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:from-indigo-500 disabled:hover:to-violet-600 disabled:shadow-none"
+        className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 active:from-indigo-700 active:to-violet-800 focus:outline-none focus-visible:outline-none px-6 py-4 sm:py-3 text-base sm:text-sm font-semibold text-white rounded-xl shadow-md hover:shadow-lg transition-colors duration-200 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:from-indigo-500 disabled:hover:to-violet-600 disabled:shadow-none"
         onClick={props.onClick}
         disabled={props.disabled}
       >

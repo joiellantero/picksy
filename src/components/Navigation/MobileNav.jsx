@@ -2,17 +2,32 @@ import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import useMeasure from 'react-use-measure';
 import { Link } from 'react-router-dom';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 import { darkModeState, namesListState, removeState } from '../../shared/globalState';
-import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
-import List from '../List';
+import List from '../SideBar/NamesList';
 import WinnerMessage from '../WinnerMessage';
-import Toggle from '../Toggle';
+import Toggle from '../UI/Toggle';
 
 /* ── Inline SVG icons ─────────────────────────────────────── */
+const SunIcon = () => (
+  <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75}
+      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+    />
+  </svg>
+);
+
+const MoonIcon = () => (
+  <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75}
+      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+    />
+  </svg>
+);
+
 const PagesIcon = () => (
-  <svg className="w-[22px] h-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75}
       d="M4 6h16M4 12h16M4 18h16"
     />
@@ -20,7 +35,7 @@ const PagesIcon = () => (
 );
 
 const GearIcon = () => (
-  <svg className="w-[22px] h-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75}
       d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
     />
@@ -33,11 +48,11 @@ const NAV_PAGES = [
   { text: 'Home', to: '/' },
   { text: 'Features', to: '/features' },
   { text: 'FAQs', to: '/help' },
-  { text: 'Documentation', to: 'https://github.com/joiellantero/picksy', external: true },
+  { text: 'Documentation', to: 'https://github.com/joiellantero/name-roulette-web', external: true },
 ];
 
 const itemClass =
-  'flex items-center w-full px-4 py-3.5 text-base font-medium text-gray-600 dark:text-gray-400 rounded-xl md:hover:bg-gray-100 md:dark:hover:bg-gray-800 md:hover:text-gray-900 md:dark:hover:text-white transition-all duration-75';
+  'flex items-center w-full px-3 py-2.5 text-sm font-medium text-gray-600 dark:text-gray-400 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-all duration-75';
 
 /* ── Component ─────────────────────────────────────────────── */
 const MobileNav = () => {
@@ -45,10 +60,10 @@ const MobileNav = () => {
   const [elementRef] = useMeasure();
   const [hiddenRef, hiddenBounds] = useMeasure();
   const [view, setView] = useState('default');
-  const [isDarkMode, setIsDarkMode] = useRecoilState(darkModeState);
-  const [namesList, setNamesList] = useRecoilState(namesListState);
-  const resetNamesList = useResetRecoilState(namesListState);
-  const [shouldRemoveName, setShouldRemoveName] = useRecoilState(removeState);
+  const [isDarkMode, setIsDarkMode] = useAtom(darkModeState);
+  const [namesList, setNamesList] = useAtom(namesListState);
+  const resetNamesList = () => setNamesList([]);
+  const [shouldRemoveName, setShouldRemoveName] = useAtom(removeState);
 
   // Close submenus when tapping outside the dock
   useEffect(() => {
@@ -66,15 +81,15 @@ const MobileNav = () => {
     switch (view) {
       case 'pages':
         return (
-          <div className="space-y-0.5 min-w-[200px] p-2">
+          <div className="space-y-0.5 min-w-[160px] p-1.5">
             {NAV_PAGES.map(({ text, to, external }) =>
               external ? (
-                <a key={text} href={to} target="_blank" rel="noopener noreferrer" onClick={() => setView('default')}>
-                  <button className={itemClass}>{text}</button>
+                <a key={text} href={to} target="_blank" rel="noopener noreferrer" onClick={() => setView('default')} className={itemClass}>
+                  {text}
                 </a>
               ) : (
-                <Link key={text} to={to} onClick={() => setView('default')}>
-                  <button className={itemClass}>{text}</button>
+                <Link key={text} to={to} onClick={() => setView('default')} className={itemClass}>
+                  {text}
                 </Link>
               )
             )}
@@ -111,7 +126,7 @@ const MobileNav = () => {
 
   const mainNav = [
     { Icon: PagesIcon, name: 'pages', action: null },
-    { Icon: null, name: 'theme', action: () => { setIsDarkMode((d) => !d); setView('default'); } },
+    { Icon: isDarkMode ? MoonIcon : SunIcon, name: 'theme', action: () => { setIsDarkMode((d) => !d); setView('default'); } },
     { Icon: GearIcon, name: 'settings', action: null },
   ];
 
@@ -123,7 +138,7 @@ const MobileNav = () => {
   return (
     <div
       ref={containerRef}
-      className="mobile-nav md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center overflow-visible"
+      className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center overflow-visible"
     >
       {/* Hidden clone — gives react-use-measure the target size before animation */}
       <div
@@ -150,7 +165,7 @@ const MobileNav = () => {
             exit={{ opacity: 0, height: 0, width: 0 }}
             transition={{ duration: 0.25, ease: [0.45, 0, 0.25, 1] }}
             style={{ transformOrigin: 'bottom center' }}
-            className="absolute bottom-[80px]"
+            className="absolute bottom-[68px]"
           >
             <div
               ref={elementRef}
@@ -174,28 +189,18 @@ const MobileNav = () => {
       </AnimatePresence>
 
       {/* Floating toolbar */}
-      <div className="flex items-center gap-1.5 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700/50 rounded-[22px] p-1.5 shadow-lg z-10 select-none">
+      <div className="flex items-center gap-1 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700/50 rounded-[18px] p-1 shadow-lg z-10">
         {mainNav.map(({ Icon, name, action }) => (
           <button
             key={name}
-            className={`p-3.5 rounded-2xl transition-all duration-150 [-webkit-tap-highlight-color:transparent] select-none ${
+            className={`p-3 rounded-2xl transition-all duration-150 cursor-pointer ${
               !action && view === name
                 ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
-                : 'text-gray-500 dark:text-gray-400 md:hover:bg-gray-100 md:dark:hover:bg-gray-800'
+                : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
             }`}
             onClick={() => handleNavClick(name, action)}
           >
-            {name === 'theme' ? (
-              <DarkModeSwitch
-                checked={isDarkMode}
-                onChange={() => {}}
-                size={22}
-                moonColor="#818cf8"
-                sunColor="#f59e0b"
-              />
-            ) : (
-              <Icon />
-            )}
+            <Icon />
           </button>
         ))}
       </div>
