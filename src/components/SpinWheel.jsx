@@ -245,7 +245,7 @@ export default function SpinWheel({ removeName }) {
           ref={canvasRef}
           width={CANVAS_SIZE * DPR}
           height={CANVAS_SIZE * DPR}
-          className='rounded-full shadow-xl shadow-indigo-500/20'
+          className={`rounded-full transition duration-500 ease-in-out ${isEmpty ? '' : 'shadow-xl shadow-indigo-500/20'}`}
           style={{ width: '100%', maxWidth: CANVAS_SIZE, aspectRatio: '1' }}
         />
       </div>
