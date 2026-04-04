@@ -40,7 +40,7 @@ const FileUpload = (props) => {
         />
       </label>
       <p className='mt-1.5 text-xs text-gray-400 dark:text-gray-500'>
-        .txt or .csv &mdash; not stored online.{' '}
+        .txt or .csv {' '}
         <Link to='/help' className='link'>Learn more</Link>
       </p>
     </div>

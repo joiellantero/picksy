@@ -82,7 +82,7 @@ export default function App() {
 
               <div className="mt-6 h-px bg-gradient-to-r from-transparent via-gray-100 dark:via-gray-800 to-transparent" />
               <p className="mt-4 text-[11px] text-gray-300 dark:text-gray-700">
-                &copy; {new Date().getFullYear()} Picksy &mdash; Made with <span className="text-rose-400">♥</span> by joiellantero
+                &copy; {new Date().getFullYear()} Picksy &#124; Made with <span className="text-rose-400">♥</span> by joiellantero
               </p>
             </div>
 
