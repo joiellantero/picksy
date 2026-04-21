@@ -4,9 +4,9 @@
 - Stack: React 19 + Vite 8 + Tailwind CSS 4 + Jotai.
 - App purpose: client-side random name picker (list mode + spin wheel mode).
 - Entry points:
-  - `/home/runner/work/picksy/picksy/src/index.jsx`
-  - `/home/runner/work/picksy/picksy/src/App.jsx`
-- Main user page: `/home/runner/work/picksy/picksy/src/pages/Home.jsx`.
+  - `src/index.jsx`
+  - `src/App.jsx`
+- Main user page: `src/pages/Home.jsx`.
 
 ## Fast, reliable workflow
 1. Install dependencies first: `npm install`
@@ -18,11 +18,11 @@ Notes:
 - Build output is `dist/` (configured in `vite.config.js`).
 
 ## Source map for common changes
-- Global persisted state atoms: `/home/runner/work/picksy/picksy/src/shared/globalState.js`
-- Name picking + mode toggle container: `/home/runner/work/picksy/picksy/src/components/Wheel.jsx`
-- Canvas spin wheel implementation: `/home/runner/work/picksy/picksy/src/components/SpinWheel.jsx`
-- Name input/upload UI: `/home/runner/work/picksy/picksy/src/components/List.jsx` and `/home/runner/work/picksy/picksy/src/components/FileUpload.jsx`
-- Navigation components actively used: `/home/runner/work/picksy/picksy/src/components/Nav/*`
+- Global persisted state atoms: `src/shared/globalState.js`
+- Name picking + mode toggle container: `src/components/Wheel.jsx`
+- Canvas spin wheel implementation: `src/components/SpinWheel.jsx`
+- Name input/upload UI: `src/components/List.jsx` and `src/components/FileUpload.jsx`
+- Navigation components actively used: `src/components/Nav/*`
 
 ## Conventions and pitfalls
 - `namesListState` is stored as a newline-delimited string in localStorage (not an array in practice); preserve that format when editing related logic.
