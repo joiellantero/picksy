@@ -8,6 +8,9 @@ import MobileNav from "./components/Nav/MobileNav";
 import Home from './pages/Home';
 import Features from './pages/Features';
 import Help from './pages/Help';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
+import Cookies from './pages/Cookies';
 
 import './styles/index.css';
 
@@ -22,6 +25,9 @@ export default function App() {
           <Route path='/' element={<Home/>} />
           <Route path='/features' element={<Features/>} />
           <Route path='/help' element={<Help/>} />
+          <Route path='/privacy' element={<Privacy/>} />
+          <Route path='/terms' element={<Terms/>} />
+          <Route path='/cookies' element={<Cookies/>} />
         </Routes>
       </div>
       <MobileNav />
@@ -41,6 +47,13 @@ export default function App() {
                 <a href="https://ko-fi.com/joiel" target="_blank" rel="noopener noreferrer" className="text-[10px] text-gray-300 dark:text-gray-700 hover:text-amber-400 dark:hover:text-amber-500 transition-colors">☕ Buy me a coffee</a>
               </div>
               <p className="text-[10px] text-gray-300 dark:text-gray-700">&copy; {new Date().getFullYear()} joiellantero &mdash; Pick a name. Make it fair.</p>
+              <div className="flex items-center gap-3 text-[10px] text-gray-300 dark:text-gray-700">
+                <Link to="/privacy" className="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Privacy</Link>
+                <span>&middot;</span>
+                <Link to="/terms" className="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Terms</Link>
+                <span>&middot;</span>
+                <Link to="/cookies" className="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Cookies</Link>
+              </div>
             </div>
 
             {/* ── Desktop footer ── */}
@@ -82,9 +95,18 @@ export default function App() {
               </div>
 
               <div className="mt-6 h-px bg-gradient-to-r from-transparent via-gray-100 dark:via-gray-800 to-transparent" />
-              <p className="mt-4 text-[11px] text-gray-300 dark:text-gray-700">
-                &copy; {new Date().getFullYear()} Picksy &#124; Made with <span className="text-rose-400">♥</span> by joiellantero
-              </p>
+              <div className="mt-4 flex items-center justify-between flex-wrap gap-2">
+                <p className="text-[11px] text-gray-300 dark:text-gray-700">
+                  &copy; {new Date().getFullYear()} Picksy &#124; Made with <span className="text-rose-400">♥</span> by joiellantero
+                </p>
+                <div className="flex items-center gap-3 text-[10px] text-gray-300 dark:text-gray-700">
+                  <Link to="/privacy" className="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Privacy</Link>
+                  <span>&middot;</span>
+                  <Link to="/terms" className="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Terms</Link>
+                  <span>&middot;</span>
+                  <Link to="/cookies" className="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Cookies</Link>
+                </div>
+              </div>
             </div>
 
           </div>
