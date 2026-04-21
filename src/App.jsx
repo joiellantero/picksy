@@ -1,6 +1,7 @@
 import { Link, Route, Routes } from "react-router-dom";
 import { useAtomValue } from "jotai";
 import { darkModeState } from "./shared/globalState";
+import { Analytics } from '@vercel/analytics/react';
 
 import Nav from "./components/Nav/Nav";
 import MobileNav from "./components/Nav/MobileNav";
@@ -89,6 +90,7 @@ export default function App() {
           </div>
         </div>
       </footer>
+      <Analytics />
     </div>
   );
 }
