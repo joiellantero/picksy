@@ -7,10 +7,6 @@ const DesktopNav = () => {
   const { pathname } = useLocation();
   const [isDarkMode, setIsDarkMode] = useAtom(darkModeState);
 
-  const handleChange = (checked) => {
-    setIsDarkMode(checked);
-  };
-
   const navLinkClass = (path) =>
     `relative px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-150 ${
       pathname === path
@@ -51,7 +47,7 @@ const DesktopNav = () => {
       <div className='hidden md:flex items-center gap-3'>
         <DarkModeSwitch
           checked={isDarkMode}
-          onChange={handleChange}
+          onChange={setIsDarkMode}
           size={18}
           moonColor="#818cf8"
           sunColor="#f59e0b"

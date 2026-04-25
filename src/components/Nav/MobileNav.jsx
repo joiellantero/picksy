@@ -42,12 +42,10 @@ const itemClass =
 /* ── Component ─────────────────────────────────────────────── */
 const MobileNav = () => {
   const containerRef = useRef(null);
-  const [elementRef] = useMeasure();
   const [hiddenRef, hiddenBounds] = useMeasure();
   const [view, setView] = useState('default');
   const [isDarkMode, setIsDarkMode] = useAtom(darkModeState);
   const [namesList, setNamesList] = useAtom(namesListState);
-  const resetNamesList = () => setNamesList([]);
   const [shouldRemoveName, setShouldRemoveName] = useAtom(removeState);
 
   // Close submenus when tapping outside the dock
@@ -88,7 +86,7 @@ const MobileNav = () => {
             <List
               value={namesList}
               onChange={(e) => setNamesList(e)}
-              onClear={() => resetNamesList()}
+              onClear={() => setNamesList([])}
             />
             <div className="border-t border-gray-100 dark:border-gray-800/50" />
             <p className="section-label">Customization</p>
@@ -107,7 +105,7 @@ const MobileNav = () => {
       default:
         return null;
     }
-  }, [view, namesList, setNamesList, resetNamesList, shouldRemoveName, setShouldRemoveName]);
+  }, [view, namesList, setNamesList, shouldRemoveName, setShouldRemoveName]);
 
   const mainNav = [
     { Icon: PagesIcon, name: 'pages', action: null },
@@ -153,7 +151,6 @@ const MobileNav = () => {
             className="absolute bottom-[80px]"
           >
             <div
-              ref={elementRef}
               className="rounded-2xl bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700/50 shadow-xl"
             >
               <AnimatePresence initial={false} mode="popLayout">

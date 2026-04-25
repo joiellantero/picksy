@@ -2,6 +2,7 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useAtom, useAtomValue } from 'jotai';
 import { namesListState, winnerMessageState, darkModeState } from '../shared/globalState';
+import useConfetti, { confettiStyles } from '../shared/useConfetti';
 import Modal from './Modals/Modal';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 
@@ -14,11 +15,6 @@ const SEG_COLORS = [
   '#06b6d4', '#3b82f6', '#84cc16', '#6366f1',
 ];
 
-const confettiStyles = {
-  position: 'fixed', pointerEvents: 'none',
-  width: '100%', height: '100%', zIndex: 9999, top: 0, left: 0,
-};
-
 function truncate(str, max) {
   return str.length > max ? str.slice(0, max - 1) + '…' : str;
 }
@@ -27,7 +23,6 @@ export default function SpinWheel({ removeName }) {
   const canvasRef = useRef(null);
   const rotationRef = useRef(0);
   const animRef = useRef(null);
-  const confettiRef = useRef(null);
 
   const [spinning, setSpinning] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -163,22 +158,7 @@ export default function SpinWheel({ removeName }) {
 
   useEffect(() => () => { if (animRef.current) cancelAnimationFrame(animRef.current); }, []);
 
-  // Confetti
-  const getInstance = useCallback(({ confetti }) => { confettiRef.current = confetti; }, []);
-  const makeShot = useCallback((ratio, opts) => {
-    confettiRef.current?.({
-      ...opts, origin: { y: 0.7 },
-      particleCount: Math.floor(200 * ratio),
-      colors: ['#6366f1', '#8b5cf6', '#a78bfa', '#c4b5fd', '#f0abfc'],
-    });
-  }, []);
-  const fire = useCallback(() => {
-    makeShot(0.25, { spread: 26, startVelocity: 55 });
-    makeShot(0.2,  { spread: 60 });
-    makeShot(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-    makeShot(0.1,  { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-    makeShot(0.1,  { spread: 120, startVelocity: 45 });
-  }, [makeShot]);
+  const { getInstance, fire } = useConfetti();
 
   const spin = useCallback(() => {
     if (spinning || names.length === 0) return;

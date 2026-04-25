@@ -1,22 +1,13 @@
 import {useState, useCallback, useRef, useEffect} from 'react';
 import {useAtom, useAtomValue} from "jotai";
 import {namesListState, winnerMessageState, spinModeState} from "../shared/globalState";
+import useConfetti, { confettiStyles } from '../shared/useConfetti';
 
 import ButtonPrimary from './Buttons/ButtonPrimary';
 import Modal from './Modals/Modal';
 import SpinWheel from './SpinWheel';
 
 import ReactCanvasConfetti from "react-canvas-confetti";
-
-const canvasStyles = {
-  position: "fixed",
-  pointerEvents: "none",
-  width: "100%",
-  height: "100%",
-  zIndex: 9999,
-  top: 0,
-  left: 0,
-};
 
 const Wheel = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,6 +18,7 @@ const Wheel = (props) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [zoom, setZoom] = useState(1);
   const containerRef = useRef(null);
+  const { getInstance, fire } = useConfetti();
 
   const getCleanNames = () => {
     const raw = typeof namesList === 'string' ? namesList : '';
@@ -48,30 +40,6 @@ const Wheel = (props) => {
     }
   };
 
-  const refAnimationInstance = useRef(null);
-
-  const getInstance = useCallback(({ confetti }) => {
-    refAnimationInstance.current = confetti;
-  }, []);
-
-  const makeShot = useCallback((particleRatio, opts) => {
-    refAnimationInstance.current &&
-      refAnimationInstance.current({
-        ...opts,
-        origin: { y: 0.7 },
-        particleCount: Math.floor(200 * particleRatio),
-        colors: ['#6366f1', '#8b5cf6', '#a78bfa', '#c4b5fd', '#f0abfc'],
-      });
-  }, []);
-
-  const fire = useCallback(() => {
-    makeShot(0.25, { spread: 26, startVelocity: 55 });
-    makeShot(0.2,  { spread: 60 });
-    makeShot(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-    makeShot(0.1,  { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-    makeShot(0.1,  { spread: 120, startVelocity: 45 });
-  }, [makeShot]);
-
   const toggleFullscreen = useCallback(() => {
     setIsFullscreen(f => {
       if (f) setZoom(1);
@@ -92,6 +60,18 @@ const Wheel = (props) => {
       document.body.style.overflow = '';
       document.body.classList.remove('fullscreen-mode');
     };
+  }, [isFullscreen]);
+
+  useEffect(() => {
+    if (!isFullscreen) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsFullscreen(false);
+        setZoom(1);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isFullscreen]);
 
   const isEmpty = cleanedNames.length === 0;
@@ -267,7 +247,7 @@ const Wheel = (props) => {
             body={drawnName}
             onClose={(isClose) => setIsOpen(isClose)}
           />
-          <ReactCanvasConfetti onInit={getInstance} style={canvasStyles} />
+          <ReactCanvasConfetti onInit={getInstance} style={confettiStyles} />
         </>
       )}
     </>
