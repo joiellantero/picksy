@@ -49,7 +49,6 @@ const DesktopNav = () => {
         </a>
       </nav>
       <div className='hidden md:flex items-center gap-3'>
-        <div className="h-5 w-px bg-gray-200 dark:bg-gray-700" />
         <DarkModeSwitch
           checked={isDarkMode}
           onChange={handleChange}

@@ -44,9 +44,9 @@ export default function App() {
               <div className="flex items-center gap-3">
                 <a href="https://sudojoie.com" target="_blank" rel="noopener noreferrer" className="text-[10px] text-gray-300 dark:text-gray-700 hover:text-indigo-400 dark:hover:text-indigo-500 transition-colors">Blog</a>
                 <span className="text-[10px] text-gray-200 dark:text-gray-800">&middot;</span>
-                <a href="https://ko-fi.com/joiel" target="_blank" rel="noopener noreferrer" className="text-[10px] text-gray-300 dark:text-gray-700 hover:text-amber-400 dark:hover:text-amber-500 transition-colors">☕ Buy me a coffee</a>
+                <a href="https://ko-fi.com/joiel" target="_blank" rel="noopener noreferrer" className="text-[10px] text-gray-300 dark:text-gray-700 hover:text-indigo-400 dark:hover:text-indigo-500 transition-colors">☕ Buy me a coffee</a>
               </div>
-              <p className="text-[10px] text-gray-300 dark:text-gray-700">&copy; {new Date().getFullYear()} joiellantero &mdash; Pick a name. Make it fair.</p>
+              <p className="text-[10px] text-gray-300 dark:text-gray-700">&copy; {new Date().getFullYear()} joiellantero &mdash; Fair picks, every time.</p>
               <div className="flex items-center gap-3 text-[10px] text-gray-300 dark:text-gray-700">
                 <Link to="/privacy" className="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Privacy</Link>
                 <span>&middot;</span>
@@ -65,13 +65,13 @@ export default function App() {
                   <p className="text-sm font-semibold bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent tracking-tight">
                     Picksy
                   </p>
-                  <p className="text-xs text-gray-400 dark:text-gray-600 italic">Pick a name. Make it fair.</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-600 italic">Fair picks, every time.</p>
                   <div className="flex items-center gap-2 mt-1">
                     <a
                       href="https://ko-fi.com/joiel"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 transition-colors"
                     >
                       <span>☕</span> Buy me a coffee
                     </a>
