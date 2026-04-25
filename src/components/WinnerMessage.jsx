@@ -4,7 +4,6 @@ import {winnerMessageState} from "../shared/globalState";
 
 const WinnerMessage = () => {
   const [winnerMessage, setWinnerMessage] = useAtom(winnerMessageState);
-  const resetWinnerMessage = () => setWinnerMessage([]);
 
   return (
     <form>
@@ -14,7 +13,7 @@ const WinnerMessage = () => {
         placeholder='e.g. 🎉 And the winner is...'
         value={winnerMessage}
         onChange={(e) => setWinnerMessage(e)}
-        onClear={() => resetWinnerMessage()}
+        onClear={() => setWinnerMessage([])}
       />
     </form>
   );

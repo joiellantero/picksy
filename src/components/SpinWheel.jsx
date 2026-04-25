@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { useAtom, useAtomValue } from 'jotai';
 import { namesListState, winnerMessageState, darkModeState } from '../shared/globalState';
+import useConfetti, { confettiStyles } from '../shared/useConfetti';
 import Modal from './Modals/Modal';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 
@@ -13,11 +15,6 @@ const SEG_COLORS = [
   '#06b6d4', '#3b82f6', '#84cc16', '#6366f1',
 ];
 
-const confettiStyles = {
-  position: 'fixed', pointerEvents: 'none',
-  width: '100%', height: '100%', zIndex: 9999, top: 0, left: 0,
-};
-
 function truncate(str, max) {
   return str.length > max ? str.slice(0, max - 1) + '…' : str;
 }
@@ -26,7 +23,6 @@ export default function SpinWheel({ removeName }) {
   const canvasRef = useRef(null);
   const rotationRef = useRef(0);
   const animRef = useRef(null);
-  const confettiRef = useRef(null);
 
   const [spinning, setSpinning] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -162,22 +158,7 @@ export default function SpinWheel({ removeName }) {
 
   useEffect(() => () => { if (animRef.current) cancelAnimationFrame(animRef.current); }, []);
 
-  // Confetti
-  const getInstance = useCallback(({ confetti }) => { confettiRef.current = confetti; }, []);
-  const makeShot = useCallback((ratio, opts) => {
-    confettiRef.current?.({
-      ...opts, origin: { y: 0.7 },
-      particleCount: Math.floor(200 * ratio),
-      colors: ['#6366f1', '#8b5cf6', '#a78bfa', '#c4b5fd', '#f0abfc'],
-    });
-  }, []);
-  const fire = useCallback(() => {
-    makeShot(0.25, { spread: 26, startVelocity: 55 });
-    makeShot(0.2,  { spread: 60 });
-    makeShot(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-    makeShot(0.1,  { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-    makeShot(0.1,  { spread: 120, startVelocity: 45 });
-  }, [makeShot]);
+  const { getInstance, fire } = useConfetti();
 
   const spin = useCallback(() => {
     if (spinning || names.length === 0) return;
@@ -248,35 +229,47 @@ export default function SpinWheel({ removeName }) {
           className={`rounded-full transition duration-500 ease-in-out ${isEmpty ? '' : 'shadow-xl shadow-indigo-500/20'}`}
           style={{ width: '100%', maxWidth: CANVAS_SIZE, aspectRatio: '1' }}
         />
-      </div>
-
-      {/* Spin button */}
-      <button
-        onClick={spin}
-        disabled={isEmpty || spinning}
-        className={`w-full flex items-center justify-center gap-2 px-6 py-4 sm:py-3 text-base sm:text-sm font-semibold text-white rounded-xl shadow-md transition-colors duration-200 ${
-          isEmpty || spinning
-            ? 'bg-indigo-300 dark:bg-indigo-900/40 cursor-not-allowed opacity-60'
-            : 'bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 active:from-indigo-700 active:to-violet-800 cursor-pointer'
-        }`}
-      >
-        {spinning ? (
-          <>
-            <svg className='w-4 h-4 animate-spin' fill='none' viewBox='0 0 24 24'>
+        {/* Clickable center hub overlay — tap to spin */}
+        {!isEmpty && (
+        <button
+          onClick={spin}
+          disabled={spinning}
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center transition-all duration-200 ${
+            spinning
+              ? 'cursor-not-allowed opacity-60'
+              : 'cursor-pointer hover:scale-110 active:scale-95'
+          }`}
+          style={{
+            width: '15%',
+            height: '15%',
+            background: 'radial-gradient(circle at 40% 40%, #c4b5fd, #4f46e5)',
+            boxShadow: '0 2px 12px rgba(99,102,241,0.4)',
+            border: '2px solid rgba(255,255,255,0.9)',
+          }}
+          title='Spin!'
+        >
+          {spinning ? (
+            <svg className='w-5 h-5 sm:w-4 sm:h-4 animate-spin text-white' fill='none' viewBox='0 0 24 24'>
               <circle className='opacity-25' cx='12' cy='12' r='10' stroke='currentColor' strokeWidth='4' />
               <path className='opacity-75' fill='currentColor' d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z' />
             </svg>
-            Spinning…
-          </>
-        ) : (
-          <>
-            <svg className='w-4 h-4 flex-shrink-0' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15' />
+          ) : (
+            <svg className='w-5 h-5 sm:w-4 sm:h-4 text-white drop-shadow-sm' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2.5} d='M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z' />
             </svg>
-            Spin the Wheel
-          </>
+          )}
+        </button>
         )}
-      </button>
+      </div>
+
+      {/* Hint text — positioned absolutely so it doesn't affect layout */}
+      <div className='relative w-full h-0'>
+        {!isEmpty && !spinning && (
+          <p className='absolute left-0 right-0 top-1 text-xs text-gray-400 dark:text-gray-500 text-center animate-pulse'>
+            Tap the center to spin
+          </p>
+        )}
+      </div>
 
       <Modal
         isOpen={isOpen}
@@ -284,7 +277,10 @@ export default function SpinWheel({ removeName }) {
         body={drawnName}
         onClose={(v) => setIsOpen(v)}
       />
-      <ReactCanvasConfetti onInit={getInstance} style={confettiStyles} />
+      {createPortal(
+        <ReactCanvasConfetti onInit={getInstance} style={confettiStyles} />,
+        document.body
+      )}
     </>
   );
 }

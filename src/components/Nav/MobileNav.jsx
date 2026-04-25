@@ -1,216 +1,209 @@
-import React, { useMemo, useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import useMeasure from 'react-use-measure';
 import { Link } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { darkModeState, namesListState, removeState } from '../../shared/globalState';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
-
 import List from '../List';
 import WinnerMessage from '../WinnerMessage';
 import Toggle from '../Toggle';
 
-/* ── Inline SVG icons ─────────────────────────────────────── */
-const PagesIcon = () => (
-  <svg className="w-[22px] h-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75}
-      d="M4 6h16M4 12h16M4 18h16"
-    />
-  </svg>
-);
+/* ── Spring config ─────────────────────────────────────────── */
+const sheetSpring = { type: 'spring', stiffness: 380, damping: 36, mass: 0.9 };
 
-const GearIcon = () => (
-  <svg className="w-[22px] h-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75}
-      d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-    />
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-  </svg>
-);
+/* ── Shared style constants ────────────────────────────────── */
+const pageLinkClass =
+  'flex items-center gap-3 px-3 py-3 rounded-xl text-[0.84rem] font-medium text-gray-600 dark:text-gray-400 active:bg-indigo-500/10 dark:active:bg-indigo-400/10 transition-all duration-150 [-webkit-tap-highlight-color:transparent]';
 
-/* ── Static data ───────────────────────────────────────────── */
-const NAV_PAGES = [
-  { text: 'Home', to: '/' },
-  { text: 'Features', to: '/features' },
-  { text: 'FAQs', to: '/help' },
-  { text: 'Documentation', to: 'https://github.com/joiellantero/picksy', external: true },
-];
-
-const itemClass =
-  'flex items-center w-full px-4 py-3.5 text-base font-medium text-gray-600 dark:text-gray-400 rounded-xl md:hover:bg-gray-100 md:dark:hover:bg-gray-800 md:hover:text-gray-900 md:dark:hover:text-white transition-all duration-75';
+const bottomBarItemClass =
+  'flex flex-col items-center gap-[5px] px-2 py-1.5 rounded-[10px] text-[0.65rem] font-semibold uppercase tracking-[0.06em] text-gray-500 dark:text-gray-500 active:bg-indigo-500/10 dark:active:bg-indigo-400/10 transition-all duration-150 [-webkit-tap-highlight-color:transparent] cursor-pointer select-none';
 
 /* ── Component ─────────────────────────────────────────────── */
 const MobileNav = () => {
-  const containerRef = useRef(null);
-  const [elementRef] = useMeasure();
-  const [hiddenRef, hiddenBounds] = useMeasure();
-  const [view, setView] = useState('default');
+  const [isOpen, setIsOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useAtom(darkModeState);
   const [namesList, setNamesList] = useAtom(namesListState);
-  const resetNamesList = () => setNamesList([]);
   const [shouldRemoveName, setShouldRemoveName] = useAtom(removeState);
+  const contentRef = useRef(null);
+  const touchStartY = useRef(0);
 
-  // Close submenus when tapping outside the dock
+  /* Lock body scroll when sheet is open */
   useEffect(() => {
-    const onOutside = (e) => {
-      if (containerRef.current && !containerRef.current.contains(e.target)) {
-        setView('default');
-      }
-    };
-    document.addEventListener('mousedown', onOutside);
-    return () => document.removeEventListener('mousedown', onOutside);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
+  const close = useCallback(() => setIsOpen(false), []);
+
+  /* Drag-to-dismiss */
+  const handleDragEnd = useCallback((_, info) => {
+    if (info.offset.y > 64 || info.velocity.y > 280) close();
+  }, [close]);
+
+  /* Swipe-down on scrollable content when at top */
+  const handleTouchStart = useCallback((e) => {
+    touchStartY.current = e.touches[0].clientY;
   }, []);
-
-  // Submenu content — memoised so re-renders don't flash during animation
-  const content = useMemo(() => {
-    switch (view) {
-      case 'pages':
-        return (
-          <div className="space-y-0.5 min-w-[200px] p-2">
-            {NAV_PAGES.map(({ text, to, external }) =>
-              external ? (
-                <a key={text} href={to} target="_blank" rel="noopener noreferrer" onClick={() => setView('default')} className={itemClass}>
-                  {text}
-                </a>
-              ) : (
-                <Link key={text} to={to} onClick={() => setView('default')} className={itemClass}>
-                  {text}
-                </Link>
-              )
-            )}
-          </div>
-        );
-
-      case 'settings':
-        return (
-          <div className="p-3 w-[90vw] max-w-[300px] space-y-3">
-            <p className="section-label">Participants</p>
-            <List
-              value={namesList}
-              onChange={(e) => setNamesList(e)}
-              onClear={() => resetNamesList()}
-            />
-            <div className="border-t border-gray-100 dark:border-gray-800/50" />
-            <p className="section-label">Customization</p>
-            <WinnerMessage />
-            <div className="border-t border-gray-100 dark:border-gray-800/50" />
-            <p className="section-label">Behavior</p>
-            <Toggle
-              isOn={shouldRemoveName}
-              handleToggle={() => setShouldRemoveName(!shouldRemoveName)}
-              label="Remove after chosen"
-              hiddenMobile={false}
-            />
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  }, [view, namesList, setNamesList, resetNamesList, shouldRemoveName, setShouldRemoveName]);
-
-  const mainNav = [
-    { Icon: PagesIcon, name: 'pages', action: null },
-    { Icon: null, name: 'theme', action: () => { setIsDarkMode((d) => !d); setView('default'); } },
-    { Icon: GearIcon, name: 'settings', action: null },
-  ];
-
-  const handleNavClick = (name, action) => {
-    if (action) { action(); return; }
-    setView((prev) => (prev === name ? 'default' : name));
-  };
+  const handleTouchEnd = useCallback((e) => {
+    const delta = e.changedTouches[0].clientY - touchStartY.current;
+    if (delta > 80 && contentRef.current && contentRef.current.scrollTop <= 0) close();
+  }, [close]);
 
   return (
-    <div
-      ref={containerRef}
-      className="mobile-nav md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center overflow-visible"
-    >
-      {/* Hidden clone — gives react-use-measure the target size before animation */}
-      <div
-        ref={hiddenRef}
-        aria-hidden="true"
-        className="absolute left-[-9999px] invisible pointer-events-none"
+    <div className="md:hidden">
+      {/* ── FAB Toggle ──────────────────────────────────────── */}
+      <button
+        onClick={() => setIsOpen(true)}
+        className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999]
+          flex items-center gap-2 h-10 px-[18px] rounded-full
+          bg-white/92 dark:bg-gray-900/92
+          border border-indigo-500/20 dark:border-indigo-400/15
+          backdrop-blur-[14px]
+          shadow-[0_4px_20px_rgba(0,0,0,0.14),0_0_0_1px_rgba(99,102,241,0.18)]
+          dark:shadow-[0_4px_24px_rgba(0,0,0,0.35),0_0_0_1px_rgba(129,140,248,0.15)]
+          text-gray-600 dark:text-indigo-300
+          active:scale-[0.96] transition-transform
+          focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-[3px]
+          cursor-pointer [-webkit-tap-highlight-color:transparent] select-none
+          ${isOpen ? 'pointer-events-none opacity-0' : ''}`}
       >
-        <div className="rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700/50">
-          {content}
-        </div>
-      </div>
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+        </svg>
+        <span className="text-[0.72rem] font-semibold uppercase tracking-[0.08em]">Menu</span>
+      </button>
 
-      {/* Animated submenu panel — opens upward above the toolbar */}
-      <AnimatePresence mode="wait">
-        {view !== 'default' && (
-          <motion.div
-            key="submenu"
-            initial={{ opacity: 0, height: 0, width: 0 }}
-            animate={{
-              opacity: 1,
-              height: hiddenBounds.height || 'auto',
-              width: hiddenBounds.width || 'auto',
-            }}
-            exit={{ opacity: 0, height: 0, width: 0 }}
-            transition={{ duration: 0.25, ease: [0.45, 0, 0.25, 1] }}
-            style={{ transformOrigin: 'bottom center' }}
-            className="absolute bottom-[80px]"
-          >
-            <div
-              ref={elementRef}
-              className="rounded-2xl bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700/50 shadow-xl"
+      {/* ── Sheet + Backdrop ────────────────────────────────── */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              key="sheet-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-[9998] bg-black/35 backdrop-blur-[3px]"
+              onClick={close}
+            />
+
+            {/* Bottom Sheet */}
+            <motion.div
+              key="sheet-panel"
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={sheetSpring}
+              drag="y"
+              dragConstraints={{ top: 0, bottom: 0 }}
+              dragElastic={{ top: 0, bottom: 0.35 }}
+              onDragEnd={handleDragEnd}
+              className="fixed bottom-0 left-0 right-0 z-[9999] flex flex-col max-h-[82vh]
+                rounded-t-[20px]
+                bg-white/[0.97] dark:bg-[#0c0c14]/[0.97]
+                backdrop-blur-[20px]
+                border-t border-indigo-500/[0.18] dark:border-indigo-400/[0.15]
+                shadow-[0_-8px_40px_rgba(0,0,0,0.14)] dark:shadow-[0_-8px_40px_rgba(0,0,0,0.55)]"
             >
-              <AnimatePresence initial={false} mode="popLayout">
-                <motion.div
-                  key={view}
-                  initial={{ opacity: 0, scale: 0.96, filter: 'blur(8px)' }}
-                  animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, scale: 0.95, filter: 'blur(8px)' }}
-                  transition={{ duration: 0.2, ease: [0.42, 0, 0.58, 1] }}
-                  className="py-1"
-                >
-                  {content}
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </motion.div>
+              {/* Drag Handle */}
+              <div className="flex justify-center pt-3 pb-3 cursor-grab active:cursor-grabbing">
+                <div className="w-9 h-1 rounded-full bg-indigo-500/25 dark:bg-indigo-400/20" />
+              </div>
+
+              {/* ── Scrollable Content ──────────────────────── */}
+              <div
+                ref={contentRef}
+                className="flex-1 overflow-y-auto px-4 pb-3 flex flex-col gap-5
+                  [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden"
+                onPointerDownCapture={(e) => e.stopPropagation()}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+              >
+
+                {/* Settings */}
+                <section>
+                  <p className="text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-gray-400 dark:text-gray-600 pb-2 mb-2 border-b border-indigo-500/10 dark:border-indigo-400/10">
+                    Settings
+                  </p>
+                  <div className="flex flex-col gap-3">
+                    <div>
+                      <p className="section-label mb-2">Participants</p>
+                      <List
+                        value={namesList}
+                        onChange={(e) => setNamesList(e)}
+                        onClear={() => setNamesList([])}
+                      />
+                    </div>
+                    <div className="border-t border-gray-100 dark:border-gray-800/50" />
+                    <div>
+                      <p className="section-label">Customization</p>
+                      <WinnerMessage />
+                    </div>
+                    <div className="border-t border-gray-100 dark:border-gray-800/50" />
+                    <div>
+                      <p className="section-label">Behavior</p>
+                      <Toggle
+                        isOn={shouldRemoveName}
+                        handleToggle={() => setShouldRemoveName(!shouldRemoveName)}
+                        label="Remove after chosen"
+                        hiddenMobile={false}
+                      />
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              {/* ── Bottom Bar ──────────────────────────────── */}
+              <div
+                className="flex items-center justify-around border-t border-indigo-500/10 dark:border-indigo-400/10 px-4 pt-3"
+                style={{ paddingBottom: 'calc(20px + env(safe-area-inset-bottom))' }}
+              >
+                <Link to="/" onClick={close} className={bottomBarItemClass}>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                  Home
+                </Link>
+
+                <Link to="/features" onClick={close} className={bottomBarItemClass}>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                  </svg>
+                  Features
+                </Link>
+
+                <button onClick={close} className={bottomBarItemClass}>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  Close
+                </button>
+
+                <Link to="/help" onClick={close} className={bottomBarItemClass}>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  FAQs
+                </Link>
+
+                <div className={bottomBarItemClass}>
+                  <DarkModeSwitch
+                    checked={isDarkMode}
+                    onChange={() => setIsDarkMode(d => !d)}
+                    size={16}
+                    moonColor="#818cf8"
+                    sunColor="#f59e0b"
+                  />
+                  {isDarkMode ? 'Dark' : 'Light'}
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
-
-      {/* Floating toolbar */}
-      <div className="flex items-center gap-1.5 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700/50 rounded-[22px] p-1.5 shadow-lg z-10 select-none">
-        {mainNav.map(({ Icon, name, action }) => {
-          const itemClass = `p-3.5 rounded-2xl transition-all duration-150 [-webkit-tap-highlight-color:transparent] select-none ${
-            !action && view === name
-              ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
-              : 'text-gray-500 dark:text-gray-400 md:hover:bg-gray-100 md:dark:hover:bg-gray-800'
-          }`;
-
-          if (name === 'theme') {
-            // DarkModeSwitch renders its own <button>, so the wrapper must not be a <button>
-            return (
-              <div key={name} className={itemClass}>
-                <DarkModeSwitch
-                  checked={isDarkMode}
-                  onChange={() => handleNavClick(name, action)}
-                  size={22}
-                  moonColor="#818cf8"
-                  sunColor="#f59e0b"
-                />
-              </div>
-            );
-          }
-
-          return (
-            <button
-              key={name}
-              className={`${itemClass} cursor-pointer`}
-              onClick={() => handleNavClick(name, action)}
-            >
-              <Icon />
-            </button>
-          );
-        })}
-      </div>
     </div>
   );
 };
 
 export default MobileNav;
-

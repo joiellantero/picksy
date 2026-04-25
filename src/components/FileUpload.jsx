@@ -8,7 +8,7 @@ const FileUpload = (props) => {
     if (file) {
       if (allowedExtensions.exec(file.name)) {
         let reader = new FileReader();
-        reader.onload = async (e) => {
+        reader.onload = (e) => {
           props.onUpload(e.target.result);
         };
         reader.readAsText(file);

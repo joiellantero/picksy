@@ -1,22 +1,13 @@
 import {useState, useCallback, useRef, useEffect} from 'react';
 import {useAtom, useAtomValue} from "jotai";
 import {namesListState, winnerMessageState, spinModeState} from "../shared/globalState";
+import useConfetti, { confettiStyles } from '../shared/useConfetti';
 
 import ButtonPrimary from './Buttons/ButtonPrimary';
 import Modal from './Modals/Modal';
 import SpinWheel from './SpinWheel';
 
 import ReactCanvasConfetti from "react-canvas-confetti";
-
-const canvasStyles = {
-  position: "fixed",
-  pointerEvents: "none",
-  width: "100%",
-  height: "100%",
-  zIndex: 9999,
-  top: 0,
-  left: 0,
-};
 
 const Wheel = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +16,9 @@ const Wheel = (props) => {
   const [namesList, setNamesList] = useAtom(namesListState);
   const [isSpinMode, setIsSpinMode] = useAtom(spinModeState);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [zoom, setZoom] = useState(1);
   const containerRef = useRef(null);
+  const { getInstance, fire } = useConfetti();
 
   const getCleanNames = () => {
     const raw = typeof namesList === 'string' ? namesList : '';
@@ -38,41 +31,23 @@ const Wheel = (props) => {
   const cleanedNames = getCleanNames();
 
   const getNames = () => {
-    const names = getCleanNames();
-    const drawn = names[Math.floor(Math.random() * names.length)];
+    const drawn = cleanedNames[Math.floor(Math.random() * cleanedNames.length)];
     setDrawnName(drawn);
     setIsOpen(true);
     fire();
-    if (props.removeName && names.indexOf(drawn) >= 0) {
-      setNamesList(names.filter(n => n !== drawn).join("\n"));
+    if (props.removeName) {
+      setNamesList(cleanedNames.filter(n => n !== drawn).join("\n"));
     }
   };
 
-  const refAnimationInstance = useRef(null);
-
-  const getInstance = useCallback(({ confetti }) => {
-    refAnimationInstance.current = confetti;
+  const toggleFullscreen = useCallback(() => {
+    setIsFullscreen(f => {
+      if (f) setZoom(1);
+      return !f;
+    });
   }, []);
-
-  const makeShot = useCallback((particleRatio, opts) => {
-    refAnimationInstance.current &&
-      refAnimationInstance.current({
-        ...opts,
-        origin: { y: 0.7 },
-        particleCount: Math.floor(200 * particleRatio),
-        colors: ['#6366f1', '#8b5cf6', '#a78bfa', '#c4b5fd', '#f0abfc'],
-      });
-  }, []);
-
-  const fire = useCallback(() => {
-    makeShot(0.25, { spread: 26, startVelocity: 55 });
-    makeShot(0.2,  { spread: 60 });
-    makeShot(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-    makeShot(0.1,  { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-    makeShot(0.1,  { spread: 120, startVelocity: 45 });
-  }, [makeShot]);
-
-  const toggleFullscreen = useCallback(() => setIsFullscreen(f => !f), []);
+  const zoomIn  = useCallback(() => setZoom(z => Math.min(+(z + 0.1).toFixed(1), 1.5)), []);
+  const zoomOut = useCallback(() => setZoom(z => Math.max(+(z - 0.1).toFixed(1), 0.5)), []);
 
   useEffect(() => {
     document.body.style.overflow = isFullscreen ? 'hidden' : '';
@@ -87,6 +62,18 @@ const Wheel = (props) => {
     };
   }, [isFullscreen]);
 
+  useEffect(() => {
+    if (!isFullscreen) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsFullscreen(false);
+        setZoom(1);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isFullscreen]);
+
   const isEmpty = cleanedNames.length === 0;
   const winnerPrompt = winnerMessageValue && winnerMessageValue.length > 0
     ? winnerMessageValue
@@ -97,11 +84,13 @@ const Wheel = (props) => {
       <div
         ref={containerRef}
         className={isFullscreen
-          ? 'fixed inset-0 z-40 bg-gray-50 dark:bg-[#0c0c14] flex flex-col items-center justify-center overflow-y-auto'
+          ? 'fixed inset-0 z-40 bg-gray-50 dark:bg-[#0c0c14] flex flex-col items-center'
           : 'flex flex-col items-center gap-6 w-full py-8 px-4 sm:px-6'
         }
       >
-        <div className={isFullscreen ? 'w-full max-w-lg mx-auto flex flex-col gap-6 items-center py-8 px-4' : 'contents'}>
+        <div
+          className={isFullscreen ? 'w-full max-w-lg mx-auto flex flex-col gap-6 items-center flex-1 min-h-0 py-4 px-4' : 'contents'}
+        >
 
         {/* Page header — hidden in fullscreen */}
         {!isFullscreen && (
@@ -117,7 +106,7 @@ const Wheel = (props) => {
           </div>
         )}
 
-        {/* Mode toggle + fullscreen */}
+        {/* Mode toggle + fullscreen + zoom */}
         <div className='flex items-center gap-2 self-center'>
           <div className='flex items-center p-1 bg-gray-100 dark:bg-gray-800/60 rounded-xl'>
             <button
@@ -147,6 +136,29 @@ const Wheel = (props) => {
               Wheel
             </button>
           </div>
+          {isFullscreen && (
+            <div className='flex items-center gap-1 bg-gray-100 dark:bg-gray-800/60 rounded-xl p-1'>
+              <button
+                onClick={zoomOut}
+                disabled={zoom <= 0.5}
+                className='w-7 h-7 flex items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-all duration-150 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed text-base font-medium leading-none'
+                title='Zoom out'
+              >
+                −
+              </button>
+              <span className='text-xs font-medium text-gray-500 dark:text-gray-400 w-9 text-center tabular-nums'>
+                {Math.round(zoom * 100)}%
+              </span>
+              <button
+                onClick={zoomIn}
+                disabled={zoom >= 1.5}
+                className='w-7 h-7 flex items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-all duration-150 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed text-base font-medium leading-none'
+                title='Zoom in'
+              >
+                +
+              </button>
+            </div>
+          )}
           <button
             onClick={toggleFullscreen}
             className='p-2 rounded-xl text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/60 transition-all duration-150 cursor-pointer [-webkit-tap-highlight-color:transparent]'
@@ -167,11 +179,18 @@ const Wheel = (props) => {
         </div>
 
         {isSpinMode ? (
-          <SpinWheel removeName={props.removeName} />
+          <div className={isFullscreen ? 'flex-1 min-h-0 flex items-center justify-center w-full' : 'contents'}>
+            <div style={isFullscreen ? { transform: `scale(${zoom})`, transformOrigin: 'center', transition: 'transform 150ms ease' } : undefined}>
+              <SpinWheel removeName={props.removeName} />
+            </div>
+          </div>
         ) : (
           <>
             {/* Names card */}
-            <div className='w-full card overflow-hidden animate-slide-up'>
+            <div
+              className='w-full card overflow-hidden animate-slide-up'
+              style={isFullscreen ? { transform: `scale(${zoom})`, transformOrigin: 'center top', transition: 'transform 150ms ease' } : undefined}
+            >
               {isEmpty ? (
                 <div className='flex flex-col items-center justify-center py-16 px-6 text-center'>
                   <div className='w-16 h-16 sm:w-14 sm:h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center mb-4'>
@@ -228,7 +247,7 @@ const Wheel = (props) => {
             body={drawnName}
             onClose={(isClose) => setIsOpen(isClose)}
           />
-          <ReactCanvasConfetti onInit={getInstance} style={canvasStyles} />
+          <ReactCanvasConfetti onInit={getInstance} style={confettiStyles} />
         </>
       )}
     </>
