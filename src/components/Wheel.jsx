@@ -104,13 +104,12 @@ const Wheel = (props) => {
       <div
         ref={containerRef}
         className={isFullscreen
-          ? 'fixed inset-0 z-40 bg-gray-50 dark:bg-[#0c0c14] flex flex-col items-center justify-center overflow-y-auto'
+          ? 'fixed inset-0 z-40 bg-gray-50 dark:bg-[#0c0c14] flex flex-col items-center'
           : 'flex flex-col items-center gap-6 w-full py-8 px-4 sm:px-6'
         }
       >
         <div
-          className={isFullscreen ? 'w-full max-w-lg mx-auto flex flex-col gap-6 items-center py-8 px-4' : 'contents'}
-          style={isFullscreen ? { transform: `scale(${zoom})`, transformOrigin: 'center top', transition: 'transform 150ms ease' } : undefined}
+          className={isFullscreen ? 'w-full max-w-lg mx-auto flex flex-col gap-6 items-center flex-1 min-h-0 py-4 px-4' : 'contents'}
         >
 
         {/* Page header — hidden in fullscreen */}
@@ -200,11 +199,18 @@ const Wheel = (props) => {
         </div>
 
         {isSpinMode ? (
-          <SpinWheel removeName={props.removeName} />
+          <div className={isFullscreen ? 'flex-1 min-h-0 flex items-center justify-center w-full' : 'contents'}>
+            <div style={isFullscreen ? { transform: `scale(${zoom})`, transformOrigin: 'center', transition: 'transform 150ms ease' } : undefined}>
+              <SpinWheel removeName={props.removeName} />
+            </div>
+          </div>
         ) : (
           <>
             {/* Names card */}
-            <div className='w-full card overflow-hidden animate-slide-up'>
+            <div
+              className='w-full card overflow-hidden animate-slide-up'
+              style={isFullscreen ? { transform: `scale(${zoom})`, transformOrigin: 'center top', transition: 'transform 150ms ease' } : undefined}
+            >
               {isEmpty ? (
                 <div className='flex flex-col items-center justify-center py-16 px-6 text-center'>
                   <div className='w-16 h-16 sm:w-14 sm:h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center mb-4'>

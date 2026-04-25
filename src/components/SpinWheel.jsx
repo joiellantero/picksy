@@ -249,35 +249,45 @@ export default function SpinWheel({ removeName }) {
           className={`rounded-full transition duration-500 ease-in-out ${isEmpty ? '' : 'shadow-xl shadow-indigo-500/20'}`}
           style={{ width: '100%', maxWidth: CANVAS_SIZE, aspectRatio: '1' }}
         />
-      </div>
-
-      {/* Spin button */}
-      <button
-        onClick={spin}
-        disabled={isEmpty || spinning}
-        className={`w-full flex items-center justify-center gap-2 px-6 py-4 sm:py-3 text-base sm:text-sm font-semibold text-white rounded-xl shadow-md transition-colors duration-200 ${
-          isEmpty || spinning
-            ? 'bg-indigo-300 dark:bg-indigo-900/40 cursor-not-allowed opacity-60'
-            : 'bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 active:from-indigo-700 active:to-violet-800 cursor-pointer'
-        }`}
-      >
-        {spinning ? (
-          <>
-            <svg className='w-4 h-4 animate-spin' fill='none' viewBox='0 0 24 24'>
+        {/* Clickable center hub overlay — tap to spin */}
+        <button
+          onClick={spin}
+          disabled={isEmpty || spinning}
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center transition-all duration-200 ${
+            isEmpty || spinning
+              ? 'cursor-not-allowed opacity-60'
+              : 'cursor-pointer hover:scale-110 active:scale-95'
+          }`}
+          style={{
+            width: '15%',
+            height: '15%',
+            background: 'radial-gradient(circle at 40% 40%, #c4b5fd, #4f46e5)',
+            boxShadow: '0 2px 12px rgba(99,102,241,0.4)',
+            border: '2px solid rgba(255,255,255,0.9)',
+          }}
+          title={isEmpty ? 'Add names first' : 'Spin!'}
+        >
+          {spinning ? (
+            <svg className='w-5 h-5 sm:w-4 sm:h-4 animate-spin text-white' fill='none' viewBox='0 0 24 24'>
               <circle className='opacity-25' cx='12' cy='12' r='10' stroke='currentColor' strokeWidth='4' />
               <path className='opacity-75' fill='currentColor' d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z' />
             </svg>
-            Spinning…
-          </>
-        ) : (
-          <>
-            <svg className='w-4 h-4 flex-shrink-0' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15' />
+          ) : (
+            <svg className='w-5 h-5 sm:w-4 sm:h-4 text-white drop-shadow-sm' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2.5} d='M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z' />
             </svg>
-            Spin the Wheel
-          </>
+          )}
+        </button>
+      </div>
+
+      {/* Hint text — positioned absolutely so it doesn't affect layout */}
+      <div className='relative w-full h-0'>
+        {!isEmpty && !spinning && (
+          <p className='absolute left-0 right-0 top-1 text-xs text-gray-400 dark:text-gray-500 text-center animate-pulse'>
+            Tap the center to spin
+          </p>
         )}
-      </button>
+      </div>
 
       <Modal
         isOpen={isOpen}
