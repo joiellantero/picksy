@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { useAtom, useAtomValue } from 'jotai';
 import { namesListState, winnerMessageState, darkModeState } from '../shared/globalState';
 import Modal from './Modals/Modal';
@@ -284,7 +285,10 @@ export default function SpinWheel({ removeName }) {
         body={drawnName}
         onClose={(v) => setIsOpen(v)}
       />
-      <ReactCanvasConfetti onInit={getInstance} style={confettiStyles} />
+      {createPortal(
+        <ReactCanvasConfetti onInit={getInstance} style={confettiStyles} />,
+        document.body
+      )}
     </>
   );
 }

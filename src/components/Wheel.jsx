@@ -25,6 +25,7 @@ const Wheel = (props) => {
   const [namesList, setNamesList] = useAtom(namesListState);
   const [isSpinMode, setIsSpinMode] = useAtom(spinModeState);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [zoom, setZoom] = useState(1);
   const containerRef = useRef(null);
 
   const getCleanNames = () => {
@@ -71,7 +72,14 @@ const Wheel = (props) => {
     makeShot(0.1,  { spread: 120, startVelocity: 45 });
   }, [makeShot]);
 
-  const toggleFullscreen = useCallback(() => setIsFullscreen(f => !f), []);
+  const toggleFullscreen = useCallback(() => {
+    setIsFullscreen(f => {
+      if (f) setZoom(1);
+      return !f;
+    });
+  }, []);
+  const zoomIn  = useCallback(() => setZoom(z => Math.min(+(z + 0.1).toFixed(1), 1.5)), []);
+  const zoomOut = useCallback(() => setZoom(z => Math.max(+(z - 0.1).toFixed(1), 0.5)), []);
 
   useEffect(() => {
     document.body.style.overflow = isFullscreen ? 'hidden' : '';
@@ -100,7 +108,10 @@ const Wheel = (props) => {
           : 'flex flex-col items-center gap-6 w-full py-8 px-4 sm:px-6'
         }
       >
-        <div className={isFullscreen ? 'w-full max-w-lg mx-auto flex flex-col gap-6 items-center py-8 px-4' : 'contents'}>
+        <div
+          className={isFullscreen ? 'w-full max-w-lg mx-auto flex flex-col gap-6 items-center py-8 px-4' : 'contents'}
+          style={isFullscreen ? { transform: `scale(${zoom})`, transformOrigin: 'center top', transition: 'transform 150ms ease' } : undefined}
+        >
 
         {/* Page header — hidden in fullscreen */}
         {!isFullscreen && (
@@ -116,7 +127,7 @@ const Wheel = (props) => {
           </div>
         )}
 
-        {/* Mode toggle + fullscreen */}
+        {/* Mode toggle + fullscreen + zoom */}
         <div className='flex items-center gap-2 self-center'>
           <div className='flex items-center p-1 bg-gray-100 dark:bg-gray-800/60 rounded-xl'>
             <button
@@ -146,6 +157,29 @@ const Wheel = (props) => {
               Wheel
             </button>
           </div>
+          {isFullscreen && (
+            <div className='flex items-center gap-1 bg-gray-100 dark:bg-gray-800/60 rounded-xl p-1'>
+              <button
+                onClick={zoomOut}
+                disabled={zoom <= 0.5}
+                className='w-7 h-7 flex items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-all duration-150 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed text-base font-medium leading-none'
+                title='Zoom out'
+              >
+                −
+              </button>
+              <span className='text-xs font-medium text-gray-500 dark:text-gray-400 w-9 text-center tabular-nums'>
+                {Math.round(zoom * 100)}%
+              </span>
+              <button
+                onClick={zoomIn}
+                disabled={zoom >= 1.5}
+                className='w-7 h-7 flex items-center justify-center rounded-lg text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-all duration-150 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed text-base font-medium leading-none'
+                title='Zoom in'
+              >
+                +
+              </button>
+            </div>
+          )}
           <button
             onClick={toggleFullscreen}
             className='p-2 rounded-xl text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/60 transition-all duration-150 cursor-pointer [-webkit-tap-highlight-color:transparent]'
