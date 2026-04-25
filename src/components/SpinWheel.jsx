@@ -250,11 +250,12 @@ export default function SpinWheel({ removeName }) {
           style={{ width: '100%', maxWidth: CANVAS_SIZE, aspectRatio: '1' }}
         />
         {/* Clickable center hub overlay — tap to spin */}
+        {!isEmpty && (
         <button
           onClick={spin}
-          disabled={isEmpty || spinning}
+          disabled={spinning}
           className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center transition-all duration-200 ${
-            isEmpty || spinning
+            spinning
               ? 'cursor-not-allowed opacity-60'
               : 'cursor-pointer hover:scale-110 active:scale-95'
           }`}
@@ -265,7 +266,7 @@ export default function SpinWheel({ removeName }) {
             boxShadow: '0 2px 12px rgba(99,102,241,0.4)',
             border: '2px solid rgba(255,255,255,0.9)',
           }}
-          title={isEmpty ? 'Add names first' : 'Spin!'}
+          title='Spin!'
         >
           {spinning ? (
             <svg className='w-5 h-5 sm:w-4 sm:h-4 animate-spin text-white' fill='none' viewBox='0 0 24 24'>
@@ -278,6 +279,7 @@ export default function SpinWheel({ removeName }) {
             </svg>
           )}
         </button>
+        )}
       </div>
 
       {/* Hint text — positioned absolutely so it doesn't affect layout */}
