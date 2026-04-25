@@ -5,12 +5,10 @@ import { useAtom } from 'jotai';
 
 const DesktopNav = () => {
   const { pathname } = useLocation();
-  const [checked, setChecked] = useAtom(darkModeState);
-  const [isDarkModeEnabled, setIsDarkModeEnabled] = useAtom(darkModeState);
+  const [isDarkMode, setIsDarkMode] = useAtom(darkModeState);
 
   const handleChange = (checked) => {
-    setChecked(checked);
-    setIsDarkModeEnabled(!isDarkModeEnabled);
+    setIsDarkMode(checked);
   };
 
   const navLinkClass = (path) =>
@@ -53,7 +51,7 @@ const DesktopNav = () => {
       <div className='hidden md:flex items-center gap-3'>
         <div className="h-5 w-px bg-gray-200 dark:bg-gray-700" />
         <DarkModeSwitch
-          checked={checked}
+          checked={isDarkMode}
           onChange={handleChange}
           size={18}
           moonColor="#818cf8"

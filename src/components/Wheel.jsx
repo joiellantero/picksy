@@ -38,13 +38,12 @@ const Wheel = (props) => {
   const cleanedNames = getCleanNames();
 
   const getNames = () => {
-    const names = getCleanNames();
-    const drawn = names[Math.floor(Math.random() * names.length)];
+    const drawn = cleanedNames[Math.floor(Math.random() * cleanedNames.length)];
     setDrawnName(drawn);
     setIsOpen(true);
     fire();
-    if (props.removeName && names.indexOf(drawn) >= 0) {
-      setNamesList(names.filter(n => n !== drawn).join("\n"));
+    if (props.removeName) {
+      setNamesList(cleanedNames.filter(n => n !== drawn).join("\n"));
     }
   };
 

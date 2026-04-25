@@ -4,8 +4,6 @@ export const darkModeState = atomWithStorage('darkModeState', false);
 
 export const removeState = atomWithStorage('removeState', false);
 
-export const settingsBtnState = atomWithStorage('settingsBtnState', false);
-
 export const settingsSideBarState = atomWithStorage('settingsModalState', false);
 
 export const namesListState = atomWithStorage('namesListState', []);

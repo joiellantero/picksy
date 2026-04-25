@@ -1,4 +1,4 @@
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import { namesListState, removeState } from '../shared/globalState';
 
 import Wheel from '../components/Wheel';
@@ -7,10 +7,8 @@ import WinnerMessage from '../components/WinnerMessage';
 import Toggle from '../components/Toggle';
 
 const Home = () => {
-  const shouldRemoveName = useAtomValue(removeState);
   const [namesList, setNamesList] = useAtom(namesListState);
-  const resetNamesList = () => setNamesList([]);
-  const [shouldRemoveNameState, setShouldRemoveName] = useAtom(removeState);
+  const [shouldRemoveName, setShouldRemoveName] = useAtom(removeState);
 
   return (
     <div className='flex flex-col md:flex-row items-stretch md:items-start justify-center w-full max-w-5xl gap-8 px-0 md:px-6 py-4 md:py-8'>
@@ -39,7 +37,7 @@ const Home = () => {
           <List
             value={namesList}
             onChange={(e) => setNamesList(e)}
-            onClear={() => resetNamesList()}
+            onClear={() => setNamesList([])}
           />
         </section>
 
@@ -57,8 +55,8 @@ const Home = () => {
         <section className='flex flex-col gap-2.5'>
           <p className='section-label'>Behavior</p>
           <Toggle
-            isOn={shouldRemoveNameState}
-            handleToggle={() => setShouldRemoveName(!shouldRemoveNameState)}
+            isOn={shouldRemoveName}
+            handleToggle={() => setShouldRemoveName(!shouldRemoveName)}
             label='Remove after chosen'
             hiddenMobile={false}
           />
