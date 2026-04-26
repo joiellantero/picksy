@@ -2,7 +2,7 @@
 
 Picksy is an open-source web app that picks a random name from a list — fairly and instantly.
 
-[![Visit - webapp](https://img.shields.io/badge/Visit-webapp-2ea44f?style=for-the-badge&logo=vercel)](https://nameroulette.vercel.app)
+[![Visit - webapp](https://img.shields.io/badge/Visit-webapp-2ea44f?style=for-the-badge&logo=vercel)](https://picksy.sudojoie.com)
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)](https://react.dev)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-38BDF8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com)
 
@@ -10,14 +10,16 @@ Picksy is an open-source web app that picks a random name from a list — fairly
 
 ## Features
 
+- **Two picking modes** — classic list draw or an animated spin wheel, switchable with a single toggle
 - **Random name picker** — instantly draws a name from your list with a confetti celebration
 - **Participants list** — add names manually (one per line) or upload a `.txt` / `.csv` file
 - **Winner prompt** — customise the message shown when a name is drawn
 - **Remove after chosen** — optionally remove a name from the pool after it's picked
+- **Fullscreen + zoom** — go fullscreen for presentations and zoom between 50 %–150 %
 - **Light / dark mode** — toggle from the nav on desktop, or the bottom dock on mobile
-- **Animated bottom dock** — mobile-first navigation with smooth framer-motion transitions
+- **Animated bottom dock** — mobile-first navigation with a drag-to-dismiss drawer and smooth framer-motion transitions
 - **Fully client-side** — no data is ever sent to a server; everything runs in the browser
-- **State persistence** — theme, names list, winner message, and behavior settings are all saved to `localStorage` via Jotai
+- **State persistence** — theme, names list, winner message, picking mode, and behavior settings are all saved to `localStorage` via Jotai
 
 ## Tech Stack
 
@@ -30,6 +32,7 @@ Picksy is an open-source web app that picks a random name from a list — fairly
 | Framer Motion | 12 | Animated bottom dock and transitions |
 | React Router DOM | 7 | Client-side routing |
 | Headless UI | 2 | Accessible modal / dialog |
+| Heroicons | 2 | Icon set |
 | react-canvas-confetti | 2 | Winner confetti animation |
 | Vercel Analytics | 2 | Usage analytics |
 
