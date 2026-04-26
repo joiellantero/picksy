@@ -91,7 +91,7 @@ export default function App() {
               <div className="mt-6 h-px bg-gradient-to-r from-transparent via-gray-100 dark:via-gray-800 to-transparent" />
               <div className="mt-4 flex items-center justify-between flex-wrap gap-2">
                 <p className="text-[11px] text-gray-300 dark:text-gray-700">
-                  &copy; {new Date().getFullYear()} Picksy &#124; Made with <span className="text-rose-400">♥</span> by joiellantero
+                  &copy; {new Date().getFullYear()} Picksy &#124; <a href="https://sudojoie.com" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">sudojoie</a>
                 </p>
                 <div className="flex items-center gap-3 text-[10px] text-gray-300 dark:text-gray-700">
                   <Link to="/privacy" className="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Privacy</Link>
