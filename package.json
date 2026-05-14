@@ -1,6 +1,7 @@
 {
   "name": "name-roulette-web",
   "version": "0.1.0",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "private": true,
   "dependencies": {
     "@headlessui/react": "^2.2.9",
