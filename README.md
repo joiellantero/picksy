@@ -84,6 +84,7 @@ All contributions are welcome! Feel free to open issues or pull requests.
 
 ## Support
 
+[![Sponsor on GitHub](https://img.shields.io/badge/Sponsor-♥-ea4aaa?style=for-the-badge&logo=github)](https://github.com/sponsors/joiellantero)
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/joiel)
 
 ## License
