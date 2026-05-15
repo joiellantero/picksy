@@ -13,6 +13,15 @@ const features = [
   {
     icon: (
       <svg className='w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={1.75} d='M12 2a10 10 0 100 20A10 10 0 0012 2zm0 0v10m0 0l-3-3m3 3l3-3' />
+      </svg>
+    ),
+    title: 'Spin the Wheel',
+    description: 'Switch to an animated spin wheel for a more visual and exciting way to pick a winner.',
+  },
+  {
+    icon: (
+      <svg className='w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={1.75} d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16' />
       </svg>
     ),
@@ -22,11 +31,20 @@ const features = [
   {
     icon: (
       <svg className='w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={1.75} d='M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4' />
+      </svg>
+    ),
+    title: 'Fullscreen Mode',
+    description: 'Go fullscreen for a distraction-free draw. Zoom in and out for the perfect view.',
+  },
+  {
+    icon: (
+      <svg className='w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
         <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={1.75} d='M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12' />
       </svg>
     ),
     title: 'File Uploads',
-    description: 'Upload a .txt or .csv file to instantly populate your names list — no manual typing required.',
+    description: 'Upload a .txt or .csv file to instantly populate your names list. No manual typing required.',
   },
   {
     icon: (
@@ -35,7 +53,16 @@ const features = [
       </svg>
     ),
     title: 'Custom Winner Message',
-    description: 'Personalise the message shown when a name is drawn. Make it fun, formal, or anything in between.',
+    description: 'Personalise the message shown when a name is drawn. Toggle it on or off as you like.',
+  },
+  {
+    icon: (
+      <svg className='w-5 h-5' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={1.75} d='M5 3l3.057 7.134L3 16h6l3 5 3-5h6l-5.057-5.866L19 3l-5.5 4L10.5 3 8 7 5 3z' />
+      </svg>
+    ),
+    title: 'Confetti Toggle',
+    description: 'Celebrate each winner with a burst of confetti, or turn it off for a calmer experience.',
   },
   {
     icon: (
@@ -53,7 +80,7 @@ const features = [
       </svg>
     ),
     title: 'Privacy First',
-    description: 'Your names list is stored locally in your browser. Nothing is sent to any server — ever.',
+    description: 'Your names list is stored locally in your browser. Nothing is sent to any server, ever.',
   },
 ];
 
