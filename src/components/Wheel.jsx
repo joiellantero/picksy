@@ -187,12 +187,13 @@ const Wheel = (props) => {
             </div>
           </div>
         ) : (
-          <>
-            {/* Names card */}
+          <div className={isFullscreen ? 'flex-1 min-h-0 flex flex-col items-center justify-center w-full' : 'contents'}>
             <div
-              className='w-full card overflow-hidden animate-slide-up'
-              style={isFullscreen ? { transform: `scale(${zoom})`, transformOrigin: 'center top', transition: 'transform 150ms ease' } : undefined}
+              className={isFullscreen ? 'flex flex-col items-center gap-6 w-full' : 'contents'}
+              style={isFullscreen ? { transform: `scale(${zoom})`, transformOrigin: 'center', transition: 'transform 150ms ease' } : undefined}
             >
+            {/* Names card */}
+            <div className='w-full card overflow-hidden animate-slide-up'>
               {isEmpty ? (
                 <div className='flex flex-col items-center justify-center py-16 px-6 text-center'>
                   <div className='w-16 h-16 sm:w-14 sm:h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center mb-4'>
@@ -236,7 +237,8 @@ const Wheel = (props) => {
               tooltip={'Add names in settings first'}
               divClass={'w-full'}
             />
-          </>
+            </div>
+          </div>
         )}
         </div>
       </div>
