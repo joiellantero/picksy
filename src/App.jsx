@@ -34,66 +34,19 @@ export default function App() {
 
       {/* ── Footer ── */}
       <footer className="relative pb-28 md:pb-0 bg-white dark:bg-[#0c0c14]">
-        <div className="h-px bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent" />
-        <div className="bg-white dark:bg-[#0c0c14] px-6 pt-8 pb-6">
-          <div className="max-w-5xl mx-auto">
-
-            {/* ── Mobile footer ── */}
-            <div className="md:hidden flex flex-col items-center gap-2 text-center">
-              <p className="text-xs font-semibold bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent tracking-tight">Picksy</p>
-              <div className="flex items-center gap-3">
-                <a href="https://sudojoie.com" target="_blank" rel="noopener noreferrer" className="text-[10px] text-gray-300 dark:text-gray-700 hover:text-indigo-400 dark:hover:text-indigo-500 transition-colors">Blog</a>
-                <span className="text-[10px] text-gray-200 dark:text-gray-800">&middot;</span>
-                <a href="https://ko-fi.com/joiel" target="_blank" rel="noopener noreferrer" className="text-[10px] text-gray-300 dark:text-gray-700 hover:text-indigo-400 dark:hover:text-indigo-500 transition-colors">Support</a>
-              </div>
-              <p className="text-[10px] text-gray-300 dark:text-gray-700">&copy; {new Date().getFullYear()} joiellantero &mdash; Fair picks, every time.</p>
-              <div className="flex items-center gap-3 text-[10px] text-gray-300 dark:text-gray-700">
-                <Link to="/privacy" className="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Privacy</Link>
-                <span>&middot;</span>
-                <Link to="/terms" className="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Terms</Link>
-                <span>&middot;</span>
-                <Link to="/cookies" className="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Cookies</Link>
-              </div>
+        <div className="h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-800 to-transparent" />
+        <div className="px-6 py-6">
+          <div className="max-w-5xl mx-auto flex flex-col items-center gap-3">
+            <div className="flex items-center gap-4 text-[11px] text-gray-400 dark:text-gray-600">
+              <Link to="/privacy" className="hover:text-gray-600 dark:hover:text-gray-400 transition-colors">Privacy</Link>
+              <Link to="/terms" className="hover:text-gray-600 dark:hover:text-gray-400 transition-colors">Terms</Link>
+              <Link to="/cookies" className="hover:text-gray-600 dark:hover:text-gray-400 transition-colors">Cookies</Link>
+              <a href="https://github.com/joiellantero/picksy" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 dark:hover:text-gray-400 transition-colors">GitHub</a>
+              <a href="https://ko-fi.com/joiel" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 dark:hover:text-gray-400 transition-colors">Support</a>
             </div>
-
-            {/* ── Desktop footer ── */}
-            <div className="hidden md:block">
-              <div className="flex flex-row items-start justify-between gap-8">
-
-                {/* Brand col */}
-                <div className="flex flex-col gap-3">
-                  <p className="text-sm font-semibold bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent tracking-tight">
-                    Picksy
-                  </p>
-                  <p className="text-xs text-gray-400 dark:text-gray-600 italic">Fair picks, every time.</p>
-                </div>
-
-                {/* Links cols */}
-                <div className="flex gap-12 text-xs">
-                  <div className="flex flex-col gap-2">
-                    <p className="text-[10px] uppercase tracking-widest font-semibold text-gray-300 dark:text-gray-700 mb-1">Developer</p>
-                    <a href="https://sudojoie.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 dark:text-gray-600 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Blog</a>
-                    <a href="https://github.com/joiellantero/picksy" target="_blank" rel="noopener noreferrer" className="text-gray-400 dark:text-gray-600 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">GitHub</a>
-                    <a href="https://ko-fi.com/joiel" target="_blank" rel="noopener noreferrer" className="text-gray-400 dark:text-gray-600 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Support</a>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-6 h-px bg-gradient-to-r from-transparent via-gray-100 dark:via-gray-800 to-transparent" />
-              <div className="mt-4 flex items-center justify-between flex-wrap gap-2">
-                <p className="text-[11px] text-gray-300 dark:text-gray-700">
-                  &copy; {new Date().getFullYear()} Picksy &#124; <a href="https://sudojoie.com" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">sudojoie</a>
-                </p>
-                <div className="flex items-center gap-3 text-[10px] text-gray-300 dark:text-gray-700">
-                  <Link to="/privacy" className="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Privacy</Link>
-                  <span>&middot;</span>
-                  <Link to="/terms" className="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Terms</Link>
-                  <span>&middot;</span>
-                  <Link to="/cookies" className="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">Cookies</Link>
-                </div>
-              </div>
-            </div>
-
+            <p className="text-[10px] text-gray-300 dark:text-gray-700">
+              &copy; {new Date().getFullYear()} <a href="https://sudojoie.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-500 dark:hover:text-gray-500 transition-colors">Picksy</a>
+            </p>
           </div>
         </div>
       </footer>
