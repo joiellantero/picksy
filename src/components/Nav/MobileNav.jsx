@@ -144,7 +144,8 @@ const MobileNav = () => {
                     </div>
                     <div className="border-t border-gray-100 dark:border-gray-800/50" />
                     <div>
-                      <p className="section-label">Behavior</p>
+                      <p className="section-label mb-2">Behavior</p>
+                      <div className="flex flex-col gap-2.5">
                       <Toggle
                         isOn={shouldRemoveName}
                         handleToggle={() => setShouldRemoveName(!shouldRemoveName)}
@@ -163,6 +164,7 @@ const MobileNav = () => {
                         label="Show confetti"
                         hiddenMobile={false}
                       />
+                      </div>
                     </div>
                   </div>
                 </section>
