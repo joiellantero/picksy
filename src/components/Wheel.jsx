@@ -1,6 +1,6 @@
 import {useState, useCallback, useRef, useEffect} from 'react';
 import {useAtom, useAtomValue} from "jotai";
-import {namesListState, winnerMessageState, spinModeState} from "../shared/globalState";
+import {namesListState, winnerMessageState, spinModeState, winnerPromptEnabledState} from "../shared/globalState";
 import useConfetti, { confettiStyles } from '../shared/useConfetti';
 
 import ButtonPrimary from './Buttons/ButtonPrimary';
@@ -15,6 +15,7 @@ const Wheel = (props) => {
   const winnerMessageValue = useAtomValue(winnerMessageState);
   const [namesList, setNamesList] = useAtom(namesListState);
   const [isSpinMode, setIsSpinMode] = useAtom(spinModeState);
+  const isWinnerPromptEnabled = useAtomValue(winnerPromptEnabledState);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [zoom, setZoom] = useState(1);
   const containerRef = useRef(null);
@@ -75,9 +76,9 @@ const Wheel = (props) => {
   }, [isFullscreen]);
 
   const isEmpty = cleanedNames.length === 0;
-  const winnerPrompt = winnerMessageValue && winnerMessageValue.length > 0
-    ? winnerMessageValue
-    : '🎉 And the winner is...';
+  const winnerPrompt = isWinnerPromptEnabled
+    ? (winnerMessageValue && winnerMessageValue.length > 0 ? winnerMessageValue : '🎉 And the winner is...')
+    : '';
 
   return (
     <>

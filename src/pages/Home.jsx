@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { namesListState, removeState } from '../shared/globalState';
+import { namesListState, removeState, winnerPromptEnabledState } from '../shared/globalState';
 
 import Wheel from '../components/Wheel';
 import List from '../components/List';
@@ -9,6 +9,7 @@ import Toggle from '../components/Toggle';
 const Home = () => {
   const [namesList, setNamesList] = useAtom(namesListState);
   const [shouldRemoveName, setShouldRemoveName] = useAtom(removeState);
+  const [isWinnerPromptEnabled, setIsWinnerPromptEnabled] = useAtom(winnerPromptEnabledState);
 
   return (
     <div className='flex flex-col md:flex-row items-stretch md:items-start justify-center w-full max-w-5xl gap-8 px-0 md:px-6 py-4 md:py-8'>
@@ -58,6 +59,12 @@ const Home = () => {
             isOn={shouldRemoveName}
             handleToggle={() => setShouldRemoveName(!shouldRemoveName)}
             label='Remove after chosen'
+            hiddenMobile={false}
+          />
+          <Toggle
+            isOn={isWinnerPromptEnabled}
+            handleToggle={() => setIsWinnerPromptEnabled(!isWinnerPromptEnabled)}
+            label='Show winner prompt'
             hiddenMobile={false}
           />
         </section>
