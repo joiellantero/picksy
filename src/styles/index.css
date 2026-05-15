@@ -20,10 +20,18 @@
 
   /* slide-up animation */
   --animate-slide-up: slideUp 0.25s ease-out;
+  --animate-pulse-ring: pulseRing 3s ease-in-out infinite;
 
   @keyframes slideUp {
     from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulseRing {
+    0%   { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.25); }
+    30%  { box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15); }
+    50%  { box-shadow: 0 0 0 8px rgba(139, 92, 246, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
   }
 }
 
@@ -60,5 +68,30 @@
   }
   .section-label {
     @apply text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500;
+  }
+
+  /* Theme-aware scrollbar for textareas */
+  /* Standard properties (Firefox, Chrome 121+) */
+  .themed-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db transparent;
+  }
+  :is(.dark, .dark *) .themed-scrollbar {
+    scrollbar-color: #4b5563 transparent;
+  }
+
+  /* WebKit scrollbar (Chrome, Safari, Edge) */
+  .themed-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .themed-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .themed-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #d1d5db;
+    border-radius: 9999px;
+  }
+  :is(.dark, .dark *) .themed-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #4b5563;
   }
 }

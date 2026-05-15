@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useAtom, useAtomValue } from 'jotai';
-import { namesListState, winnerMessageState, darkModeState } from '../shared/globalState';
+import { namesListState, winnerMessageState, darkModeState, winnerPromptEnabledState, confettiEnabledState } from '../shared/globalState';
 import useConfetti, { confettiStyles } from '../shared/useConfetti';
 import Modal from './Modals/Modal';
 import ReactCanvasConfetti from 'react-canvas-confetti';
@@ -31,6 +31,8 @@ export default function SpinWheel({ removeName }) {
   const [namesList, setNamesList] = useAtom(namesListState);
   const winnerMessage = useAtomValue(winnerMessageState);
   const isDarkMode = useAtomValue(darkModeState);
+  const isWinnerPromptEnabled = useAtomValue(winnerPromptEnabledState);
+  const isConfettiEnabled = useAtomValue(confettiEnabledState);
 
   const names = (() => {
     const raw = typeof namesList === 'string' ? namesList : '';
@@ -39,10 +41,9 @@ export default function SpinWheel({ removeName }) {
 
   const isEmpty = names.length === 0;
 
-  const winnerPrompt =
-    winnerMessage && winnerMessage.length > 0
-      ? winnerMessage
-      : '🎉 And the winner is...';
+  const winnerPrompt = isWinnerPromptEnabled
+    ? (winnerMessage && winnerMessage.length > 0 ? winnerMessage : '🎉 And the winner is...')
+    : '';
 
   const drawWheel = useCallback((rot, dark = isDarkMode) => {
     const canvas = canvasRef.current;
@@ -197,7 +198,7 @@ export default function SpinWheel({ removeName }) {
         setDrawnName(names[winnerIdx]);
         setSpinning(false);
         setIsOpen(true);
-        fire();
+        if (isConfettiEnabled) fire();
       }
     };
 

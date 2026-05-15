@@ -9,3 +9,7 @@ export const namesListState = atomWithStorage('namesListState', []);
 export const winnerMessageState = atomWithStorage('winnerMessageState', []);
 
 export const spinModeState = atomWithStorage('spinModeState', false);
+
+export const winnerPromptEnabledState = atomWithStorage('winnerPromptEnabledState', true);
+
+export const confettiEnabledState = atomWithStorage('confettiEnabledState', true);

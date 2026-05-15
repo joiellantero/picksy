@@ -1,6 +1,6 @@
 import {useState, useCallback, useRef, useEffect} from 'react';
 import {useAtom, useAtomValue} from "jotai";
-import {namesListState, winnerMessageState, spinModeState} from "../shared/globalState";
+import {namesListState, winnerMessageState, spinModeState, winnerPromptEnabledState, confettiEnabledState} from "../shared/globalState";
 import useConfetti, { confettiStyles } from '../shared/useConfetti';
 
 import ButtonPrimary from './Buttons/ButtonPrimary';
@@ -15,6 +15,8 @@ const Wheel = (props) => {
   const winnerMessageValue = useAtomValue(winnerMessageState);
   const [namesList, setNamesList] = useAtom(namesListState);
   const [isSpinMode, setIsSpinMode] = useAtom(spinModeState);
+  const isWinnerPromptEnabled = useAtomValue(winnerPromptEnabledState);
+  const isConfettiEnabled = useAtomValue(confettiEnabledState);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [zoom, setZoom] = useState(1);
   const containerRef = useRef(null);
@@ -34,7 +36,7 @@ const Wheel = (props) => {
     const drawn = cleanedNames[Math.floor(Math.random() * cleanedNames.length)];
     setDrawnName(drawn);
     setIsOpen(true);
-    fire();
+    if (isConfettiEnabled) fire();
     if (props.removeName) {
       setNamesList(cleanedNames.filter(n => n !== drawn).join("\n"));
     }
@@ -75,9 +77,9 @@ const Wheel = (props) => {
   }, [isFullscreen]);
 
   const isEmpty = cleanedNames.length === 0;
-  const winnerPrompt = winnerMessageValue && winnerMessageValue.length > 0
-    ? winnerMessageValue
-    : '🎉 And the winner is...';
+  const winnerPrompt = isWinnerPromptEnabled
+    ? (winnerMessageValue && winnerMessageValue.length > 0 ? winnerMessageValue : '🎉 And the winner is...')
+    : '';
 
   return (
     <>
@@ -185,12 +187,13 @@ const Wheel = (props) => {
             </div>
           </div>
         ) : (
-          <>
-            {/* Names card */}
+          <div className={isFullscreen ? 'flex-1 min-h-0 flex flex-col items-center justify-center w-full' : 'contents'}>
             <div
-              className='w-full card overflow-hidden animate-slide-up'
-              style={isFullscreen ? { transform: `scale(${zoom})`, transformOrigin: 'center top', transition: 'transform 150ms ease' } : undefined}
+              className={isFullscreen ? 'flex flex-col items-center gap-6 w-full' : 'contents'}
+              style={isFullscreen ? { transform: `scale(${zoom})`, transformOrigin: 'center', transition: 'transform 150ms ease' } : undefined}
             >
+            {/* Names card */}
+            <div className='w-full card overflow-hidden animate-slide-up'>
               {isEmpty ? (
                 <div className='flex flex-col items-center justify-center py-16 px-6 text-center'>
                   <div className='w-16 h-16 sm:w-14 sm:h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center mb-4'>
@@ -234,7 +237,8 @@ const Wheel = (props) => {
               tooltip={'Add names in settings first'}
               divClass={'w-full'}
             />
-          </>
+            </div>
+          </div>
         )}
         </div>
       </div>

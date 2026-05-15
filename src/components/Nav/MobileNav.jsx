@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { darkModeState, namesListState, removeState } from '../../shared/globalState';
+import { darkModeState, namesListState, removeState, winnerPromptEnabledState, confettiEnabledState } from '../../shared/globalState';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 import List from '../List';
 import WinnerMessage from '../WinnerMessage';
@@ -24,6 +24,8 @@ const MobileNav = () => {
   const [isDarkMode, setIsDarkMode] = useAtom(darkModeState);
   const [namesList, setNamesList] = useAtom(namesListState);
   const [shouldRemoveName, setShouldRemoveName] = useAtom(removeState);
+  const [isWinnerPromptEnabled, setIsWinnerPromptEnabled] = useAtom(winnerPromptEnabledState);
+  const [isConfettiEnabled, setIsConfettiEnabled] = useAtom(confettiEnabledState);
   const contentRef = useRef(null);
   const touchStartY = useRef(0);
 
@@ -142,13 +144,27 @@ const MobileNav = () => {
                     </div>
                     <div className="border-t border-gray-100 dark:border-gray-800/50" />
                     <div>
-                      <p className="section-label">Behavior</p>
+                      <p className="section-label mb-2">Behavior</p>
+                      <div className="flex flex-col gap-2.5">
                       <Toggle
                         isOn={shouldRemoveName}
                         handleToggle={() => setShouldRemoveName(!shouldRemoveName)}
                         label="Remove after chosen"
                         hiddenMobile={false}
                       />
+                      <Toggle
+                        isOn={isWinnerPromptEnabled}
+                        handleToggle={() => setIsWinnerPromptEnabled(!isWinnerPromptEnabled)}
+                        label="Show winner prompt"
+                        hiddenMobile={false}
+                      />
+                      <Toggle
+                        isOn={isConfettiEnabled}
+                        handleToggle={() => setIsConfettiEnabled(!isConfettiEnabled)}
+                        label="Show confetti"
+                        hiddenMobile={false}
+                      />
+                      </div>
                     </div>
                   </div>
                 </section>
