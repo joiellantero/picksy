@@ -15,7 +15,7 @@ const TextArea = (props) => {
     ) : (
       <div className='relative'>
         <textarea
-          className="w-full px-4 py-3 text-base sm:text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/50 rounded-xl outline-none appearance-none focus:ring-2 focus:ring-indigo-400/40 focus:ring-offset-0 focus:border-gray-200 dark:focus:border-gray-700/50 resize-none placeholder:text-gray-400 dark:placeholder:text-gray-600"
+          className="w-full px-4 pr-16 py-3 text-base sm:text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/50 rounded-xl outline-none appearance-none focus:ring-2 focus:ring-indigo-400/40 focus:ring-offset-0 focus:border-gray-200 dark:focus:border-gray-700/50 resize-none placeholder:text-gray-400 dark:placeholder:text-gray-600 themed-scrollbar"
           value={props.value}
           rows={props.rows}
           id={props.id}
@@ -25,7 +25,7 @@ const TextArea = (props) => {
         {hasValue && (
           <button
             type='button'
-            className='absolute top-2 right-2 text-xs font-medium text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-2 py-1 rounded-lg transition-colors duration-150 cursor-pointer'
+            className='absolute top-2 right-3.5 text-xs font-medium text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-2 py-1 rounded-lg transition-colors duration-150 cursor-pointer'
             onClick={props.onClear}
           >
             Clear

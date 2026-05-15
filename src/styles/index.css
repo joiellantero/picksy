@@ -61,4 +61,29 @@
   .section-label {
     @apply text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500;
   }
+
+  /* Theme-aware scrollbar for textareas */
+  /* Standard properties (Firefox, Chrome 121+) */
+  .themed-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db transparent;
+  }
+  :is(.dark, .dark *) .themed-scrollbar {
+    scrollbar-color: #4b5563 transparent;
+  }
+
+  /* WebKit scrollbar (Chrome, Safari, Edge) */
+  .themed-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .themed-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .themed-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #d1d5db;
+    border-radius: 9999px;
+  }
+  :is(.dark, .dark *) .themed-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #4b5563;
+  }
 }
