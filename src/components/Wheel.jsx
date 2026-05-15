@@ -1,6 +1,6 @@
 import {useState, useCallback, useRef, useEffect} from 'react';
 import {useAtom, useAtomValue} from "jotai";
-import {namesListState, winnerMessageState, spinModeState, winnerPromptEnabledState} from "../shared/globalState";
+import {namesListState, winnerMessageState, spinModeState, winnerPromptEnabledState, confettiEnabledState} from "../shared/globalState";
 import useConfetti, { confettiStyles } from '../shared/useConfetti';
 
 import ButtonPrimary from './Buttons/ButtonPrimary';
@@ -16,6 +16,7 @@ const Wheel = (props) => {
   const [namesList, setNamesList] = useAtom(namesListState);
   const [isSpinMode, setIsSpinMode] = useAtom(spinModeState);
   const isWinnerPromptEnabled = useAtomValue(winnerPromptEnabledState);
+  const isConfettiEnabled = useAtomValue(confettiEnabledState);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [zoom, setZoom] = useState(1);
   const containerRef = useRef(null);
@@ -35,7 +36,7 @@ const Wheel = (props) => {
     const drawn = cleanedNames[Math.floor(Math.random() * cleanedNames.length)];
     setDrawnName(drawn);
     setIsOpen(true);
-    fire();
+    if (isConfettiEnabled) fire();
     if (props.removeName) {
       setNamesList(cleanedNames.filter(n => n !== drawn).join("\n"));
     }
